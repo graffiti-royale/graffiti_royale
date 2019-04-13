@@ -1,0 +1,1 @@
+web: gunicorn graffiti_royale.wsgi
