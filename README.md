@@ -12,4 +12,4 @@ https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
 
 Tutorials for Channels and WebSockets:
 https://www.html5rocks.com/en/tutorials/websockets/basics/
-https://realpython.com/getting-started-with-django-channels/
+- Tutorial for channels is provided in the channels doc
