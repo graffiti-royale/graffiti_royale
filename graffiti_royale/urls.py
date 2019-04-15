@@ -23,8 +23,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.default.urls')),
     path('', views.homepage, name='homepage'),
-    path('play', views.play, name='play'),
-    path('tutorial', views.tutorial, name='tutorial'),
+    path('play/', views.play, name='play'),
+    path('tutorial/', views.tutorial, name='tutorial'),
+    path('chat/', views.index, name='index'),
+    path('chat/<str:room_name>/', views.room, name='room'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
