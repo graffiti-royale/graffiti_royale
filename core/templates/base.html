@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>GRAFFiTi ROYALE</title>
+        <title>{% block title %}GRAFFiTi ROYALE{% endblock %}</title>
      
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +13,8 @@
         <link href="https://fonts.googleapis.com/css?family=Londrina+Sketch|Londrina+Solid|Plaster" rel="stylesheet">       
         <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
         <link rel="stylesheet" type="text/css" href="gr.css"/>
-
+        
+    {% block meta %}{% endblock %}
     </head>
     <body>
         <header>
@@ -42,6 +43,7 @@
         </header>
 
         <div class="footer"> </div>
-           
-    </body>
+
+    {% block content %}{% endblock %}
+</body>
 </html>
