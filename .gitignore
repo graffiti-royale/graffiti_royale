@@ -3,6 +3,7 @@
 
 ### Browserify ###
 node_modules
+bundle.js
 
 ### Django ###
 *.vscode
