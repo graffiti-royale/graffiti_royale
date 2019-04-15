@@ -135,5 +135,13 @@ ACCOUNT_ACTIVATION_DAYS = 7
 LOGIN_REDIRECT_URL = '/'
 
 ASGI_APPLICATION = "graffiti_royale.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 django_heroku.settings(locals())

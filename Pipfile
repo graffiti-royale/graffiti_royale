@@ -13,6 +13,7 @@ django-registration-redux = "*"
 django-heroku = "*"
 gunicorn = "*"
 channels = "*"
+channels-redis = "*"
 
 [requires]
 python_version = "3.7"
