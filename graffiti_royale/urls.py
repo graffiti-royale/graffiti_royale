@@ -22,7 +22,9 @@ from core import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.default.urls')),
-    path('', views.homepage, name='homepage')
+    path('', views.homepage, name='homepage'),
+    path('play', views.play, name='play'),
+    path('tutorial', views.tutorial, name='tutorial'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
