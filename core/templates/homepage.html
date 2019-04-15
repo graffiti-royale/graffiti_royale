@@ -1,9 +1,10 @@
-{% extends 'base.html' %}
 
+{% extends 'base.html' %}
+{% load static %}
 {% block title %}Graffiti Royale{% endblock %}
 
 {% block content %}
 <center><a class="head-link" href="{% url 'play' %}"><div class="avenir nav-option play f-subheadline lh-title hvr-bob hvr-glow">PLAY</div></a><br></center>
-<center><a class="head-link" href="{% url '' %}"><div class="avenir nav-option modes f-subheadline lh-title hvr-bob hvr-glow">PROFiLE</div></a><br></center>
+<center><a class="head-link" href=""><div class="avenir nav-option modes f-subheadline lh-title hvr-bob hvr-glow">PROFiLE</div></a><br></center>
 <center><a class="head-link" href="{% url 'tutorial' %}"><div class="avenir nav-option tutorial f-subheadline lh-title hvr-bob hvr-glow">TUTORiAL</div></a><br></center>
 {% endblock %}
