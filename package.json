@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "devDependencies": {
+    "browserify": "^16.2.3"
+  }
+}
