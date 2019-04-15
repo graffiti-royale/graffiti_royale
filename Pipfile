@@ -12,6 +12,7 @@ psycopg2 = "*"
 django-registration-redux = "*"
 django-heroku = "*"
 gunicorn = "*"
+channels = "*"
 
 [requires]
 python_version = "3.7"
