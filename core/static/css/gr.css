@@ -30,6 +30,13 @@ body {
     justify-content: center;
     align-items: center;
     font-size:130px;
+    text-decoration: none;
+    color: black;
+}
+
+.logo:visited {
+    text-decoration: none;
+    color:black
 }
 
 .footer {
