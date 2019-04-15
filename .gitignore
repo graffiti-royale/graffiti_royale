@@ -2,7 +2,7 @@
 # Edit at https://www.gitignore.io/?templates=django
 
 ### Browserify ###
-node_modules
+node_modules.1
 bundle.js
 
 ### Django ###
