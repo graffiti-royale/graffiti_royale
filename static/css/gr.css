@@ -13,10 +13,10 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 4rem 4rem;
-    color: black;
-    background-color: #ffffff;
+    color: white;
+    background-color: rgb(0, 0, 0);
     font-style: italic;
-    border-bottom: .2rem solid black;
+    /* border-bottom: .2rem solid black; */
     /* border-radius:0px 0px 30px 30px; */
     /* height: 1rem; */
 }
@@ -26,17 +26,17 @@ body {
     height: 3rem;
     font-family: 'Londrina Sketch', cursive;
     /* font-family: 'Plaster', cursive; */
-    text-shadow: -.75px 0 black, 0 .75px black, .75px 0 black, 0 -.75px black;
+    text-shadow: -.75px 0 white, 0 .75px white, .75px 0 white, 0 -.75px white;
     justify-content: center;
     align-items: center;
     font-size:130px;
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 .logo:visited {
     text-decoration: none;
-    color:black
+    color:white;
 }
 
 .footer {
@@ -44,11 +44,10 @@ body {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: white;
+    background-color: black;
     text-align: center;
-    height: 4.8rem;
+    height: 4rem;
     border-top: .2rem solid black;
-    /* border-radius:100px 100px 0px 0px; */
   }
 
 /* .fa-spray-can {
@@ -56,7 +55,7 @@ body {
 } */
 
 .head-link {
-    color: rgb(0, 0, 0);
+    color: white;
     text-decoration: none;
     flex: auto;
     font-weight: bold;
@@ -64,21 +63,52 @@ body {
 }
 
 .head-link:hover {
-    color: black;
+    color: white;
     text-decoration: none;
+}
+
+input {
+    text-align: center;
+    height: 4rem;
+    margin-right: .5rem;
+    border-radius: 3rem;
+    border: 3px solid black;
+    caret-color:rgb(255, 0, 132);
+}
+
+.login-button {
+    text-align: center;
+    height: 4rem;
+    width:8rem;
+    margin-right: .5rem;
+    border-radius: 3rem;
+    border: 3px solid black;
+    color: white;
+    caret-color:rgb(255, 0, 132);
+    background-color:rgb(0, 179, 255);
+}
+
+.login-button:hover {
+    text-align: center;
+    height: 4rem;
+    margin-right: .5rem;
+    border-radius: 3rem;
+    border: 3px solid black;
+    caret-color:rgb(255, 0, 132);
+    background-color:rgb(255, 0, 132);
 }
 
 .play {
     background-image: linear-gradient(to right, #18fbff, rgb(0, 123, 255));
     border-style: solid;
-    border-width: .2rem;
+    border-width: .3rem;
     border-color: black;
     color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    text-shadow: -1.2px 0 black, 0 1.2px black, 1.2px 0 black, 0 -1.2px black;
     font-family: 'Londrina Solid', cursive;
     border-radius: 100px;
-    width:420px;
-    height:100px;
+    width:440px;
+    height:110px;
     font-size: 3.9rem;
     display: flex;
     justify-content: center;
@@ -91,7 +121,7 @@ body {
 
 .play:hover {
     color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    text-shadow: -1.2px 0 black, 0 1.2px black, 1.2px 0 black, 0 -1.2px black;
     font-family: 'Londrina Solid', cursive;
     font-style: italic;
     /* background-image: white; */
@@ -101,14 +131,14 @@ body {
 .modes {
     background-image: linear-gradient(to right, #ff4797, rgb(255, 0, 17));
     border-style: solid;
-    border-width: .2rem;
+    border-width: .3rem;
     border-color: black;
     color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    text-shadow: -1.2px 0 black, 0 1.2px black, 1.2px 0 black, 0 -1.2px black;
     font-family: 'Londrina Solid', cursive;
     border-radius: 100px;
-    width:420px;
-    height:100px;
+    width:440px;
+    height:110px;
     font-size: 3.9rem;
     display: flex;
     justify-content: center;
@@ -121,7 +151,7 @@ body {
 
 .modes:hover {
     color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    text-shadow: -1.2px 0 black, 0 1.2px black, 1.2px 0 black, 0 -1.2px black;
     font-family: 'Londrina Solid', cursive;
     font-style: italic;
     /* background-color: white; */
@@ -130,14 +160,14 @@ body {
 .tutorial {
     background-image: linear-gradient(to right, rgb(255, 247, 0), #85ff1b);
     border-style: solid;
-    border-width: .2rem;
+    border-width: .3rem;
     border-color: black;
     color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    text-shadow: -1.2px 0 black, 0 1.2px black, 1.2px 0 black, 0 -1.2px black;
     font-family: 'Londrina Solid', cursive;
     border-radius: 100px;
-    width:420px;
-    height:100px;
+    width:440px;
+    height:110px;
     font-size: 3.9rem;
     display: flex;
     justify-content: center;
@@ -150,7 +180,7 @@ body {
 
 .tutorial:hover {
     color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    text-shadow: -1.2px 0 black, 0 1.2px black, 1.2px 0 black, 0 -1.2px black;
     font-family: 'Londrina Solid', cursive;
     font-style: italic;
     /* background-color: white; */
@@ -168,6 +198,27 @@ body {
     text-align: center;
     border: 2px solid black;
     box-shadow: -2px 5px 5px 1px rgb(158, 158, 158);
-    width: 320px;
+    width: 600px;
+    height: 400px;
     padding: 2rem;
+    background-color:white;
+    font-family: 'Londrina Solid', cursive;
+    font-size: 30px;
+    border-radius: 100px;
+    text-decoration: none;
+}
+
+.login-link {
+    text-decoration: none;
+    color:rgb(0, 179, 255);
+}
+
+.login-link:visited {
+    text-decoration: none;
+    color:rgb(0, 179, 255);
+}
+
+.login-link:hover {
+    text-decoration: none;
+    color:rgb(255, 0, 132);
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{% block title %}GRAFFiTi ROYALE{% endblock %}</title>
+        <title>{% block title %}Graffiti Royale{% endblock %}</title>
         {% block meta %}
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,11 +21,11 @@
     <body>
         <header>
             <div class="banner">
-                <i class="fas fa-spray-can fa-4x dim hvr-buzz-out"></i><a href="{% url 'homepage' %}" class="logo"><div><p>GRAFFiTi ROYALE</p></div></a>
+             <a href="{% url 'homepage' %}" class="logo dim"><div><p>GRAFFiTi ROYALE</p></div></a>
                  <div>
-                    <span><a class="login head-link avenir b dim f2 lh-copy" href="{% url 'auth_login'%}?next={{request.path}}"><i class="fa fa-user fa-1x"></i>&nbspLOGiN</a></span>
+                    <span><a class="login head-link avenir b dim f2 lh-copy" href="{% url 'auth_login'%}?next={{request.path}}"><i class="fa fa-spray-can fa-1x hvr-buzz-out"></i>&nbspLOGiN</a></span>
                 </div>   
-            </div><br><br><br>
+            </div><br><br><br><br>
         </header>
         <div class="footer"> </div>
     {% block content %}{% endblock %}
