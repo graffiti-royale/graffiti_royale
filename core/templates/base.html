@@ -16,34 +16,17 @@
         
     {% block meta %}{% endblock %}
     </head>
+    {% load static %}
     <body>
         <header>
             <div class="banner">
-                <i class="fas fa-spray-can fa-4x dim hvr-buzz-out"></i><div class="logo"><p class="">GRAFFiTi ROYALE</p></div>
-               
-                <!-- <div>
-                    <i class="fa fa-user fa-2x"></i><span>
-                        <a class="username avernir b dim f3 lh-copy" href="{% url 'profile_page' username=user.username %}">
-                        
-                        </a><a class="f3 lh-copy">|</a>
-                    </span>
-                    <a class="head-link avenir b dim f3 lh-copy" href="{% url 'auth_logout'%}?next={{request.path}}">  Logout</a>
-                </div>   
-                -->
+                <i class="fas fa-spray-can fa-4x dim hvr-buzz-out"></i><a href="{% url 'homepage' %}" class="logo"><div><p>GRAFFiTi ROYALE</p></div></a>
                  <div>
-                    
-                    <span><a class="login head-link avenir b dim f2 lh-copy" href="{% url 'auth_login'%}?next={{request.path}}"><i class="fa fa-user fa-1x"></i>&nbspLOGiN</a></span>
+                    <span><a class="login head-link avenir b dim f2 lh-copy" href="{% url ''%}?next={{request.path}}"><i class="fa fa-user fa-1x"></i>&nbspLOGiN</a></span>
                 </div>   
-        
             </div><br><br><br>
-           
-                <center><a class="head-link" href="{% url 'index' %}"><div class="avenir nav-option play f-subheadline lh-title hvr-bob hvr-glow">PLAY</div></a><br></center>
-                <center><a class="head-link" href="{% url 'create' %}"><div class="avenir nav-option modes f-subheadline lh-title hvr-bob hvr-glow">PROFiLE</div></a><br></center>
-                <center><a class="head-link" href="{% url 'random_play' %}"><div class="avenir nav-option tutorial f-subheadline lh-title hvr-bob hvr-glow">TUTORiAL</div></a><br></center>
         </header>
-
         <div class="footer"> </div>
-
     {% block content %}{% endblock %}
 </body>
 </html>
