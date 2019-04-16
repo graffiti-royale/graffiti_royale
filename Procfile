@@ -1,2 +1,1 @@
-web: daphne -b 0.0.0.0 -p 8001 graffiti_royale.asgi:application
-web: python manage.py runworker channels
+web: daphne graffiti_royale.asgi:application --port $PORT --bind 0.0.0.0
