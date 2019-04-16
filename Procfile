@@ -1,1 +1,1 @@
-web: gunicorn graffiti_royale.wsgi
+web: daphne myproject.asgi:application
