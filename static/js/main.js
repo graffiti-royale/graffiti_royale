@@ -6,7 +6,7 @@ const clickDrag = []
 let paint
 let room = document.URL.split('/')[3]
 console.log(room)
-let drawSocket = new WebSocket(`wss://${window.location.host}/ws/draw/${room}/`)
+let drawSocket = new WebSocket(`ws://${window.location.host}/ws/draw/${room}/`)
 let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C', 'ble']
 colorsArray = colorsArray[Math.floor(Math.random() * colorsArray.length)]
 
@@ -28,8 +28,7 @@ canvas.addEventListener('mousedown', function (e) {
   drawSocket.send(JSON.stringify({
     'X': mouseX,
     'Y': mouseY,
-    'color': colorsArray,
-    'test': 'b'
+    'color': colorsArray
   }))
   paint = true
   addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop)
@@ -41,8 +40,7 @@ canvas.addEventListener('mousemove', function (e) {
     drawSocket.send(JSON.stringify({
       'X': e.pageX - this.offsetLeft,
       'Y': e.pageY - this.offsetTop,
-      'color': colorsArray,
-      'test': 'b'
+      'color': colorsArray
     }))
     addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true)
     redraw(colorsArray)
