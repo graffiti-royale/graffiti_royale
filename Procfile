@@ -1,1 +1,1 @@
-web: daphne myproject.asgi:application
+web: daphne graffiti_royale.asgi:application
