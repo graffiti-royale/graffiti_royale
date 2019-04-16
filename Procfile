@@ -1,1 +1,1 @@
-web: daphne graffiti_royale.asgi:application --port $port --bind 0.0.0.0
+web: daphne -b 0.0.0.0 -p 8001 graffiti_royale.asgi:application
