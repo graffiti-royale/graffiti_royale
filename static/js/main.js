@@ -6,16 +6,20 @@ const clickDrag = []
 let paint
 let room = document.URL.split('/')[3]
 console.log(room)
-let drawSocket = new WebSocket(`wss://sleepy-earth-87641.herokuapp.com/ws/draw/${room}/`)
-let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C']
+let drawSocket = new WebSocket(`wss://${window.location.host}/ws/draw/${room}/`)
+let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C', 'ble']
 colorsArray = colorsArray[Math.floor(Math.random() * colorsArray.length)]
+
+let username = document.querySelector('.username').dataset.username
 
 drawSocket.onmessage = function (e) {
   let data = JSON.parse(e.data)
+  console.log(data)
   let X = data['X']
   let Y = data['Y']
+  let color = data['color']
   addClick(X, Y, true)
-  redraw()
+  redraw(color)
 }
 
 canvas.addEventListener('mousedown', function (e) {
@@ -23,21 +27,25 @@ canvas.addEventListener('mousedown', function (e) {
   let mouseY = e.pageY - canvas.offsetTop
   drawSocket.send(JSON.stringify({
     'X': mouseX,
-    'Y': mouseY
+    'Y': mouseY,
+    'color': colorsArray,
+    'test': 'b'
   }))
   paint = true
   addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop)
-  redraw()
+  redraw(colorsArray)
 })
 
 canvas.addEventListener('mousemove', function (e) {
   if (paint) {
     drawSocket.send(JSON.stringify({
       'X': e.pageX - this.offsetLeft,
-      'Y': e.pageY - this.offsetTop
+      'Y': e.pageY - this.offsetTop,
+      'color': colorsArray,
+      'test': 'b'
     }))
     addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true)
-    redraw()
+    redraw(colorsArray)
   }
 })
 
@@ -55,10 +63,10 @@ function addClick (x, y, dragging) {
   clickDrag.push(dragging)
 }
 
-function redraw () {
+function redraw (color) {
   context.clearRect(0, 0, context.canvas.width, context.canvas.height)
 
-  context.strokeStyle = colorsArray
+  context.strokeStyle = color
   context.lineJoin = 'round'
   context.lineWidth = 5
 
