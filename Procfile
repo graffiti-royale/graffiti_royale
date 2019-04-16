@@ -1,1 +1,1 @@
-web: gunicorn graffiti_royale.wsgi
+web: daphne graffiti_royale.asgi:application --port $PORT --bind 0.0.0.0
