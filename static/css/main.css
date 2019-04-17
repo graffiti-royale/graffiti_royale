@@ -81,7 +81,7 @@ body {
     color: white;
     text-shadow: -1.1px 0 black, 0 1.1px black, 1.1px 0 black, 0 -1.1px black;
     font-family: 'Londrina Solid', cursive;
-    border-radius: 100px;
+    border-radius: 50px 100px 50px 100px;
     height:100px;
     font-size: 3.9rem;
     display: flex;
@@ -114,7 +114,7 @@ body {
     color: white;
     text-shadow: -1.1px 0 black, 0 1.1px black, 1.1px 0 black, 0 -1.1px black;
     font-family: 'Londrina Solid', cursive;
-    border-radius: 100px;
+    border-radius: 50px 100px 50px 100px;
     height:100px;
     font-size: 3.9rem;
     display: flex;
@@ -147,7 +147,7 @@ body {
     color: white;
     text-shadow: -1.1px 0 black, 0 1.1px black, 1.1px 0 black, 0 -1.1px black;
     font-family: 'Londrina Solid', cursive;
-    border-radius: 100px;
+    border-radius: 50px 100px 50px 100px;
     height:100px;
     font-size: 3.9rem;
     display: flex;
@@ -168,6 +168,23 @@ body {
     cursor: pointer;
 }
 
+input {
+    text-align: center;
+    height: 4rem;
+    margin-right: .5rem;
+    margin-top: 1rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    caret-color:rgb(255, 0, 17);
+    color: rgb(255, 0, 17);
+    background-color : white;
+}
+
+input:focus {
+    outline: none;
+    background-color : white;
+}
+
 .login {
     font-family: 'Londrina Solid', cursive;
     font-style: normal;
@@ -184,7 +201,7 @@ body {
     font-size: 30px;
     border-radius: 30px;
     text-decoration: none;
-    margin: 60px 30px 40px 30px;
+    margin: 60px 30px 60px 30px;
     min-width:300px;
     max-width:700px;
     min-height: 400px;
@@ -206,21 +223,6 @@ body {
     color:rgb(255, 0, 17);
 }
 
-input {
-    text-align: center;
-    height: 4rem;
-    margin-right: .5rem;
-    margin-top: 1rem;
-    border-radius: 3rem;
-    border: .2rem solid black;
-    caret-color:rgb(255, 0, 17);
-    color: rgb(255, 0, 17);
-}
-
-input:focus {
-    outline: none;
-}
-
 .login-button {
     text-align: center;
     height: 4.3rem;
@@ -231,10 +233,87 @@ input:focus {
     color: white;
     caret-color:rgb(255, 0, 132);
     background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
-
 }
 
 .login-button:hover {
+    text-align: center;
+    margin-right: .5rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    caret-color:rgb(255, 0, 132);
+    background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
+}
+
+.reset-form {
+    margin: auto;
+    text-align: center;
+    border: .2rem solid black;
+    box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
+    padding: 2rem;
+    background-color:white;
+    font-family: 'Londrina Solid', cursive;
+    font-size: 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    margin: 60px 30px 60px 30px;
+    min-width:300px;
+    max-width:800px;
+    min-height: 350px;
+    max-height: 900px;
+}
+
+.reset-button {
+    text-align: center;
+    height: 4.3rem;
+    width:17rem;
+    margin-right: .5rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    color: white;
+    caret-color:rgb(255, 0, 132);
+    background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
+}
+
+.reset-button:hover {
+    text-align: center;
+    margin-right: .5rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    caret-color:rgb(255, 0, 132);
+    background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
+}
+
+.registration-form {
+    margin: auto;
+    text-align: center;
+    border: .2rem solid black;
+    box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
+    padding: 2rem;
+    background-color:white;
+    font-family: 'Londrina Solid', cursive;
+    font-size: 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    margin: 60px 30px 60px 30px;
+    min-width:300px;
+    max-width:800px;
+    min-height: 300px;
+    max-height: 1400px;
+}
+
+.registration-button {
+    text-align: center;
+    height: 4.3rem;
+    width:17rem;
+    margin-right: .5rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    color: white;
+    caret-color:rgb(255, 0, 132);
+    background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
+}
+
+.registration-button:hover {
     text-align: center;
     margin-right: .5rem;
     border-radius: 3rem;
@@ -289,8 +368,8 @@ input:focus {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background: linear-gradient(
-        rgba(255, 255, 255, 0.893), 
-        rgba(255, 255, 255, 0.893)),
+        rgba(255, 255, 255, 0.783), 
+        rgba(255, 255, 255, 0.783)),
         url("https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg");
 }
 

@@ -2,12 +2,14 @@
 {% load i18n %}
 
 {% block content %}
-<h3>Register for an Account</h3>
+<center><div class="registration-form">
+<h2>Register for an Account</h2><br>
 <form method="post" action="">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="{% trans 'Submit' %}" />
+    <br><input type="submit" class="registration-button" value="{% trans 'SUBMiT' %}" />
 </form>
+</div></center>
 {% endblock %}
 
 
