@@ -212,7 +212,6 @@ input {
     background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
 }
 
-<<<<<<< HEAD
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -250,7 +249,6 @@ input {
     text-decoration: none;
     cursor: pointer;
   }
-=======
 .playfield {
     background-position: left;
     background-repeat: no-repeat;
@@ -262,4 +260,3 @@ input {
 }
 
 .crosshair { cursor: crosshair; }
->>>>>>> master
