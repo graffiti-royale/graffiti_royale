@@ -82,4 +82,3 @@ class PlayConsumer(WebsocketConsumer):
             'path': path,
             'color': color
         }))
-    
