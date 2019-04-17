@@ -20,8 +20,8 @@ body {
     font-style: italic;
     border-bottom: .2rem solid black;
     /* border-radius:0px 0px 30px 30px; */
+    /* box-shadow: -2px 3px 3px 1px rgb(159, 159, 159); */
     /* height: 1rem; */
-
 }
 
 .logo {
@@ -211,3 +211,15 @@ input {
     caret-color:rgb(255, 0, 132);
     background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
 }
+
+.playfield {
+    background-position: left;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.893), 
+        rgba(255, 255, 255, 0.893)),
+        url("https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg");
+}
+
+.crosshair { cursor: crosshair; }
