@@ -4,10 +4,9 @@
 {% block title %}Graffiti Royale{% endblock %}
 
 {% block content %}
-<body id="homePage">
-<center><a class="head-link" href="{% url 'play' %}"><div class="avenir nav-option play f-subheadline lh-title hvr-bob hvr-glow"><i class="fas fa-spray-can"></i>&nbsp&nbspPLAY</div></a><br></center>
-<center><a class="head-link" href=""><div class="avenir nav-option profile f-subheadline lh-title hvr-bob hvr-glow"><i class="fas fa-address-card"></i>&nbsp&nbspPROFiLE</div></a><br></center>
-<center><a class="head-link tutorial-button" ><div class="avenir nav-option tutorial f-subheadline lh-title hvr-bob hvr-glow"><i class="fas fa-scroll"></i>&nbsp&nbspTUTORiAL</div></a><br></center>
+<center><a class="play-link" href="{% url 'play' %}"><div class="play hvr-bob hvr-glow"><i class="fas fa-spray-can"></i>&nbspPLAY</div></a></center>
+<center><a class="profile-link" href=""><div class="profile hvr-bob hvr-glow"><i class="fas fa-address-card"></i>&nbspPROFiLE</div></a></center>
+<center><a class="tutorial-link tutorial-button"><div class="tutorial hvr-bob hvr-glow"><i class="fas fa-scroll"></i>&nbspTUTORiAL</div></a></center>
 
 <div id="myModal" class="modal">
   <!-- Modal content -->
