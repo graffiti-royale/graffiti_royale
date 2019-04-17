@@ -5,18 +5,18 @@ let myPath = []
 let room = document.URL.split('/')[3]
 let drawSocket = new WebSocket(`ws://${window.location.host}/ws/draw/${room}/`)
 
-let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C']
+let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C', '#13d9f3', '#f313f3', '#f3ef13']
 color = colorsArray[Math.floor(Math.random() * colorsArray.length)]
 
 let username = document.querySelector('.username').dataset.username
 
 drawSocket.onmessage = function (e) {
   let data = JSON.parse(e.data)
-  context.strokeStyle = data['color'];
+  context.strokeStyle = data['color']
   context.shadowBlur = 4
-  context.shadowColor = color
-  context.lineJoin = "round";
-  context.lineWidth = 5;
+  context.shadowColor = data['color']
+  context.lineJoin = "round"
+  context.lineWidth = 5
   context.beginPath()
   context.moveTo(data['path'][0][0], data['path'][0][1])
   context.lineTo(data['path'][1][0], data['path'][1][1])
