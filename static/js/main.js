@@ -16,7 +16,7 @@ drawSocket.onmessage = function (e) {
   context.strokeStyle = data['color']
   context.shadowBlur = 4
   context.shadowColor = data['color']
-  context.lineJoin = "round"
+  context.lineJoin = 'round'
   context.lineWidth = 5
   context.beginPath()
   context.moveTo(data['path'][0][0], data['path'][0][1])
@@ -24,24 +24,24 @@ drawSocket.onmessage = function (e) {
   context.stroke()
 }
 
-canvas.addEventListener('mousedown', function(event) {
-  var mouseX = event.pageX - this.offsetLeft;
-  var mouseY = event.pageY - this.offsetTop;
+canvas.addEventListener('mousedown', function (event) {
+  var mouseX = event.pageX - this.offsetLeft
+  var mouseY = event.pageY - this.offsetTop
   paint = true
   myPath.push([mouseX, mouseY])
 })
 
-canvas.addEventListener('mouseup', function(event) {
+canvas.addEventListener('mouseup', function (event) {
   paint = false
   myPath = []
 })
 
-canvas.addEventListener('mouseleave', function(event) {
+canvas.addEventListener('mouseleave', function (event) {
   paint = false
   myPath = []
 })
 
-canvas.addEventListener('mousemove', function(event) {
+canvas.addEventListener('mousemove', function (event) {
   if (paint) {
     myPath.push([event.pageX - this.offsetLeft, event.pageY - this.offsetTop])
     drawSocket.send(JSON.stringify({
@@ -51,7 +51,7 @@ canvas.addEventListener('mousemove', function(event) {
     context.strokeStyle = color
     context.shadowBlur = 4
     context.shadowColor = color
-    context.lineCap = "round"
+    context.lineCap = 'round'
     context.lineWidth = 5
     context.beginPath()
     context.moveTo(myPath[0][0], myPath[0][1])
