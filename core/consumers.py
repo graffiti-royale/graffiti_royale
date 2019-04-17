@@ -1,6 +1,7 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 import json
+from .models import Room
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
@@ -82,4 +83,3 @@ class PlayConsumer(WebsocketConsumer):
             'path': path,
             'color': color
         }))
-    
