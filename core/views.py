@@ -11,7 +11,7 @@ def tutorial(request):
     return render(request, 'tutorial.html', context={})
 
 def play(request):
-    return render(request, 'play.html', context = {})
+    return render(request, 'play.html', context = {"user": request.user})
     
 def index(request):
     return render(request, 'chat/index.html', {})

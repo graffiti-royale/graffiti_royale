@@ -60,26 +60,26 @@ class PlayConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        X = text_data_json['X']
-        Y = text_data_json['Y']
+        path = text_data_json['path']
+        color = text_data_json['color']
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
                 'type': 'coord',
-                'X': X,
-                'Y': Y
+                'path': path,
+                'color': color
             }
         )
 
     def coord(self, event):
-        X = event['X']
-        Y = event['Y']
+        path = event['path']
+        color = event['color']
 
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'X': X,
-            'Y': Y
+            'path': path,
+            'color': color
         }))
     

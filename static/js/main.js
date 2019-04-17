@@ -1,79 +1,64 @@
 const canvas = document.querySelector('canvas')
 context = canvas.getContext('2d')
-const clickX = []
-const clickY = []
-const clickDrag = []
 let paint
+let myPath = []
 let room = document.URL.split('/')[3]
-console.log(room)
-let drawSocket = new WebSocket(`wss://sleepy-earth-87641.herokuapp.com/ws/draw/${room}/`)
+let drawSocket = new WebSocket(`ws://${window.location.host}/ws/draw/${room}/`)
+
 let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C']
-colorsArray = colorsArray[Math.floor(Math.random() * colorsArray.length)]
+color = colorsArray[Math.floor(Math.random() * colorsArray.length)]
+
+let username = document.querySelector('.username').dataset.username
 
 drawSocket.onmessage = function (e) {
   let data = JSON.parse(e.data)
-  let X = data['X']
-  let Y = data['Y']
-  addClick(X, Y, true)
-  redraw()
+  context.strokeStyle = data['color'];
+  context.shadowBlur = 4
+  context.shadowColor = color
+  context.lineJoin = "round";
+  context.lineWidth = 5;
+  context.beginPath()
+  context.moveTo(data['path'][0][0], data['path'][0][1])
+  context.lineTo(data['path'][1][0], data['path'][1][1])
+  context.stroke()
 }
 
-canvas.addEventListener('mousedown', function (e) {
-  let mouseX = e.pageX - canvas.offsetLeft
-  let mouseY = e.pageY - canvas.offsetTop
-  drawSocket.send(JSON.stringify({
-    'X': mouseX,
-    'Y': mouseY
-  }))
+canvas.addEventListener('mousedown', function(event) {
+  var mouseX = event.pageX - this.offsetLeft;
+  var mouseY = event.pageY - this.offsetTop;
   paint = true
-  addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop)
-  redraw()
+  myPath.push([mouseX, mouseY])
 })
 
-canvas.addEventListener('mousemove', function (e) {
+canvas.addEventListener('mouseup', function(event) {
+  paint = false
+  myPath = []
+})
+
+canvas.addEventListener('mouseleave', function(event) {
+  paint = false
+  myPath = []
+})
+
+canvas.addEventListener('mousemove', function(event) {
   if (paint) {
+    myPath.push([event.pageX - this.offsetLeft, event.pageY - this.offsetTop])
     drawSocket.send(JSON.stringify({
-      'X': e.pageX - this.offsetLeft,
-      'Y': e.pageY - this.offsetTop
+      'path': myPath,
+      'color': color
     }))
-    addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true)
-    redraw()
-  }
-})
-
-canvas.addEventListener('mouseup', function () {
-  paint = false
-})
-
-canvas.addEventListener('mouseleave', function () {
-  paint = false
-})
-
-function addClick (x, y, dragging) {
-  clickX.push(x)
-  clickY.push(y)
-  clickDrag.push(dragging)
-}
-
-function redraw () {
-  context.clearRect(0, 0, context.canvas.width, context.canvas.height)
-
-  context.strokeStyle = colorsArray
-  context.lineJoin = 'round'
-  context.lineWidth = 5
-
-  for (var i = 0; i < clickX.length; i++) {
+    context.strokeStyle = color;
+    context.shadowBlur = 4
+    context.shadowColor = color
+    context.lineJoin = "round";
+    context.lineWidth = 5;
     context.beginPath()
-    if (clickDrag[i] && i) {
-      context.moveTo(clickX[i - 1], clickY[i - 1])
-    } else {
-      context.moveTo(clickX[i] - 1, clickY[i])
-    }
-    context.lineTo(clickX[i], clickY[i])
-    context.closePath()
+    context.moveTo(myPath[0][0], myPath[0][1])
+    context.lineTo(myPath[1][0], myPath[1][1])
     context.stroke()
+    myPath.shift()
   }
-}
+})
 
 module.exports = {
 }
