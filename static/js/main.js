@@ -47,11 +47,11 @@ canvas.addEventListener('mousemove', function(event) {
       'path': myPath,
       'color': color
     }))
-    context.strokeStyle = color;
+    context.strokeStyle = color
     context.shadowBlur = 4
     context.shadowColor = color
-    context.lineJoin = "round";
-    context.lineWidth = 5;
+    context.lineCap = "round"
+    context.lineWidth = 5
     context.beginPath()
     context.moveTo(myPath[0][0], myPath[0][1])
     context.lineTo(myPath[1][0], myPath[1][1])
