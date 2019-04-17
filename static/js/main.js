@@ -9,6 +9,17 @@ color = colorsArray[Math.floor(Math.random() * colorsArray.length)]
 
 let username = document.querySelector('.username').dataset.username
 
+drawSocket.onmessage = function (e) {
+  let data = JSON.parse(e.data)
+  context.strokeStyle = data['color'];
+  context.lineJoin = "round";
+  context.lineWidth = 5;
+  context.beginPath()
+  context.moveTo(data['path'][0][0], data['path'][0][1])
+  context.lineTo(data['path'][1][0], data['path'][1][1])
+  context.stroke()
+}
+
 canvas.addEventListener('mousedown', function(event) {
   var mouseX = event.pageX - this.offsetLeft;
   var mouseY = event.pageY - this.offsetTop;
