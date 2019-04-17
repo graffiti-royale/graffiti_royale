@@ -100,11 +100,16 @@ class UsersConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
+        enter = text_data_json['enter']
+        print(enter)
         username = text_data_json['username']
         user = User.objects.get(username=username)
         room, _ = Room.objects.get_or_create(name=self.room_name)
-        room.users.add(user)
-        users = [user.username for user in room.users.all()]
+        if enter:
+            room.users.add(user)
+        else:
+            room.users.remove(user)
+        users = [[user.username] for user in room.users.all()]
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
@@ -115,7 +120,7 @@ class UsersConsumer(WebsocketConsumer):
             }
         )
 
-    def coord(self, event):
+    def send_users(self, event):
         users = event['users']
 
         # Send message to WebSocket

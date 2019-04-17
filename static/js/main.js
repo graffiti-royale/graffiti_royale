@@ -13,17 +13,28 @@ color = colorsArray[Math.floor(Math.random() * colorsArray.length)]
 let username = document.querySelector('.username').dataset.username
 let users = [username]
 
-usersSocket.onopen(function(event) {
-  drawSocket.send(JSON.stringify({
-    'username': username
+usersSocket.onopen = function(event) {
+  console.log(username)
+  usersSocket.send(JSON.stringify({
+    'username': username,
+    'enter': true
   }))
   console.log('WebSocket connection successful.')
-})
+}
 
-usersSocket.onmessage(function(event) {
+usersSocket.onmessage = function(event) {
   let data = JSON.parse(event.data)
   users = data['users']
-  console.log('Users updated.')
+  console.log(`Users updated.: ${users}`)
+}
+
+window.addEventListener('beforeunload', function(){
+  console.log('closing!')
+  usersSocket.send(JSON.stringify({
+    'username': username,
+    'enter': false
+  }))
+  usersSocket.close()
 })
 
 drawSocket.onmessage = function (event) {
@@ -75,6 +86,5 @@ canvas.addEventListener('mousemove', function(event) {
     myPath.shift()
   }
 })
-
 module.exports = {
 }
