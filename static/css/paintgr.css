@@ -1,0 +1,224 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    background-image: url("https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg");
+    background-position: left;
+}
+
+.banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4rem 4rem;
+    color: black;
+    background-color: #ffffff;
+    font-style: italic;
+    border-bottom: .2rem solid black;
+    /* border-radius:0px 0px 30px 30px; */
+    /* height: 1rem; */
+
+}
+
+.logo {
+    display: flex;
+    height: 3rem;
+    font-family: 'Londrina Sketch', cursive;
+    text-shadow: -.75px 0 black, 0 .75px black, .75px 0 black, 0 -.75px black;
+    justify-content: center;
+    align-items: center;
+    font-size:130px;
+    text-decoration: none;
+    color: black;
+}
+
+.logo:visited {
+    text-decoration: none;
+    color:black;
+}
+
+/* .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    text-align: center;
+    height: 4.8rem;
+    border-top: .2rem solid black;
+} */
+
+.head-link {
+    color: black;
+    text-decoration: none;
+    flex: auto;
+    font-weight: bold;
+    justify-content: space-between;
+}
+
+.head-link:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.play {
+    background-image: url("https://www.onlygfx.com/wp-content/uploads/2016/10/spray-paint-banner-9.png");
+    background-repeat: no-repeat;
+    background-size: 440px 170px;
+    background-position: left;
+    /* background-image: linear-gradient(to right, #18fbff, rgb(0, 123, 255)); */
+    /* border-style: solid;
+    border-width: .2rem;
+    border-color: black; */
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-family: 'Londrina Solid', cursive;
+    /* border-radius: 100px; */
+    width:450px;
+    height:140px;
+    font-size: 3.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    /* box-shadow: -2px 3px 3px 1px rgb(159, 159, 159); */
+}
+
+.play:hover {
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-family: 'Londrina Solid', cursive;
+    font-style: italic;
+}
+
+.profile {
+    background-image: url("https://www.onlygfx.com/wp-content/uploads/2016/10/spray-paint-banner-2.png");
+    
+    background-repeat: no-repeat;
+    background-size: 430px 160px;
+    background-position: center;
+    /* background-image: linear-gradient(to right, #ff4797, rgb(255, 0, 17)); */
+    /* border-style: solid;
+    border-width: .2rem;
+    border-color: black; */
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-family: 'Londrina Solid', cursive;
+    /* border-radius: 100px; */
+    width:450px;
+    height:140px;
+    font-size: 3.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    /* box-shadow: -2px 3px 3px 1px rgb(159, 159, 159); */
+
+}
+
+.profile:hover {
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-family: 'Londrina Solid', cursive;
+    font-style: italic;
+}
+
+.tutorial {
+    background-image: url("https://www.onlygfx.com/wp-content/uploads/2016/10/spray-paint-banner-3.png");
+    background-repeat: no-repeat;
+    background-size: 440px 199px;
+    background-position: center;
+    /* background-image: linear-gradient(to right, rgb(255, 247, 0), #85ff1b); */
+    /* border-style: solid;
+    border-width: .2rem;
+    border-color: black; */
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-family: 'Londrina Solid', cursive;
+    /* border-radius: 100px; */
+    width:450px;
+    height:140px;
+    font-size: 3.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    /* box-shadow: -2px 3px 3px 1px rgb(159, 159, 159); */
+
+}
+
+.tutorial:hover {
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-family: 'Londrina Solid', cursive;
+    font-style: italic;
+}
+
+.login {
+    font-family: 'Londrina Solid', cursive;
+    font-style: normal;
+}
+
+.login-form {
+    margin: auto;
+    text-align: center;
+    border: .2rem solid black;
+    box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
+    width: 600px;
+    height: 400px;
+    padding: 2rem;
+    background-color:white;
+    /* background-image: linear-gradient(to right, rgb(255, 247, 0), #85ff1b); */
+    font-family: 'Londrina Solid', cursive;
+    font-size: 30px;
+    border-radius: 100px;
+    text-decoration: none;
+}
+
+.login-link {
+    text-decoration: none;
+    color:rgb(255, 0, 132);
+}
+
+.login-link:visited {
+    text-decoration: none;
+    color:rgb(255, 0, 132);
+}
+
+.login-link:hover {
+    text-decoration: none;
+    color:rgb(0, 123, 255);
+}
+
+input {
+    text-align: center;
+    height: 4rem;
+    margin-right: .5rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    caret-color:rgb(255, 0, 132);
+}
+
+.login-button {
+    text-align: center;
+    height: 4rem;
+    width:12rem;
+    margin-right: .5rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    color: white;
+    caret-color:rgb(255, 0, 132);
+    background-image: linear-gradient(to right, #ff4797, rgb(255, 0, 17));
+}
+
+.login-button:hover {
+    text-align: center;
+    height: 4rem;
+    margin-right: .5rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    caret-color:rgb(255, 0, 132);
+    background-image: linear-gradient(to right, #18fbff, rgb(0, 123, 255));
+}

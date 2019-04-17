@@ -3,7 +3,8 @@ context = canvas.getContext('2d')
 let paint
 let myPath = []
 let room = document.URL.split('/')[3]
-let drawSocket = new WebSocket(`wss://${window.location.host}/ws/draw/${room}/`)
+let drawSocket = new WebSocket(`ws://${window.location.host}/ws/draw/${room}/`)
+
 let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C']
 color = colorsArray[Math.floor(Math.random() * colorsArray.length)]
 
@@ -12,6 +13,8 @@ let username = document.querySelector('.username').dataset.username
 drawSocket.onmessage = function (e) {
   let data = JSON.parse(e.data)
   context.strokeStyle = data['color'];
+  context.shadowBlur = 4
+  context.shadowColor = color
   context.lineJoin = "round";
   context.lineWidth = 5;
   context.beginPath()
@@ -45,6 +48,8 @@ canvas.addEventListener('mousemove', function(event) {
       'color': color
     }))
     context.strokeStyle = color;
+    context.shadowBlur = 4
+    context.shadowColor = color
     context.lineJoin = "round";
     context.lineWidth = 5;
     context.beginPath()
