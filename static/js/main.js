@@ -12,6 +12,8 @@ let username = document.querySelector('.username').dataset.username
 drawSocket.onmessage = function (e) {
   let data = JSON.parse(e.data)
   context.strokeStyle = data['color'];
+  context.shadowBlur = 4
+  context.shadowColor = color
   context.lineJoin = "round";
   context.lineWidth = 5;
   context.beginPath()
@@ -45,6 +47,8 @@ canvas.addEventListener('mousemove', function(event) {
       'color': color
     }))
     context.strokeStyle = color;
+    context.shadowBlur = 4
+    context.shadowColor = color
     context.lineJoin = "round";
     context.lineWidth = 5;
     context.beginPath()
