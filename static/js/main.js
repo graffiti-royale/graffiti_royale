@@ -3,7 +3,7 @@ context = canvas.getContext('2d')
 let paint
 let myPath = []
 let room = document.URL.split('/')[3]
-let drawSocket = new WebSocket(`ws://${window.location.host}/ws/draw/${room}/`)
+let drawSocket = new WebSocket(`wss://${window.location.host}/ws/draw/${room}/`)
 let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C']
 color = colorsArray[Math.floor(Math.random() * colorsArray.length)]
 
