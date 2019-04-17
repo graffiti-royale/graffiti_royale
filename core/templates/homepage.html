@@ -4,7 +4,21 @@
 {% block title %}Graffiti Royale{% endblock %}
 
 {% block content %}
-<center><a class="head-link" href="{% url 'play' %}"><div class="avenir nav-option play f-subheadline lh-title hvr-bob hvr-glow"><i class="fas fa-spray-can"></i>&nbsp&nbspPLAY</div></a><br></center><br>
-<center><a class="head-link" href=""><div class="avenir nav-option profile f-subheadline lh-title hvr-bob hvr-glow"><i class="fas fa-address-card"></i>&nbsp&nbspPROFiLE</div></a><br></center><br>
-<center><a class="head-link" href="{% url 'tutorial' %}"><div class="avenir nav-option tutorial f-subheadline lh-title hvr-bob hvr-glow"><i class="fas fa-chalkboard-teacher"></i>&nbsp&nbspTUTORiAL</div></a><br></center>
+<center><a class="head-link" href="{% url 'play' %}"><div class="avenir nav-option play f-subheadline lh-title hvr-bob hvr-glow">PLAY</div></a><br></center>
+<center><a class="head-link" href=""><div class="avenir nav-option modes f-subheadline lh-title hvr-bob hvr-glow">PROFiLE</div></a><br></center>
+<center><a class="head-link tutorial-button" ><div class="avenir nav-option tutorial f-subheadline lh-title hvr-bob hvr-glow">TUTORiAL</div></a><br></center>
+
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h4 id="headerTitle"> Welcome!</h4>
+    <p id="firstP"></p><br><p id="secondP"></p>
+    <span class="next">>>></span>
+  </div>
+</div>
+
+<script src="{% static 'js/tutorial.js' %}"></script>
 {% endblock %}
+
+
