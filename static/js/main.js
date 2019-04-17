@@ -29,6 +29,10 @@ canvas.addEventListener('mouseleave', function(event) {
 canvas.addEventListener('mousemove', function(event) {
   if (paint) {
     myPath.push([event.pageX - this.offsetLeft, event.pageY - this.offsetTop])
+    drawSocket.send(JSON.stringify({
+      'path': myPath,
+      'color': color
+    }))
     context.strokeStyle = color;
     context.lineJoin = "round";
     context.lineWidth = 5;
