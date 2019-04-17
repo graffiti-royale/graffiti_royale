@@ -1,12 +1,6 @@
 const canvas = document.querySelector('canvas')
 context = canvas.getContext('2d')
 
-var background = new Image();
-background.src = "https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg";
-background.onload = function(){
-  context.drawImage(background, 0, 0);
-}
-
 let paint
 let myPath = []
 let room = document.URL.split('/')[3]
