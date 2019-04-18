@@ -16,7 +16,7 @@ body {
     align-items: center;
     padding: 4rem 4rem;
     color: black;
-    background-color: #ffffff;
+    background-color: white;
     font-style: italic;
     border-bottom: .2rem solid black;
     /* border-radius:0px 0px 30px 30px; */
@@ -64,6 +64,14 @@ body {
     color: black;
     text-decoration: none;
 }
+
+/* .buttons {
+    margin: 0;
+    position: absolute;
+    top: 60%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+} */
 
 .play-link {
     color: black;
@@ -387,5 +395,7 @@ input:focus {
     width: 4000px;
     height:4000px;
   } */
+
+  
 
 
