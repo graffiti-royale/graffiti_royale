@@ -9,10 +9,10 @@ function playPageJavaScript(){
   let usersSocket = new WebSocket(`ws://${window.location.host}/ws/${room}/users`)
 
   let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C', '#13d9f3', '#f313f3', '#f3ef13']
-  color = colorsArray[Math.floor(Math.random() * colorsArray.length)]
+  const color = colorsArray[Math.floor(Math.random() * colorsArray.length)]
 
   let username = document.querySelector('.username').dataset.username
-  let users = [username]
+  let users
 
   usersSocket.onopen = function(event) {
     console.log(username)
@@ -20,13 +20,13 @@ function playPageJavaScript(){
       'username': username,
       'enter': true
     }))
-    console.log('WebSocket connection successful.')
   }
 
   usersSocket.onmessage = function(event) {
     let data = JSON.parse(event.data)
     users = data['users']
-    console.log(`Users updated.: ${users}`)
+    console.log(`Users updated:`)
+    console.log(users)
   }
 
   window.addEventListener('beforeunload', function(){
@@ -40,15 +40,20 @@ function playPageJavaScript(){
 
   drawSocket.onmessage = function (event) {
     let data = JSON.parse(event.data)
-    context.strokeStyle = data['color']
-    context.shadowBlur = 4
-    context.shadowColor = data['color']
-    context.lineJoin = "round"
-    context.lineWidth = 5
-    context.beginPath()
-    context.moveTo(data['path'][0][0], data['path'][0][1])
-    context.lineTo(data['path'][1][0], data['path'][1][1])
-    context.stroke()
+    if (username != data['username']) {
+      context.strokeStyle = data['color']
+      context.shadowBlur = 4
+      context.shadowColor = data['color']
+      context.lineJoin = "round"
+      context.lineWidth = 5
+
+      users[data['username']].push([[data['path'][0][0], data['path'][0][1]],[data['path'][1][0], data['path'][1][1]]])
+      console.log(users[data['username']])
+      context.beginPath()
+      context.moveTo(data['path'][0][0], data['path'][0][1])
+      context.lineTo(data['path'][1][0], data['path'][1][1])
+      context.stroke()
+    }
   }
 
   canvas.addEventListener('mousedown', function(event) {
@@ -73,7 +78,8 @@ function playPageJavaScript(){
       myPath.push([event.pageX - this.offsetLeft, event.pageY - this.offsetTop])
       drawSocket.send(JSON.stringify({
         'path': myPath,
-        'color': color
+        'color': color,
+        'username': username
       }))
       context.strokeStyle = color
       context.shadowBlur = 4

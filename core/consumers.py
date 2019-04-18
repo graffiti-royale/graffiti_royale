@@ -64,6 +64,7 @@ class PlayConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         path = text_data_json['path']
         color = text_data_json['color']
+        username = text_data_json['username']
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
@@ -71,18 +72,21 @@ class PlayConsumer(WebsocketConsumer):
             {
                 'type': 'coord',
                 'path': path,
-                'color': color
+                'color': color,
+                'username': username
             }
         )
 
     def coord(self, event):
         path = event['path']
         color = event['color']
+        username = event['username']
 
         # Send message to WebSocket
         self.send(text_data=json.dumps({
             'path': path,
-            'color': color
+            'color': color,
+            'username': username
         }))
 
 class UsersConsumer(WebsocketConsumer):
@@ -101,7 +105,6 @@ class UsersConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         enter = text_data_json['enter']
-        print(enter)
         username = text_data_json['username']
         user = User.objects.get(username=username)
         room, _ = Room.objects.get_or_create(name=self.room_name)
@@ -109,7 +112,7 @@ class UsersConsumer(WebsocketConsumer):
             room.users.add(user)
         else:
             room.users.remove(user)
-        users = [[user.username] for user in room.users.all()]
+        users = {user.username:[] for user in room.users.all()}
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
