@@ -1,0 +1,21 @@
+{
+    "short_name": "Graffiti",
+    "name": "Graffiti Royale",
+    "icons": [
+      {
+        "src": "",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "",
+    "background_color": "",
+    "display": "standalone",
+    "scope": "",
+    "theme_color": ""
+  }
