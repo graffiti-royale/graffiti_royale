@@ -1,7 +1,7 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 import json
-from .models import Room
+from .models import Room, Profile
 from django.contrib.auth.models import User
 
 class ChatConsumer(WebsocketConsumer):
@@ -106,13 +106,18 @@ class UsersConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         enter = text_data_json['enter']
         username = text_data_json['username']
-        user = User.objects.get(username=username)
+        user, created = User.objects.get_or_create(username=username)
+        if created:
+            user.profile.guest = True
+            user.profile.save()
         room, _ = Room.objects.get_or_create(name=self.room_name)
         if enter:
             room.users.add(user)
         else:
             room.users.remove(user)
-        users = {user.username:[] for user in room.users.all()}
+            if text_data_json['guest']:
+                user.delete()
+        users = {person.username:[person.profile.guest, []] for person in room.users.all()}
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(

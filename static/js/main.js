@@ -33,7 +33,8 @@ function playPageJavaScript(){
     console.log('closing!')
     usersSocket.send(JSON.stringify({
       'username': username,
-      'enter': false
+      'enter': false,
+      'guest': users[username][0]
     }))
     usersSocket.close()
   })
@@ -47,7 +48,7 @@ function playPageJavaScript(){
       context.lineJoin = "round"
       context.lineWidth = 5
 
-      users[data['username']].push([[data['path'][0][0], data['path'][0][1]],[data['path'][1][0], data['path'][1][1]]])
+      users[data['username']][1].push([[data['path'][0][0], data['path'][0][1]],[data['path'][1][0], data['path'][1][1]]])
       console.log(users[data['username']])
       context.beginPath()
       context.moveTo(data['path'][0][0], data['path'][0][1])
