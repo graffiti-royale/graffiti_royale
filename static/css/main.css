@@ -26,6 +26,7 @@ body {
 
 .logo {
     display: flex;
+    height: 3rem;
     font-family: 'Londrina Sketch', cursive;
     text-shadow: -.75px 0 black, 0 .75px black, .75px 0 black, 0 -.75px black;
     justify-content: center;
@@ -33,10 +34,6 @@ body {
     font-size:130px;
     text-decoration: none;
     color: black;
-    margin: 15px 20px 15px 20px;
-    min-width:300px;
-    min-height: 2rem;
-    max-height: 3rem;
 }
 
 .logo:visited {
@@ -347,6 +344,14 @@ input:focus {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+  }
+
+  .next {
+    color:rgb(0, 123, 255);
+  }
+
+  .next:hover {
+    cursor: default;
   }
   
   /* The Close Button */
