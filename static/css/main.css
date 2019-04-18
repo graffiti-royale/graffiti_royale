@@ -380,4 +380,12 @@ input:focus {
 
 .crosshair { cursor: crosshair; }
 
+/* .rainbow {
+    border: 5px solid transparent;
+    border-image: linear-gradient(to bottom right, rgb(0, 123, 255) 0%, #18fbff 20%, rgb(255, 247, 0) 40%, #85ff1b 60%, #ff4797 80%, rgb(255, 0, 17) 100%);
+    border-image-slice: 1;
+    width: 4000px;
+    height:4000px;
+  } */
+
 
