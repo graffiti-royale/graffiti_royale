@@ -23,7 +23,14 @@
             <div class="banner">
              <div><i class="fas fa-spray-can fa-4x dim hvr-buzz-out"></i></div><a href="{% url 'homepage' %}" class="logo"><div><p>GRAFFiTi ROYALE</p></div></a>
                  <div>
-                    <span><a class="login head-link dim f2 lh-copy" href="{% url 'auth_login'%}?next={{request.path}}"><i class="fa fa-user fa-1x"></i>&nbspLOGiN</a></span>
+                    <span>
+                    {% if request.user.is_authenticated %}
+                    <span>{{ request.user.username }}</span>
+                    <a class="logout" href="{% url 'auth_logout' %}">Logout</a>
+                    {% else %}
+                    <a class="login head-link dim f2 lh-copy" href="{% url 'auth_login'%}?next={{request.path}}"><i class="fa fa-user fa-1x"></i>&nbspLOGiN</a>
+                    {% endif %}
+                    </span>
                 </div>   
             </div>
         </header>

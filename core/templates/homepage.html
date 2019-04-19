@@ -5,7 +5,13 @@
 
 {% block content %}
 <body id="homePage">
-<center><a class="play-link" href="{% url 'play' %}"><h2 class="play hvr-bob hvr-glow"><i class="fas fa-spray-can"></i>&nbspPLAY</h2></a></center>
+<center><a class="head-link" href="
+  {% if request.user.is_authenticated %}
+    {% url 'play' username=request.user.username %}
+  {% else %}
+    {% url 'make_guest' %}
+  {% endif %}">
+  <h2 class="play hvr-bob hvr-glow"><i class="fas fa-spray-can"></i>&nbspPLAY</h2></a></center>
 <center><a class="profile-link" href=""><h2 class="profile hvr-bob hvr-glow"><i class="fas fa-address-card"></i>&nbspPROFiLE</h2></a></center>
 <center><a class="tutorial-link tutorial-button"><h2 class="tutorial hvr-bob hvr-glow"><i class="fas fa-scroll"></i>&nbspTUTORiAL</h2></a></center>
 
