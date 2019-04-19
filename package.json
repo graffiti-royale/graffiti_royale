@@ -8,5 +8,8 @@
     "watch": "watchify static/js/*.js --debug -v -o static/build/bundle.js",
     "build-dev": "browserify static/js/*.js --debug -o static/build/bundle.js",
     "build": "browserify static/js/*.js -o static/build/bundle.js"
+  },
+  "dependencies": {
+    "cookies-js": "^1.2.3"
   }
 }

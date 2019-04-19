@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<h2>Enter a guest username:</h2>
+<input type="text" id="guest-name"></input>
+<button type="submit">Let's play!</button>
+<div id="guestlog"></div>
+<script src="{% static 'build/bundle.js' %}"></script>
+{% endblock %}
