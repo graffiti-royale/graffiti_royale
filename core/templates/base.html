@@ -28,11 +28,11 @@
                     <span>{{ request.user.username }}</span>
                     <a class="logout" href="{% url 'auth_logout' %}">Logout</a>
                     {% else %}
-                    <a class="login head-link avenir b dim f2 lh-copy" href="{% url 'auth_login'%}?next={{request.path}}"><i class="fa fa-user fa-1x"></i>&nbspLOGiN</a>
+                    <a class="login head-link dim f2 lh-copy" href="{% url 'auth_login'%}?next={{request.path}}"><i class="fa fa-user fa-1x"></i>&nbspLOGiN</a>
                     {% endif %}
                     </span>
                 </div>   
-            </div><br><br><br><br>
+            </div>
         </header>
         <div class="footer"> </div>
     {% block content %}{% endblock %}
