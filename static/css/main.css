@@ -16,11 +16,14 @@ body {
     align-items: center;
     padding: 4rem 4rem;
     color: black;
-    background-color: #ffffff;
+    background-color: white;
     font-style: italic;
-    border-bottom: .2rem solid black;
+    /* border-bottom: .2rem solid black; */
+    border-bottom: 5px solid transparent;
+    border-image: linear-gradient(to right, rgb(0, 123, 255) 0%, #18fbff 20%, #ff4797 40%, rgb(255, 0, 17) 60%, rgb(255, 247, 0) 80%, #85ff1b 100%);
+    border-image-slice: 1;
     /* border-radius:0px 0px 30px 30px; */
-    /* box-shadow: -2px 3px 3px 1px rgb(159, 159, 159); */
+    box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
     /* height: 1rem; */
 }
 
@@ -49,7 +52,9 @@ body {
     background-color: white;
     text-align: center;
     height: 4.8rem;
-    border-top: .2rem solid black;
+    border-top: 5px solid transparent;
+    border-image: linear-gradient(to right, rgb(0, 123, 255) 0%, #18fbff 20%, #ff4797 40%, rgb(255, 0, 17) 60%, rgb(255, 247, 0) 80%, #85ff1b 100%);
+    border-image-slice: 1;
 } */
 
 .head-link {
@@ -65,6 +70,19 @@ body {
     text-decoration: none;
 }
 
+/* .buttons {
+    margin: 0;
+    position: absolute;
+    top: 60%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+} */
+
+.play-link {
+    color: black;
+    text-decoration: none;
+}
+
 .play {
     background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
     border-style: solid;
@@ -73,8 +91,7 @@ body {
     color: white;
     text-shadow: -1.1px 0 black, 0 1.1px black, 1.1px 0 black, 0 -1.1px black;
     font-family: 'Londrina Solid', cursive;
-    border-radius: 100px;
-    width:420px;
+    border-radius: 100px 100px 100px 100px;
     height:100px;
     font-size: 3.9rem;
     display: flex;
@@ -82,7 +99,9 @@ body {
     align-items: center;
     padding: 1rem;
     box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
-
+    margin: 80px 30px 40px 30px;
+    min-width:300px;
+    max-width:520px;
 }
 
 .play:hover {
@@ -90,6 +109,11 @@ body {
     text-shadow: -1.1px 0 black, 0 1.1px black, 1.1px 0 black, 0 -1.1px black;
     font-family: 'Londrina Solid', cursive;
     font-style: italic;
+}
+
+.profile-link {
+    color: black;
+    text-decoration: none;
 }
 
 .profile {
@@ -100,8 +124,7 @@ body {
     color: white;
     text-shadow: -1.1px 0 black, 0 1.1px black, 1.1px 0 black, 0 -1.1px black;
     font-family: 'Londrina Solid', cursive;
-    border-radius: 100px;
-    width:420px;
+    border-radius: 100px 100px 100px 100px;
     height:100px;
     font-size: 3.9rem;
     display: flex;
@@ -109,7 +132,9 @@ body {
     align-items: center;
     padding: 1rem;
     box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
-
+    margin: 30px 30px 40px 30px;
+    min-width:300px;
+    max-width:520px;
 }
 
 .profile:hover {
@@ -119,16 +144,20 @@ body {
     font-style: italic;
 }
 
+.tutorial-link {
+    color: black;
+    text-decoration: none;
+}
+
 .tutorial {
-    background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
+    background-image: linear-gradient(to bottom, #18fbff, #007bff);
     border-style: solid;
     border-width: .2rem;
     border-color: black;
     color: white;
     text-shadow: -1.1px 0 black, 0 1.1px black, 1.1px 0 black, 0 -1.1px black;
     font-family: 'Londrina Solid', cursive;
-    border-radius: 100px;
-    width:420px;
+    border-radius: 100px 100px 100px 100px;
     height:100px;
     font-size: 3.9rem;
     display: flex;
@@ -136,7 +165,9 @@ body {
     align-items: center;
     padding: 1rem;
     box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
-
+    margin: 30px 30px 80px 30px;
+    min-width:300px;
+    max-width:520px;
 }
 
 .tutorial:hover {
@@ -144,6 +175,24 @@ body {
     text-shadow: -1.1px 0 black, 0 1.1px black, 1.1px 0 black, 0 -1.1px black;
     font-family: 'Londrina Solid', cursive;
     font-style: italic;
+    cursor: pointer;
+}
+
+input {
+    text-align: center;
+    height: 4rem;
+    margin-right: .5rem;
+    margin-top: 1rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    caret-color:rgb(255, 0, 17);
+    color: rgb(255, 0, 17);
+    background-color : white;
+}
+
+input:focus {
+    outline: none;
+    background-color : white;
 }
 
 .login {
@@ -156,14 +205,17 @@ body {
     text-align: center;
     border: .2rem solid black;
     box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
-    width: 600px;
-    height: 400px;
     padding: 2rem;
     background-color:white;
     font-family: 'Londrina Solid', cursive;
     font-size: 30px;
-    border-radius: 100px;
+    border-radius: 30px;
     text-decoration: none;
+    margin: 60px 30px 60px 30px;
+    min-width:300px;
+    max-width:700px;
+    min-height: 400px;
+    max-height: 900px;
 }
 
 .login-link {
@@ -181,15 +233,6 @@ body {
     color:rgb(255, 0, 17);
 }
 
-input {
-    text-align: center;
-    height: 4rem;
-    margin-right: .5rem;
-    border-radius: 3rem;
-    border: .2rem solid black;
-    caret-color:rgb(255, 0, 17);
-}
-
 .login-button {
     text-align: center;
     height: 4.3rem;
@@ -200,10 +243,87 @@ input {
     color: white;
     caret-color:rgb(255, 0, 132);
     background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
-
 }
 
 .login-button:hover {
+    text-align: center;
+    margin-right: .5rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    caret-color:rgb(255, 0, 132);
+    background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
+}
+
+.reset-form {
+    margin: auto;
+    text-align: center;
+    border: .2rem solid black;
+    box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
+    padding: 2rem;
+    background-color:white;
+    font-family: 'Londrina Solid', cursive;
+    font-size: 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    margin: 60px 30px 60px 30px;
+    min-width:300px;
+    max-width:800px;
+    min-height: 350px;
+    max-height: 900px;
+}
+
+.reset-button {
+    text-align: center;
+    height: 4.3rem;
+    width:17rem;
+    margin-right: .5rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    color: white;
+    caret-color:rgb(255, 0, 132);
+    background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
+}
+
+.reset-button:hover {
+    text-align: center;
+    margin-right: .5rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    caret-color:rgb(255, 0, 132);
+    background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
+}
+
+.registration-form {
+    margin: auto;
+    text-align: center;
+    border: .2rem solid black;
+    box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
+    padding: 2rem;
+    background-color:white;
+    font-family: 'Londrina Solid', cursive;
+    font-size: 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    margin: 60px 30px 60px 30px;
+    min-width:300px;
+    max-width:800px;
+    min-height: 300px;
+    max-height: 1400px;
+}
+
+.registration-button {
+    text-align: center;
+    height: 4.3rem;
+    width:17rem;
+    margin-right: .5rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    color: white;
+    caret-color:rgb(255, 0, 132);
+    background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
+}
+
+.registration-button:hover {
     text-align: center;
     margin-right: .5rem;
     border-radius: 3rem;
@@ -217,6 +337,7 @@ input {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     padding-top: 100px; /* Location of the box */
+    padding-bottom: 100px;
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -224,41 +345,75 @@ input {
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
+    font-family: 'Londrina Solid', cursive;
+    font-size: 30px;
+}
+
+.modal:hover {
+    cursor: default;
+}
   
   /* Modal Content */
-  .modal-content {
+.modal-content {
     background-color: #fefefe;
     margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-  }
+    padding: 40px;
+    border: .2rem solid black;
+    width: 85%;
+    font-family: 'Londrina Solid', cursive;
+    font-size: 30px;
+    border-radius: 30px;
+}
+
+.welcome {
+    font-family: 'Londrina Sketch', cursive;
+    font-size: 70px;
+    color: black;
+}
+
+.next {
+    color:rgb(0, 123, 255);
+}
+
+.next:hover {
+    cursor: default;
+    color:rgb(255, 0, 17);
+}
   
   /* The Close Button */
-  .close {
-    color: #aaaaaa;
+.close {
+    color:rgb(255, 0, 17);
     float: right;
-    font-size: 28px;
+    font-size: 20px;
     font-weight: bold;
-  }
+}
   
-  .close:hover,
-  .close:focus {
-    color: #000;
+.close:hover,
+.close:focus {
+    color:rgb(255, 0, 17);
     text-decoration: none;
     cursor: pointer;
-  }
+}
+
 .playfield {
     background-position: left;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background: linear-gradient(
-        rgba(255, 255, 255, 0.893), 
-        rgba(255, 255, 255, 0.893)),
+        rgba(255, 255, 255, 0.783), 
+        rgba(255, 255, 255, 0.783)),
         url("https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg");
 }
 
 .crosshair { cursor: crosshair; }
+
+/* .rainbow {
+    border: 5px solid transparent;
+    border-image: linear-gradient(to right, rgb(0, 123, 255) 0%, #18fbff 20%, #ff4797 40%, rgb(255, 0, 17) 60%, rgb(255, 247, 0) 80%, #85ff1b 100%);    border-image-slice: 1;
+    width: 4010px;
+    height:4010px;
+} */
+
+  
 
 

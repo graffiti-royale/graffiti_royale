@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils.safestring import mark_safe
 import json
+from django.contrib.auth.models import User
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -10,13 +12,17 @@ def homepage(request):
 def tutorial(request):
     return render(request, 'tutorial.html', context={})
 
-def play(request):
-    return render(request, 'play.html', context = {"user": request.user})
+def play(request, username):
+    print(username)
+    return render(request, 'play.html', context = {"username": username})
     
-def index(request):
-    return render(request, 'chat/index.html', {})
+def make_guest(request):
+    return render(request, 'make_guest.html', context={})
 
-def room(request, room_name):
-    return render(request, 'chat/room.html', {
-        'room_name_json': mark_safe(json.dumps(room_name))
-    })
+def check_guest_name(request):
+    data = json.loads(request.body)
+    try:
+        User.objects.get(username=data['username'])
+        return JsonResponse({"message": 'Username already in use.'})
+    except:
+        return JsonResponse({"url": f"play/{data['username']}"})
