@@ -21,7 +21,8 @@
     <div class="username" data-username="{{ username }}"></div>
     {% load static %}
     <script src="{% static 'build/bundle.js' %}"></script>
-    <script>
+
+    {% comment %} <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('/static/sw.js').then(function(registration) {
@@ -33,7 +34,8 @@
                 });
             });
         }
-    </script>
+    </script> {% endcomment %}
+
 </body>
 </div>
 </html>

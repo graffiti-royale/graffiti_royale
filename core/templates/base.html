@@ -37,7 +37,7 @@
         <div class="footer"> </div>
     {% block content %}{% endblock %}
 
-    <script>
+    {% comment %} <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('/static/sw.js').then(function(registration) {
@@ -49,7 +49,7 @@
                 });
             });
         }
-    </script>
+    </script> {% endcomment %}
 
 </body>
 </html>

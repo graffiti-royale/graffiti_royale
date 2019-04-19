@@ -26,3 +26,5 @@ def check_guest_name(request):
         return JsonResponse({"message": 'Username already in use.'})
     except:
         return JsonResponse({"url": f"play/{data['username']}"})
+
+def get_javascript_file(request, )
