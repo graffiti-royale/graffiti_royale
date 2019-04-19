@@ -95,6 +95,16 @@ function playPageJavaScript(){
     }
   })
 
+  window.addEventListener('resize', function(event) {
+    console.log('hi')
+    event.preventDefault()
+  })
+
+  window.addEventListener('wheel', function(event) {
+    console.log('hi')
+    event.preventDefault()
+  })
+
   module.exports = {
   }
 }
