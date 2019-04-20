@@ -106,6 +106,7 @@ class UsersConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         enter = text_data_json['enter']
         username = text_data_json['username']
+        random_word = text_data_json['random_word']
         user, created = User.objects.get_or_create(username=username)
         if created:
             user.profile.guest = True
@@ -117,7 +118,7 @@ class UsersConsumer(WebsocketConsumer):
             room.users.remove(user)
             if text_data_json['guest']:
                 user.delete()
-        users = {person.username:[person.profile.guest, []] for person in room.users.all()}
+        users = {person.username:[person.profile.guest, random_word,[]] for person in room.users.all()}
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(

@@ -3,6 +3,14 @@ from django.utils.safestring import mark_safe
 import json
 from django.contrib.auth.models import User
 from django.http import JsonResponse
+import random
+
+# Chooses a random word from our Words.csv file
+def get_random_word():
+    with open("Words.csv") as word_list:
+        lines = [line for line in word_list]
+    return random.choice(lines).lower()
+
 
 # Create your views here.
 
@@ -14,7 +22,11 @@ def tutorial(request):
 
 def play(request, username):
     print(username)
-    return render(request, 'play.html', context = {"username": username})
+    random_word = get_random_word()
+    return render(request, 'play.html', context = 
+    {"username": username,
+    "random_word": random_word,
+    })
     
 def make_guest(request):
     return render(request, 'make_guest.html', context={})

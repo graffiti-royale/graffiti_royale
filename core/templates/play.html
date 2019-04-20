@@ -17,7 +17,7 @@
 <body class="playfield crosshair" id="playPage">
     
     <canvas width="4000" height="4000" id="drawMap"></canvas>
-    <div class="username" data-username="{{ username }}"></div>
+    <div class="username" data-username="{{ username }}" data-word="{{ random_word }}"></div>
     {% load static %}
     <script src="{% static 'build/bundle.js' %}"></script>
 </body>
