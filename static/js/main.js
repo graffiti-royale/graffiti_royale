@@ -12,7 +12,7 @@ function playPageJavaScript(){
   const color = colorsArray[Math.floor(Math.random() * colorsArray.length)]
 
   let username = document.querySelector('.username').dataset.username
-  let random_word = document.querySelector('.username').dataset.random_word
+  let random_word = document.querySelector('.username').dataset.word
   let users
 
   usersSocket.onopen = function(event) {
