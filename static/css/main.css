@@ -3,12 +3,12 @@
     margin: 0;
 }
 
-body {
+/* body {
     background-image: url("https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg");
     background-position: left;
     background-repeat: no-repeat;
     background-attachment: fixed;
-}
+} */
 
 .banner {
     display: flex;
@@ -395,7 +395,7 @@ input:focus {
     cursor: pointer;
 }
 
-.playfield {
+/* .playfield {
     background-position: left;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -403,9 +403,16 @@ input:focus {
         rgba(255, 255, 255, 0.783), 
         rgba(255, 255, 255, 0.783)),
         url("https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg");
-}
+} */
 
 .crosshair { cursor: crosshair; }
+
+#drawMap {
+    z-index: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
 
 /* .rainbow {
     border: 5px solid transparent;

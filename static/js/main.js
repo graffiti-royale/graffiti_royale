@@ -62,6 +62,7 @@ function playPageJavaScript(){
     var mouseY = event.pageY - this.offsetTop;
     paint = true
     myPath.push([mouseX, mouseY])
+    context.scale(.5, .5)
   })
 
   canvas.addEventListener('mouseup', function(event) {
@@ -93,16 +94,6 @@ function playPageJavaScript(){
       context.stroke()
       myPath.shift()
     }
-  })
-
-  window.addEventListener('resize', function(event) {
-    console.log('hi')
-    event.preventDefault()
-  })
-
-  window.addEventListener('wheel', function(event) {
-    console.log('hi')
-    event.preventDefault()
   })
 
   module.exports = {
