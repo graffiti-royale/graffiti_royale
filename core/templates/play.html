@@ -14,12 +14,16 @@
 
 </head>
 
-<body class="playfield crosshair" id="playPage">
+
+
+<body class="playfield crosshair fieldlogo" id="playPage">
     {% comment %} <img src="https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg"> {% endcomment %}
     <canvas width="600" height="600" id="drawMap"></canvas>
     <div class="username" data-username="{{ username }}"></div>
     {% load static %}
     <script src="{% static 'build/bundle.js' %}"></script>
+    <div class="footer"> </div>
+
 </body>
 </div>
 </html>
