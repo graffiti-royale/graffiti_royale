@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
+
+<br><center><div class="guest-form">
 <h2>Enter a guest username:</h2>
-<input type="text" id="guest-name"></input>
-<button type="submit">Let's play!</button>
+<input type="text" id="guest-name"></input><br><br>
+<button type="submit" class="guest-button">LET'S PLAY!</button>
 <div id="guestlog"></div>
 <script src="{% static 'build/bundle.js' %}"></script>
+</div></center>
 {% endblock %}
