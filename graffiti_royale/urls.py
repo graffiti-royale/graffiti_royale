@@ -18,7 +18,6 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from core import views
-from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,7 +27,7 @@ urlpatterns = [
     path('tutorial/', views.tutorial, name='tutorial'),
     path('makeguest/', views.make_guest, name='make_guest'),
     path('checkguestname/', views.check_guest_name, name='check_guest'),
-    path('sw.js', (TemplateView.as_view(template_name="/sw.js", content_type='application/javascript', )), name='sw.js'),
+    path('sw.js', views.get_serviceworker, name='sw.js'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,14 +1,17 @@
 // we'll version our cache (and learn how to delete caches in
 // some other post)
 const cacheName = 'v1::static'
-
+{% load static %}
 self.addEventListener('install', e => {
   // once the SW is installed, go ahead and fetch the resources
   // to make this work offline
   e.waitUntil(
     caches.open(cacheName).then(cache => {
       return cache.addAll([
-        '/'
+        '/',
+        "{% static 'css/main.css' %}",
+        "{% static 'js/guest_login.js' %}",
+        "{% static 'js/tutorial.js' %}",
         /*
           DEAR READER,
           ADD A LIST OF YOUR ASSETS THAT
