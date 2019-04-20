@@ -7,6 +7,7 @@ function playPageJavaScript(){
   let room = document.URL.split('/')[3]
   let drawSocket = new WebSocket(`ws://${window.location.host}/ws/draw/${room}/`)
   let usersSocket = new WebSocket(`ws://${window.location.host}/ws/${room}/users`)
+  let zoomedOut = true
 
   let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C', '#13d9f3', '#f313f3', '#f3ef13']
   const color = colorsArray[Math.floor(Math.random() * colorsArray.length)]
@@ -42,11 +43,12 @@ function playPageJavaScript(){
   drawSocket.onmessage = function (event) {
     let data = JSON.parse(event.data)
     if (username != data['username']) {
+      if (zoomedOut) {context.scale(.25, .25)}
       context.strokeStyle = data['color']
       context.shadowBlur = 4
       context.shadowColor = data['color']
       context.lineJoin = "round"
-      context.lineWidth = 5
+      context.lineWidth = 10
 
       users[data['username']][1].push([[data['path'][0][0], data['path'][0][1]],[data['path'][1][0], data['path'][1][1]]])
       console.log(users[data['username']])
@@ -54,29 +56,49 @@ function playPageJavaScript(){
       context.moveTo(data['path'][0][0], data['path'][0][1])
       context.lineTo(data['path'][1][0], data['path'][1][1])
       context.stroke()
+      if (zoomedOut) {context.scale(4, 4)}
     }
   }
 
+  canvas.addEventListener('dblclick', function(event) {
+    if (zoomedOut) {
+      var zoom = parseInt(canvas.style.zoom) + 300 +'%'
+      canvas.style.zoom = zoom
+      zoomedOut = false
+      context.scale(.25, .25)
+    } else {
+      var zoom = parseInt(canvas.style.zoom) - 300 +'%'
+      canvas.style.zoom = zoom
+      zoomedOut = true
+      context.scale(4, 4)
+    }
+  })
+
   canvas.addEventListener('mousedown', function(event) {
-    var mouseX = event.pageX - this.offsetLeft;
-    var mouseY = event.pageY - this.offsetTop;
-    paint = true
-    myPath.push([mouseX, mouseY])
-    context.scale(.5, .5)
+    if (!zoomedOut) {
+      var mouseX = event.pageX - this.offsetLeft;
+      var mouseY = event.pageY - this.offsetTop;
+      paint = true
+      myPath.push([mouseX, mouseY])
+    }
   })
 
   canvas.addEventListener('mouseup', function(event) {
-    paint = false
-    myPath = []
+    if (!zoomedOut) {
+      paint = false
+      myPath = [] 
+    }
   })
 
   canvas.addEventListener('mouseleave', function(event) {
-    paint = false
-    myPath = []
+    if (!zoomedOut) {
+      paint = false
+      myPath = [] 
+    }
   })
 
   canvas.addEventListener('mousemove', function(event) {
-    if (paint) {
+    if (paint && !zoomedOut) {
       myPath.push([event.pageX - this.offsetLeft, event.pageY - this.offsetTop])
       drawSocket.send(JSON.stringify({
         'path': myPath,
@@ -87,7 +109,7 @@ function playPageJavaScript(){
       context.shadowBlur = 4
       context.shadowColor = color
       context.lineCap = "round"
-      context.lineWidth = 5
+      context.lineWidth = 10
       context.beginPath()
       context.moveTo(myPath[0][0], myPath[0][1])
       context.lineTo(myPath[1][0], myPath[1][1])
