@@ -60,15 +60,19 @@ function playPageJavaScript(){
     }
   }
 
-  canvas.addEventListener('dblclick', function(event) {
+  canvas.addEventListener('click', function(event) {
     if (zoomedOut) {
-      var zoom = parseInt(canvas.style.zoom) + 300 +'%'
-      canvas.style.zoom = zoom
+      let X = event.pageX - 15 
+      let Y = event.pageY - 15
+      console.log(X)
+      console.log(Y)
+      canvas.style.transformOrigin = `${X} ${Y}`
+      console.log(canvas.style.transformOrigin)
+      canvas.style.transform = 'scale(4, 4)'
       zoomedOut = false
       context.scale(.25, .25)
     } else {
-      var zoom = parseInt(canvas.style.zoom) - 300 +'%'
-      canvas.style.zoom = zoom
+      canvas.style.transform = 'scale(1, 1)'
       zoomedOut = true
       context.scale(4, 4)
     }
@@ -76,8 +80,8 @@ function playPageJavaScript(){
 
   canvas.addEventListener('mousedown', function(event) {
     if (!zoomedOut) {
-      var mouseX = event.pageX - this.offsetLeft;
-      var mouseY = event.pageY - this.offsetTop;
+      var mouseX = event.pageX - this.offsetLeft - 15;
+      var mouseY = event.pageY - this.offsetTop - 15;
       paint = true
       myPath.push([mouseX, mouseY])
     }
@@ -99,7 +103,7 @@ function playPageJavaScript(){
 
   canvas.addEventListener('mousemove', function(event) {
     if (paint && !zoomedOut) {
-      myPath.push([event.pageX - this.offsetLeft, event.pageY - this.offsetTop])
+      myPath.push([event.pageX - this.offsetLeft - 15, event.pageY - this.offsetTop - 15])
       drawSocket.send(JSON.stringify({
         'path': myPath,
         'color': color,
