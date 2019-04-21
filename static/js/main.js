@@ -1,9 +1,14 @@
 function playPageJavaScript(){
-  const canvas = document.querySelector('canvas')
+  const canvas = document.querySelector('#drawMap')
+  const upCanvas = document.querySelector('#upcanvas')
   context = canvas.getContext('2d')
+  upContext = upCanvas.getContext('2d')
   canvas.width = window.innerWidth
   canvas.height = window.innerHeight
+  upCanvas.width = window.innerWidth
+  upCanvas.height = window.innerHeight
 
+  const ZOOMFACTOR = 8
   let paint
   let myPath = []
   let room = document.URL.split('/')[3]
@@ -47,12 +52,12 @@ function playPageJavaScript(){
   drawSocket.onmessage = function (event) {
     let data = JSON.parse(event.data)
     if (username != data['username']) {
-      if (zoomedOut) {context.scale(.25, .25)}
+      if (zoomedOut) {context.scale(1/ZOOMFACTOR, 1/ZOOMFACTOR)}
       context.strokeStyle = data['color']
       context.shadowBlur = 4
       context.shadowColor = data['color']
       context.lineJoin = "round"
-      context.lineWidth = 10
+      context.lineWidth = 15
 
       users[data['username']][1].push([[data['path'][0][0], data['path'][0][1]],[data['path'][1][0], data['path'][1][1]]])
       console.log(users[data['username']])
@@ -60,58 +65,60 @@ function playPageJavaScript(){
       context.moveTo(data['path'][0][0], data['path'][0][1])
       context.lineTo(data['path'][1][0], data['path'][1][1])
       context.stroke()
-      if (zoomedOut) {context.scale(4, 4)}
+      if (zoomedOut) {context.scale(ZOOMFACTOR, ZOOMFACTOR)}
     }
   }
 
-  canvas.addEventListener('click', function(event) {
+  upCanvas.addEventListener('dblclick', function(event) {
+    upContext.clearRect(0, 0, canvas.width, canvas.height)
     if (zoomedOut) {
-      let X = event.pageX 
-      let Y = event.pageY
-      xOffset = event.pageX * 2.75 
-      yOffset = event.pageY * 2.75
-      let moveX = -1*(Math.max(X, canvas.width/4)-(canvas.width/2))
-      let moveY = -1*(Math.max(Y, canvas.height/4)-(canvas.height/2))
+      let X = Math.min(Math.max(event.pageX, canvas.width/ZOOMFACTOR/2), canvas.width-canvas.width/ZOOMFACTOR/2) 
+      let Y = Math.min(Math.max(event.pageY, canvas.height/ZOOMFACTOR/2), canvas.height-canvas.height/ZOOMFACTOR/2)
+      xOffset = (X*ZOOMFACTOR)-canvas.width/2
+      yOffset = (Y*ZOOMFACTOR)-canvas.height/2
+      let moveX = -1*(Math.max(X, canvas.width/ZOOMFACTOR/2)-(canvas.width/2))
+      let moveY = -1*(Math.max(Y, canvas.height/ZOOMFACTOR/2)-(canvas.height/2))
       X = X*100/canvas.width
       Y = Y*100/canvas.height
+      console.log(xOffset)
       let coord = `${X}% ${Y}%`
-      canvas.style.transform = `translate(${moveX}px, ${moveY}px)` + 'scale(4, 4)'
+      canvas.style.transform = `translate(${moveX}px, ${moveY}px) scale(${ZOOMFACTOR}, ${ZOOMFACTOR})`
       canvas.style.transformOrigin = coord
       zoomedOut = false
-      context.scale(.25, .25)
+      context.scale(1/ZOOMFACTOR, 1/ZOOMFACTOR)
     } else {
       canvas.style.transform = 'scale(1, 1)'
       zoomedOut = true
-      context.scale(4, 4)
+      context.scale(ZOOMFACTOR, ZOOMFACTOR)
     }
   })
 
-  canvas.addEventListener('mousedown', function(event) {
+  upCanvas.addEventListener('mousedown', function(event) {
     if (!zoomedOut) {
-      var mouseX = event.pageX + xOffset;
-      var mouseY = event.pageY + yOffset;
+      var mouseX = event.pageX+xOffset;
+      var mouseY = event.pageY+yOffset;
       paint = true
       myPath.push([mouseX, mouseY])
     }
   })
 
-  canvas.addEventListener('mouseup', function(event) {
+  upCanvas.addEventListener('mouseup', function(event) {
     if (!zoomedOut) {
       paint = false
       myPath = [] 
     }
   })
 
-  canvas.addEventListener('mouseleave', function(event) {
+  upCanvas.addEventListener('mouseleave', function(event) {
     if (!zoomedOut) {
       paint = false
       myPath = [] 
     }
   })
 
-  canvas.addEventListener('mousemove', function(event) {
+  upCanvas.addEventListener('mousemove', function(event) {
     if (paint && !zoomedOut) {
-      myPath.push([event.pageX + xOffset, event.pageY + yOffset])
+      myPath.push([event.pageX+xOffset, event.pageY+yOffset])
       drawSocket.send(JSON.stringify({
         'path': myPath,
         'color': color,
@@ -121,12 +128,17 @@ function playPageJavaScript(){
       context.shadowBlur = 4
       context.shadowColor = color
       context.lineCap = "round"
-      context.lineWidth = 10
+      context.lineWidth = 15
       context.beginPath()
       context.moveTo(myPath[0][0], myPath[0][1])
       context.lineTo(myPath[1][0], myPath[1][1])
       context.stroke()
       myPath.shift()
+    } else if (zoomedOut) {
+      let X = Math.min(Math.max(event.pageX, upCanvas.width/ZOOMFACTOR/2), upCanvas.width-upCanvas.width/ZOOMFACTOR/2) 
+      let Y = Math.min(Math.max(event.pageY, upCanvas.height/ZOOMFACTOR/2), upCanvas.height-upCanvas.height/ZOOMFACTOR/2)
+      upContext.clearRect(0, 0, upCanvas.width, upCanvas.height) 
+      upContext.strokeRect(X-upCanvas.width/ZOOMFACTOR/2, Y-upCanvas.height/ZOOMFACTOR/2, upCanvas.width/ZOOMFACTOR, upCanvas.height/ZOOMFACTOR)
     }
   })
 

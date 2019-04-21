@@ -17,8 +17,8 @@
 
 
 <body class="playfield crosshair fieldlogo" id="playPage">
-    {% comment %} <img src="https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg"> {% endcomment %}
     <canvas id="drawMap"></canvas>
+    <canvas id="upcanvas"></canvas>
     <div class="username" data-username="{{ username }}"></div>
     {% load static %}
     <script src="{% static 'build/bundle.js' %}"></script>

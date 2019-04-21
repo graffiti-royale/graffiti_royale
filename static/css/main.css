@@ -427,6 +427,13 @@ input:focus {
         url("https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg");
 }
 
+#upcanvas {
+    z-index: 2;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
 /* .rainbow {
     border: 5px solid transparent;
     border-image: linear-gradient(to right, rgb(0, 123, 255) 0%, #18fbff 20%, #ff4797 40%, rgb(255, 0, 17) 60%, rgb(255, 247, 0) 80%, #85ff1b 100%);    border-image-slice: 1;
