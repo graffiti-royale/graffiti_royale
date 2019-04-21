@@ -1,6 +1,8 @@
 function playPageJavaScript(){
   const canvas = document.querySelector('canvas')
   context = canvas.getContext('2d')
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
 
   let paint
   let myPath = []
@@ -8,6 +10,8 @@ function playPageJavaScript(){
   let drawSocket = new WebSocket(`ws://${window.location.host}/ws/draw/${room}/`)
   let usersSocket = new WebSocket(`ws://${window.location.host}/ws/${room}/users`)
   let zoomedOut = true
+  let xOffset
+  let yOffset
 
   let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C', '#13d9f3', '#f313f3', '#f3ef13']
   const color = colorsArray[Math.floor(Math.random() * colorsArray.length)]
@@ -62,13 +66,17 @@ function playPageJavaScript(){
 
   canvas.addEventListener('click', function(event) {
     if (zoomedOut) {
-      let X = event.pageX - 15 
-      let Y = event.pageY - 15
-      console.log(X)
-      console.log(Y)
-      canvas.style.transformOrigin = `${X} ${Y}`
-      console.log(canvas.style.transformOrigin)
-      canvas.style.transform = 'scale(4, 4)'
+      let X = event.pageX 
+      let Y = event.pageY
+      xOffset = event.pageX * 2.75 
+      yOffset = event.pageY * 2.75
+      let moveX = -1*(Math.max(X, canvas.width/4)-(canvas.width/2))
+      let moveY = -1*(Math.max(Y, canvas.height/4)-(canvas.height/2))
+      X = X*100/canvas.width
+      Y = Y*100/canvas.height
+      let coord = `${X}% ${Y}%`
+      canvas.style.transform = `translate(${moveX}px, ${moveY}px)` + 'scale(4, 4)'
+      canvas.style.transformOrigin = coord
       zoomedOut = false
       context.scale(.25, .25)
     } else {
@@ -80,8 +88,8 @@ function playPageJavaScript(){
 
   canvas.addEventListener('mousedown', function(event) {
     if (!zoomedOut) {
-      var mouseX = event.pageX - this.offsetLeft - 15;
-      var mouseY = event.pageY - this.offsetTop - 15;
+      var mouseX = event.pageX + xOffset;
+      var mouseY = event.pageY + yOffset;
       paint = true
       myPath.push([mouseX, mouseY])
     }
@@ -103,7 +111,7 @@ function playPageJavaScript(){
 
   canvas.addEventListener('mousemove', function(event) {
     if (paint && !zoomedOut) {
-      myPath.push([event.pageX - this.offsetLeft - 15, event.pageY - this.offsetTop - 15])
+      myPath.push([event.pageX + xOffset, event.pageY + yOffset])
       drawSocket.send(JSON.stringify({
         'path': myPath,
         'color': color,
