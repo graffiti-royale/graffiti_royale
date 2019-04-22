@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-        
+        <link rel="manifest" href="{% static 'manifest.json' %}">
     
     </head>
     
@@ -36,5 +36,6 @@
         </header>
         <div class="footer"> </div>
     {% block content %}{% endblock %}
+
 </body>
 </html>

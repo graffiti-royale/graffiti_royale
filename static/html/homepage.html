@@ -1,0 +1,33 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Graffiti Royale{% endblock %}
+
+{% block content %}
+<body id="homePage">
+<center><a class="head-link" href="
+  {% if request.user.is_authenticated %}
+    {% url 'play' username=request.user.username %}
+  {% else %}
+    {% url 'make_guest' %}
+  {% endif %}">
+  <h2 class="play hvr-bob hvr-glow"><i class="fas fa-spray-can"></i>&nbspPLAY</h2></a></center>
+<center><a class="profile-link" href=""><h2 class="profile hvr-bob hvr-glow"><i class="fas fa-address-card"></i>&nbspPROFiLE</h2></a></center>
+<center><a class="tutorial-link tutorial-button"><h2 class="tutorial hvr-bob hvr-glow"><i class="fas fa-scroll"></i>&nbspTUTORiAL</h2></a></center>
+
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close"><i class="fas fa-times fa-2x"></i></span>
+    <center><h4 id="headerTitle" class="welcome"> Welcome!</h4></center><br>
+    <p id="firstP"></p><br><p id="secondP"></p><br>
+    <center><span class="next"><i class="fas fa-chevron-circle-right fa-2x"></i></span></center>
+  </div>
+</div>
+</body>
+
+<script src="{% static 'build/bundle.js' %}"></script>
+
+{% endblock %}
+
+

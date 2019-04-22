@@ -26,7 +26,8 @@ urlpatterns = [
     path('play/<str:username>/', views.play, name='play'),
     path('tutorial/', views.tutorial, name='tutorial'),
     path('makeguest/', views.make_guest, name='make_guest'),
-    path('checkguestname/', views.check_guest_name, name='check_guest')
+    path('checkguestname/', views.check_guest_name, name='check_guest'),
+    path('sw.js', views.get_serviceworker, name='sw.js'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
