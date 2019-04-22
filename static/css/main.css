@@ -189,8 +189,7 @@ body {
 input {
     text-align: center;
     height: 4rem;
-    margin-right: .5rem;
-    margin-top: 1rem;
+    margin: 1rem .5rem 1rem .5rem;
     border-radius: 3rem;
     border: .2rem solid black;
     caret-color:rgb(255, 0, 17);
@@ -201,6 +200,7 @@ input {
 input:focus {
     outline: none;
     background-color : white;
+    margin: 1rem .5rem 1rem .5rem;
 }
 
 .login {
@@ -245,7 +245,7 @@ input:focus {
     text-align: center;
     height: 4.3rem;
     width:12rem;
-    margin-right: .5rem;
+    margin: 0rem .5rem 0rem .5rem;
     border-radius: 3rem;
     border: .2rem solid black;
     color: white;
@@ -255,7 +255,7 @@ input:focus {
 
 .login-button:hover {
     text-align: center;
-    margin-right: .5rem;
+    margin: 0rem .5rem 0rem .5rem;
     border-radius: 3rem;
     border: .2rem solid black;
     caret-color:rgb(255, 0, 132);
@@ -302,7 +302,7 @@ input:focus {
     text-align: center;
     height: 4.3rem;
     width:17rem;
-    margin-right: .5rem;
+    margin: 0rem .5rem 0rem .5rem;
     border-radius: 3rem;
     border: .2rem solid black;
     color: white;
@@ -312,7 +312,7 @@ input:focus {
 
 .reset-button:hover {
     text-align: center;
-    margin-right: .5rem;
+    margin: 0rem .5rem 0rem .5rem;
     border-radius: 3rem;
     border: .2rem solid black;
     caret-color:rgb(255, 0, 132);
@@ -385,14 +385,14 @@ input:focus {
     min-width:300px;
     max-width:950px;
     min-height: 300px;
-    max-height: 1400px;
+    max-height: auto;
 }
 
 .registration-button {
     text-align: center;
     height: 4.3rem;
     width:17rem;
-    margin-right: .5rem;
+    margin: 0rem .5rem 0rem .5rem;
     border-radius: 3rem;
     border: .2rem solid black;
     color: white;
@@ -402,7 +402,7 @@ input:focus {
 
 .registration-button:hover {
     text-align: center;
-    margin-right: .5rem;
+    margin: 0rem .5rem 0rem .5rem;
     border-radius: 3rem;
     border: .2rem solid black;
     caret-color:rgb(255, 0, 132);
@@ -556,7 +556,7 @@ input:focus {
     text-align: center;
     height: 4.3rem;
     width:17rem;
-    margin-right: .5rem;
+    margin: 0rem .5rem 0rem .5rem;
     border-radius: 3rem;
     border: .2rem solid black;
     color: white;
@@ -566,7 +566,7 @@ input:focus {
 
 .guest-button:hover {
     text-align: center;
-    margin-right: .5rem;
+    margin: 0rem .5rem 0rem .5rem;
     border-radius: 3rem;
     border: .2rem solid black;
     caret-color:rgb(255, 0, 132);
