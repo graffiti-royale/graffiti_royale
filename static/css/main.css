@@ -28,7 +28,6 @@ body {
     /* border-radius:0px 0px 30px 30px; */
     box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
     /* height: 1rem; */
-    min-height:50px;
 }
 
 .logo {
@@ -42,7 +41,6 @@ body {
     font-size:130px;
     text-decoration: none;
     color: black;
-    float: center;
 }
 
 .logo:visited {
