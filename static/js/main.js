@@ -12,8 +12,8 @@ function playPageJavaScript () {
   let paint
   let myPath = []
   let room = document.URL.split('/')[3]
-  let drawSocket = new WebSocket(`ws://${window.location.host}/ws/draw/${room}/`)
-  let usersSocket = new WebSocket(`ws://${window.location.host}/ws/${room}/users`)
+  let drawSocket = new WebSocket(`wss://${window.location.host}/ws/draw/${room}/`)
+  let usersSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/users`)
   let zoomedOut = true
   let xOffset
   let yOffset
