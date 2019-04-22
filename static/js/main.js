@@ -8,7 +8,7 @@ function playPageJavaScript(){
   upCanvas.width = window.innerWidth
   upCanvas.height = window.innerHeight
 
-  const ZOOMFACTOR = 8
+  const ZOOMFACTOR = 6
   let paint
   let myPath = []
   let room = document.URL.split('/')[3]
@@ -54,10 +54,10 @@ function playPageJavaScript(){
     if (username != data['username']) {
       if (zoomedOut) {context.scale(1/ZOOMFACTOR, 1/ZOOMFACTOR)}
       context.strokeStyle = data['color']
-      context.shadowBlur = 4
+      context.shadowBlur = 3
       context.shadowColor = data['color']
       context.lineJoin = "round"
-      context.lineWidth = 15
+      context.lineWidth = 8
 
       users[data['username']][1].push([[data['path'][0][0], data['path'][0][1]],[data['path'][1][0], data['path'][1][1]]])
       console.log(users[data['username']])
@@ -125,10 +125,10 @@ function playPageJavaScript(){
         'username': username
       }))
       context.strokeStyle = color
-      context.shadowBlur = 4
+      context.shadowBlur = 3
       context.shadowColor = color
       context.lineCap = "round"
-      context.lineWidth = 15
+      context.lineWidth = 8
       context.beginPath()
       context.moveTo(myPath[0][0], myPath[0][1])
       context.lineTo(myPath[1][0], myPath[1][1])
@@ -140,6 +140,10 @@ function playPageJavaScript(){
       upContext.clearRect(0, 0, upCanvas.width, upCanvas.height) 
       upContext.strokeRect(X-upCanvas.width/ZOOMFACTOR/2, Y-upCanvas.height/ZOOMFACTOR/2, upCanvas.width/ZOOMFACTOR, upCanvas.height/ZOOMFACTOR)
     }
+  })
+
+  window.addEventListener('scroll', function(event) {
+    window.scrollTo(0, 0)
   })
 
   module.exports = {
