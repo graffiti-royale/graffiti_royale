@@ -8,7 +8,7 @@ function playPageJavaScript(){
   upCanvas.width = window.innerWidth
   upCanvas.height = window.innerHeight
 
-  const ZOOMFACTOR = 6
+  const ZOOMFACTOR = 4
   let paint
   let myPath = []
   let room = document.URL.split('/')[3]
@@ -54,13 +54,12 @@ function playPageJavaScript(){
     if (username != data['username']) {
       if (zoomedOut) {context.scale(1/ZOOMFACTOR, 1/ZOOMFACTOR)}
       context.strokeStyle = data['color']
-      context.shadowBlur = 3
+      context.shadowBlur = 2
       context.shadowColor = data['color']
       context.lineJoin = "round"
-      context.lineWidth = 8
+      context.lineWidth = 4
 
       users[data['username']][1].push([[data['path'][0][0], data['path'][0][1]],[data['path'][1][0], data['path'][1][1]]])
-      console.log(users[data['username']])
       context.beginPath()
       context.moveTo(data['path'][0][0], data['path'][0][1])
       context.lineTo(data['path'][1][0], data['path'][1][1])
@@ -70,6 +69,7 @@ function playPageJavaScript(){
   }
 
   upCanvas.addEventListener('dblclick', function(event) {
+    // event.preventDefault()
     upContext.clearRect(0, 0, canvas.width, canvas.height)
     if (zoomedOut) {
       let X = Math.min(Math.max(event.pageX, canvas.width/ZOOMFACTOR/2), canvas.width-canvas.width/ZOOMFACTOR/2) 
@@ -80,7 +80,6 @@ function playPageJavaScript(){
       let moveY = -1*(Math.max(Y, canvas.height/ZOOMFACTOR/2)-(canvas.height/2))
       X = X*100/canvas.width
       Y = Y*100/canvas.height
-      console.log(xOffset)
       let coord = `${X}% ${Y}%`
       canvas.style.transform = `translate(${moveX}px, ${moveY}px) scale(${ZOOMFACTOR}, ${ZOOMFACTOR})`
       canvas.style.transformOrigin = coord
@@ -102,7 +101,23 @@ function playPageJavaScript(){
     }
   })
 
+  upCanvas.addEventListener('touchstart', function(event) {
+    if (!zoomedOut) {
+      var mouseX = event.touches[0].pageX+xOffset;
+      var mouseY = event.touches[0].pageY+yOffset;
+      paint = true
+      myPath.push([mouseX, mouseY])
+    }
+  })
+
   upCanvas.addEventListener('mouseup', function(event) {
+    if (!zoomedOut) {
+      paint = false
+      myPath = [] 
+    }
+  })
+
+  upCanvas.addEventListener('touchend', function(event) {
     if (!zoomedOut) {
       paint = false
       myPath = [] 
@@ -125,10 +140,10 @@ function playPageJavaScript(){
         'username': username
       }))
       context.strokeStyle = color
-      context.shadowBlur = 3
+      context.shadowBlur = 2
       context.shadowColor = color
       context.lineCap = "round"
-      context.lineWidth = 8
+      context.lineWidth = 4
       context.beginPath()
       context.moveTo(myPath[0][0], myPath[0][1])
       context.lineTo(myPath[1][0], myPath[1][1])
@@ -137,6 +152,33 @@ function playPageJavaScript(){
     } else if (zoomedOut) {
       let X = Math.min(Math.max(event.pageX, upCanvas.width/ZOOMFACTOR/2), upCanvas.width-upCanvas.width/ZOOMFACTOR/2) 
       let Y = Math.min(Math.max(event.pageY, upCanvas.height/ZOOMFACTOR/2), upCanvas.height-upCanvas.height/ZOOMFACTOR/2)
+      upContext.clearRect(0, 0, upCanvas.width, upCanvas.height) 
+      upContext.strokeRect(X-upCanvas.width/ZOOMFACTOR/2, Y-upCanvas.height/ZOOMFACTOR/2, upCanvas.width/ZOOMFACTOR, upCanvas.height/ZOOMFACTOR)
+    }
+  })
+
+  upCanvas.addEventListener('touchmove', function(event) {
+    event.preventDefault()
+    if (paint && !zoomedOut) {
+      myPath.push([event.touches[0].pageX+xOffset, event.touches[0].pageY+yOffset])
+      drawSocket.send(JSON.stringify({
+        'path': myPath,
+        'color': color,
+        'username': username
+      }))
+      context.strokeStyle = color
+      context.shadowBlur = 2
+      context.shadowColor = color
+      context.lineCap = "round"
+      context.lineWidth = 4
+      context.beginPath()
+      context.moveTo(myPath[0][0], myPath[0][1])
+      context.lineTo(myPath[1][0], myPath[1][1])
+      context.stroke()
+      myPath.shift()
+    } else if (zoomedOut) {
+      let X = Math.min(Math.max(event.touches[0].pageX, upCanvas.width/ZOOMFACTOR/2), upCanvas.width-upCanvas.width/ZOOMFACTOR/2) 
+      let Y = Math.min(Math.max(event.touches[0].pageY, upCanvas.height/ZOOMFACTOR/2), upCanvas.height-upCanvas.height/ZOOMFACTOR/2)
       upContext.clearRect(0, 0, upCanvas.width, upCanvas.height) 
       upContext.strokeRect(X-upCanvas.width/ZOOMFACTOR/2, Y-upCanvas.height/ZOOMFACTOR/2, upCanvas.width/ZOOMFACTOR, upCanvas.height/ZOOMFACTOR)
     }
