@@ -40,6 +40,7 @@ body {
     font-size:130px;
     text-decoration: none;
     color: black;
+    float: center;
 }
 
 .logo:visited {
@@ -47,18 +48,22 @@ body {
     color:black;
 }
 
-/* .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: white;
-    text-align: center;
-    height: 4.8rem;
-    border-top: 7px solid transparent;
-    border-image: linear-gradient(to right, rgb(0, 123, 255) 0%, #18fbff 20%, #ff4797 40%, rgb(255, 0, 17) 60%, rgb(255, 247, 0) 80%, #85ff1b 100%);
-    border-image-slice: 1;
-} */
+.copyright {
+  
+    height: 1.5rem;
+    color:rgba(113, 113, 113, 0.356);
+    /* text-shadow: -.75px 0 rgb(63, 63, 63), 0 .75px rgb(63, 63, 63), .75px 0 rgb(63, 63, 63), 0 -.75px rgb(63, 63, 63); */
+    font-family: 'Londrina Solid', cursive;
+    min-width:250px;
+    max-width:560px;
+    font-size:16px;
+    margin: 0px 30px 10px 30px;
+    float: right;
+    -webkit-user-select: none;      
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+}
 
 .head-link {
     color: black;
@@ -168,7 +173,7 @@ body {
     align-items: center;
     padding: 1rem;
     box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
-    margin: 30px 30px 80px 30px;
+    margin: 30px 30px 70px 30px;
     min-width:300px;
     max-width:520px;
 }
@@ -257,6 +262,24 @@ input:focus {
     background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
 }
 
+.logout {
+    margin: auto;
+    text-align: center;
+    border: .2rem solid black;
+    box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
+    padding: 2rem;
+    background-color:white;
+    font-family: 'Londrina Solid', cursive;
+    font-size: 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    margin: 120px 30px 60px 30px;
+    min-width:300px;
+    max-width:700px;
+    min-height: 100px;
+    max-height: 130px;
+}
+
 .reset-form {
     margin: auto;
     text-align: center;
@@ -333,6 +356,24 @@ input:focus {
     border: .2rem solid black;
     caret-color:rgb(255, 0, 132);
     background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
+}
+
+.reg-complete {
+    margin: auto;
+    text-align: center;
+    border: .2rem solid black;
+    box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
+    padding: 2rem;
+    background-color:white;
+    font-family: 'Londrina Solid', cursive;
+    font-size: 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    margin: 60px 30px 60px 30px;
+    min-width:300px;
+    max-width:950px;
+    min-height: 300px;
+    max-height: 1400px;
 }
 
 .modal {
@@ -460,7 +501,7 @@ input:focus {
     background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
 }
 
-.fieldlogo{
+/* .fieldlogo{
     background-position: center;
     padding: 100px 100px;
     font-family: 'Londrina Sketch', cursive;
@@ -470,7 +511,7 @@ input:focus {
     font-size:930px;
     text-decoration: none;
     color: rgba(125, 125, 125, 0.027);
-    /* z-index: -1; */
-}
+    z-index: -1;
+} */
 
 
