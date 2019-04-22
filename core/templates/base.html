@@ -27,15 +27,15 @@
                     <span>
                     {% if request.user.is_authenticated %}
                     <span>{{ request.user.username }}</span>
-                    <a class="logout" href="{% url 'auth_logout' %}">Logout</a>
+                    <a class="logout" href="{% url 'auth_logout' %}">LOG OUT</a>
                     {% else %}
-                    <a class="login head-link dim f2 lh-copy" style="font-size:3vw" href="{% url 'auth_login'%}?next={{request.path}}"><i class="fa fa-user fa-1x"></i>&nbspLOGiN</a>
+                    <a class="login head-link dim f2 lh-copy" style="font-size:3vw" href="{% url 'auth_login'%}?next={{request.path}}"><i class="fa fa-user fa-1x"></i>&nbspLOG iN</a>
                     {% endif %}
                     </span>
                 </div>   
             </div>
         </header>
-        <div class="footer"> </div>
+        
     {% block content %}{% endblock %}
 
 </body>
