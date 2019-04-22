@@ -25,6 +25,5 @@ function guestLoginJavaScript() {
 let onGuestLoginPage = document.querySelector('#guestlog')
 
 if (onGuestLoginPage) {
-    console.log('HI!')
     guestLoginJavaScript()
 }
