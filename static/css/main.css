@@ -524,6 +524,7 @@ input:focus {
     position: absolute;
     top: 0px;
     left: 0px;
+    touch-action: manipulation;
 }
 
 /* .rainbow {
