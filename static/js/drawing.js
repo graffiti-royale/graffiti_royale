@@ -23,8 +23,9 @@ function drawingScript2 () {
   /* Setting up personal info */
   let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C', '#13d9f3', '#f313f3', '#f3ef13']
   const myColor = colorsArray[Math.floor(Math.random() * colorsArray.length)]
-  let random_word = document.querySelector('.username').dataset.word
-  let username = document.querySelector('.username').dataset.username
+  let random_word = document.querySelector('.user_data').dataset.word
+  let username = document.querySelector('.user_data').dataset.username
+  let room = document.querySelector('.user_data').dataset.roompk
 
   let userPaths = {}
   let room = document.URL.split('/')[3]
@@ -74,9 +75,7 @@ function drawingScript2 () {
     zoomedOut = false
     xOffset = zoomCenter[0] - drawMap.width / 2
     yOffset = zoomCenter[1] - drawMap.height / 2
-    console.log(xOffset, yOffset)
     drawMap.style.zIndex = 3
-    console.log(drawMap.style)
   })
 
   drawMap.addEventListener('dblclick', function (event) {
@@ -133,7 +132,6 @@ function drawingScript2 () {
 
   drawMap.addEventListener('mouseup', function () {
     paint = false
-    console.log(userPaths)
   })
 
   drawMap.addEventListener('mouseleave', function () {

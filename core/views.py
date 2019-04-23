@@ -10,7 +10,7 @@ import random
 # Chooses a random word from our Words.csv file
 def get_random_word():
     with open("Words.csv") as word_list:
-        lines = [line for line in word_list]
+        lines = [line.strip() for line in word_list]
     return random.choice(lines).lower()
 
 
