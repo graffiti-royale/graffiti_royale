@@ -19,10 +19,11 @@
 <body class="playfield crosshair fieldlogo" id="playPage">
     <canvas id="drawMap"></canvas>
     <canvas id="upcanvas"></canvas>
-    <div class="username" data-username="{{ username }}" data-word="{{ random_word }}"></div>
+    <div class="user_data" data-username="{{ username }}" data-word="{{ random_word }}" data-room="{{ roompk }}"></div>
     <div class="play-footer">
-        <p>This needs the specific word for our users</p>
+        <p>{{ random_word }}</p>
         <input type="text" name="wordGuessed">
+        <input type="submit">
     </div>
     {% load static %}
     <script src="{% static 'build/bundle.js' %}"></script>
