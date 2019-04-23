@@ -3,6 +3,7 @@ function playPageJavaScript () {
   const upCanvas = document.querySelector('#upcanvas')
   context = canvas.getContext('2d')
   upContext = upCanvas.getContext('2d')
+  
   canvas.width = 600
   canvas.height = 600
   upCanvas.width = 600
@@ -194,6 +195,6 @@ function playPageJavaScript () {
 
 let onPlayPage = document.querySelector('#playPage')
 
-if (onPlayPage) {
-  playPageJavaScript()
-}
+// if (onPlayPage) {
+//   playPageJavaScript()
+// }
