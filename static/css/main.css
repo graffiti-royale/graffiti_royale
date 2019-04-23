@@ -79,6 +79,57 @@ body {
     border-image-slice: 1;
     cursor: default;
     font-size: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.random-word {
+    -webkit-user-select: none;      
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+    font-size: 20px;
+    font-style: italic;
+    font-family: 'Londrina Solid', cursive;
+    color:black;
+}
+
+.submitguess-button {
+    text-align: center;
+    height: 4.3rem;
+    width:12rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    color: white;
+    background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
+    font-size: 40px;
+    min-width:70px;
+    max-width:150px;
+    cursor: pointer;
+}
+
+.submitguess-button:hover {
+    text-align: center;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
+    min-width:70px;
+    max-width:150px;
+    cursor: pointer;
+}
+
+.submitguess-button:visited {
+    text-align: center;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
+    min-width:70px;
+    max-width:150px;
+    cursor: pointer;
+}
+
+.wordGuessed {
+    font-size: 40px;
 }
 
 .head-link {
@@ -204,12 +255,14 @@ input {
     color: rgb(255, 0, 17);
     background-color : white;
     font-family: 'Londrina Solid', cursive;
+    font-size:30px;
 }
 
 input:focus {
     outline: none;
     background-color : white;
     margin: 1rem .5rem 1rem .5rem;
+    font-size:30px;
 }
 
 .login {
@@ -528,6 +581,7 @@ input:focus {
     top: 20px;
     left: 50px;
     touch-action: manipulation;
+    cursor: zoom-in;
 }
 
 .guest-form {
