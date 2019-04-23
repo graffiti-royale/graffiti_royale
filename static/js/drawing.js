@@ -88,7 +88,7 @@ function drawingScript2 () {
 
   drawSocket.onmessage = function (event) {
     let data = JSON.parse(event.data)
-    if (data['username'] != username) {
+    if (data['username'] !== username) {
       if (data['new_path']) {
         userPaths[data['username']]['paths'].push(data['point'])
       } else {

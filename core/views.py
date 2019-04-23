@@ -37,7 +37,8 @@ def play(request, username):
     return render(request, 'play.html', context = {
         "username": username,
         "roompk": room.pk,
-        "random_word": random_word
+        "random_word": random_word,
+        "ROOM_CAP": ROOM_CAP
         })
     
 def make_guest(request):
