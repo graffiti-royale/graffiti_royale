@@ -8,7 +8,7 @@
     <div><form method="post" action="">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" class="login-button" value="{% trans 'LOG iN' %}" />
+        <input type="submit" class="login-button" value="{% trans 'LOGiN' %}" />
         <input type="hidden" name="next" value="{{ next }}" />
     </form><br>
     <p>{% trans "Forgot your password?" %}<a class="login-link i" href="{% url 'auth_password_reset' %}"> {% trans "RESET iT" %}</a></p>
