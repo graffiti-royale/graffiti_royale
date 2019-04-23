@@ -1,13 +1,23 @@
 function drawingScript2 () {
     /* Setting up the canvas */
-    const canvas = document.querySelector('#drawMap')
-    const context = canvas.getContext('2d')
-    canvas.width = 600
-    canvas.height = 600
-    context.shadowBlur = 3
-    context.lineCap = "round"
-    context.lineWidth = 3
+    const drawMap = document.querySelector('#drawMap')
+    const miniMap = document.querySelector('#upcanvas')
+    const drawMapCxt = drawMap.getContext('2d')
+    miniMapCxt = miniMap.getContext('2d')
+    drawMap.width = window.innerWidth
+    drawMap.height = window.innerHeight
+    miniMap.width = 600
+    miniMap.height = 600
+    drawMapCxt.shadowBlur = 4
+    drawMapCxt.lineCap = "round"
+    drawMapCxt.lineWidth = 4
+
     let paint
+    let zoomedOut = true
+    const ZOOMFACTOR = 8
+    let zoomCenter = []
+    let xOffset = 0
+    let yOffset = 0
 
     /* Setting up personal info */
     let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C', '#13d9f3', '#f313f3', '#f3ef13']
@@ -15,7 +25,6 @@ function drawingScript2 () {
     let username = document.querySelector('.username').dataset.username
 
     let userPaths = {}
-    let queuedPaths = {}
     let room = document.URL.split('/')[3]
     let usersSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/users`)
     usersSocket.onopen = function (event) {
@@ -30,7 +39,6 @@ function drawingScript2 () {
     usersSocket.onmessage = function (event) {
         let data = JSON.parse(event.data)
         userPaths = data['users']
-        queuedPaths = data['users']
         console.log(`Users updated:`)
         console.log(userPaths)
     }
@@ -45,6 +53,25 @@ function drawingScript2 () {
         usersSocket.close()
     })
 
+    miniMap.addEventListener('mousemove', function(event) {
+        if (zoomedOut) {
+            let X = Math.min(
+                Math.max(event.pageX - this.offsetLeft, drawMap.width / ZOOMFACTOR / 2), miniMap.width - drawMap.width / ZOOMFACTOR / 2
+            )
+            let Y = Math.min(
+                Math.max(event.pageY - this.offsetTop, drawMap.height / ZOOMFACTOR / 2), 
+                miniMap.height - drawMap.height / ZOOMFACTOR / 2
+            )
+            zoomCenter = [Math.floor(X), Math.floor(Y)]
+        }
+    })
+
+    miniMap.addEventListener('dblclick', function(event) {
+        zoomedOut = !zoomedOut
+        xOffset = zoomCenter[0] - drawMap.width / ZOOMFACTOR / 2
+        yOffset = zoomCenter[1] - drawMap.height / ZOOMFACTOR / 2
+        console.log(xOffset, yOffset)
+    })
     
     let drawSocket = new WebSocket(`wss://${window.location.host}/ws/draw/${room}/`)    
 
@@ -53,73 +80,122 @@ function drawingScript2 () {
         if (data['username'] != username) {
             if (data['new_path']) {
                 userPaths[data['username']]['paths'].push(data['point'])
-                queuedPaths[data['username']]['paths'].push(data['point'])
             } else {
                 userPaths[data['username']]['paths'][userPaths[data['username']]['paths'].length-1].push(data['point'])
-                if (queuedPaths[data['username']]['paths'].length === 0) {
-                    queuedPaths[data['username']]['paths'].push(data['point'])
-                } else {
-                    queuedPaths[data['username']]['paths'][userPaths[data['username']]['paths'].length-1].push(data['point'])
-                }
             }
         }
     }
 
-    canvas.addEventListener('mousedown', function(event) {
+    drawMap.addEventListener('mousedown', function(event) {
         paint = true
-        userPaths[username]['paths'].push([[event.pageX - this.offsetLeft, event.pageY-this.offsetTop]])
-        queuedPaths[username]['paths'].push([[event.pageX - this.offsetLeft, event.pageY-this.offsetTop]])
+        userPaths[username]['paths'].push([[
+            Math.floor(event.pageX/ZOOMFACTOR)+xOffset, 
+            Math.floor(event.pageY/ZOOMFACTOR)+yOffset
+        ]])
         drawSocket.send(JSON.stringify({
             "username": username,
-            "point": [event.pageX - this.offsetLeft, event.pageY - this.offsetTop],
+            "point": [
+                Math.floor(event.pageX/ZOOMFACTOR)+xOffset, 
+                Math.floor(event.pageY/ZOOMFACTOR)+yOffset
+            ],
             "new_path": true 
         }))
     })  
     
-    canvas.addEventListener('mousemove', function(event) {
+    drawMap.addEventListener('mousemove', function(event) {
         if (paint) {
-            userPaths[username]['paths'][userPaths[username]['paths'].length-1].push(
-                [event.pageX - this.offsetLeft, event.pageY - this.offsetTop]
-            )
-            queuedPaths[username]['paths'][userPaths[username]['paths'].length-1].push(
-                [event.pageX - this.offsetLeft, event.pageY - this.offsetTop]
-            )
+            userPaths[username]['paths'][userPaths[username]['paths'].length-1].push([
+                Math.floor(event.pageX/ZOOMFACTOR)+xOffset, 
+                Math.floor(event.pageY/ZOOMFACTOR)+yOffset
+            ])
             drawSocket.send(JSON.stringify({
                 "username": username,
-                "point": [event.pageX - this.offsetLeft, event.pageY - this.offsetTop],
+                "point": [
+                    Math.floor(event.pageX/ZOOMFACTOR)+xOffset, 
+                    Math.floor(event.pageY/ZOOMFACTOR)+yOffset
+                ],
                 "new_path": false 
             }))
         }
     })
 
-    canvas.addEventListener('mouseup', function() {
+    drawMap.addEventListener('mouseup', function() {
         paint = false
         console.log(userPaths)
     })
 
-    canvas.addEventListener('mouseleave', function() {
+    drawMap.addEventListener('mouseleave', function() {
         paint = false
     })
 
     /* Redraw function */
     function redraw() {
-        for (let user of Object.values(queuedPaths)) {
+        miniMapCxt.clearRect(0, 0, miniMap.width, miniMap.height)
+        for (let user of Object.values(userPaths)) {
             let color = user['color']
             let paths = user['paths']
-            let username = user['username']
-            context.strokeStyle = color
-            context.shadowColor = color
+            miniMapCxt.strokeStyle = color
+            miniMapCxt.shadowColor = color
+            miniMapCxt.shadowBlur = 2
+            miniMapCxt.lineCap = "round"
+            miniMapCxt.lineWidth = 2
             
             for (let path of Object.values(paths)) {
-                context.beginPath()
-                context.moveTo(path[0][0], path[0][1])
+                miniMapCxt.beginPath()
+                miniMapCxt.moveTo(path[0][0], path[0][1])
                 for (i = 1; i < path.length; i++) {
-                    context.moveTo(path[i][0], path[i][1])
-                    context.lineTo(path[i-1][0], path[i-1][1])
+                    miniMapCxt.moveTo(path[i][0], path[i][1])
+                    miniMapCxt.lineTo(path[i-1][0], path[i-1][1])
                 }
-                context.stroke()
-            queuedPaths[username]['paths'] = []
+                miniMapCxt.stroke()
             }
+        }
+        if (zoomCenter) {
+            miniMapCxt.shadowBlur = 0
+            miniMapCxt.lineCap = "round"
+            miniMapCxt.lineWidth = 2
+            miniMapCxt.strokeStyle = '#000000'
+            miniMapCxt.strokeRect(
+                zoomCenter[0] - drawMap.width / ZOOMFACTOR / 2, 
+                zoomCenter[1] - drawMap.height / ZOOMFACTOR / 2, 
+                drawMap.width / ZOOMFACTOR, 
+                drawMap.height / ZOOMFACTOR
+            )
+        }
+
+        if (!zoomedOut) {
+            drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
+            for (let user of Object.values(userPaths)) {
+                let color = user['color']
+                let paths = user['paths']
+                drawMapCxt.strokeStyle = color
+                drawMapCxt.shadowColor = color
+                drawMapCxt.shadowBlur = 3
+                drawMapCxt.lineCap = "round"
+                drawMapCxt.lineWidth = 5
+                
+                for (let path of Object.values(paths)) {
+                    drawMapCxt.beginPath()
+                    drawMapCxt.moveTo(
+                        (path[0][0]-xOffset)*ZOOMFACTOR, 
+                        (path[0][1]-yOffset)*ZOOMFACTOR
+                    )
+                    for (i = 2; i < path.length; i++) {
+                        drawMapCxt.moveTo(
+                            (path[i][0]-xOffset)*ZOOMFACTOR, 
+                            (path[i][1]-yOffset)*ZOOMFACTOR
+                        )
+                        drawMapCxt.arcTo(
+                            (path[i-1][0]-xOffset)*ZOOMFACTOR, 
+                            (path[i-1][1]-yOffset)*ZOOMFACTOR,
+                            (path[i-2][0]-xOffset)*ZOOMFACTOR, 
+                            (path[i-2][1]-yOffset)*ZOOMFACTOR,
+                            2
+                        )
+                    }
+                    drawMapCxt.stroke()
+                }
+            } 
         }
     }
 
