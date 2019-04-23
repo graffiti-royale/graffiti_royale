@@ -5,21 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#3367D6"/>
 
     <title>{% block title %}Graffiti Royale{% endblock %}</title>
     {% block meta %}{% endblock %}
     {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-<link href="https://fonts.googleapis.com/css?family=Londrina+Sketch|Londrina+Solid" rel="stylesheet">       
+<link href="https://fonts.googleapis.com/css?family=Londrina+Sketch|Londrina+Solid" rel="stylesheet">
+<link rel="manifest" href="{% static 'manifest.json' %}">       
 
 </head>
 
+<<<<<<< HEAD
 <body class="playfield crosshair" id="playPage">
     
     <canvas width="4000" height="4000" id="drawMap"></canvas>
     <div class="username" data-username="{{ username }}" data-word="{{ random_word }}"></div>
+=======
+<body class="playfield crosshair fieldlogo" id="playPage">
+    <canvas id="drawMap"></canvas>
+    <canvas id="upcanvas"></canvas>
+    <div class="username" data-username="{{ username }}"></div>
+>>>>>>> 16abec9635d3da73ce76571d22aa0ac3eea941da
     {% load static %}
     <script src="{% static 'build/bundle.js' %}"></script>
+
 </body>
 </div>
 </html>

@@ -7,6 +7,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="theme-color" content="#3367D6"/>
         {% endblock %}
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css" integrity="sha384-Mmxa0mLqhmOeaE8vgOSbKacftZcsNYDjQzuCOm6D02luYSzBG8vpaOykv9lFQ51Y" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover.css">
@@ -14,27 +15,28 @@
         <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-        
+        <link rel="manifest" href="{% static 'manifest.json' %}">
     
     </head>
     
     <body>
         <header>
             <div class="banner">
-             <div><i class="fas fa-spray-can fa-4x dim hvr-buzz-out"></i></div><a href="{% url 'homepage' %}" class="logo"><div><p>GRAFFiTi ROYALE</p></div></a>
+            <a href="{% url 'homepage' %}" class="logo" style="font-size:9vw"><div><p>GRAFFiTi ROYALE</p></div></a>
                  <div>
                     <span>
                     {% if request.user.is_authenticated %}
                     <span>{{ request.user.username }}</span>
-                    <a class="logout" href="{% url 'auth_logout' %}">Logout</a>
+                    <a class="logout" href="{% url 'auth_logout' %}">LOG OUT</a>
                     {% else %}
-                    <a class="login head-link dim f2 lh-copy" href="{% url 'auth_login'%}?next={{request.path}}"><i class="fa fa-user fa-1x"></i>&nbspLOGiN</a>
+                    <a class="login head-link dim f2 lh-copy" style="font-size:3vw" href="{% url 'auth_login'%}?next={{request.path}}"><i class="fa fa-user fa-1x"></i>&nbspLOG iN</a>
                     {% endif %}
                     </span>
                 </div>   
             </div>
         </header>
-        <div class="footer"> </div>
+        
     {% block content %}{% endblock %}
+
 </body>
 </html>

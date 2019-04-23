@@ -1,5 +1,5 @@
 from asgiref.sync import async_to_sync
-from channels.generic.websocket import WebsocketConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer, WebsocketConsumer
 import json
 from .models import Room, Profile
 from django.contrib.auth.models import User
@@ -48,26 +48,26 @@ class ChatConsumer(WebsocketConsumer):
         }))
 
 class PlayConsumer(WebsocketConsumer):
-    def connect(self):
+    async def connect(self):
         self.room_name = 'play'
         self.room_group_name = 'draw_%s' % self.room_name
 
         # Join room group
-        async_to_sync(self.channel_layer.group_add)(
+        await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
         )
 
-        self.accept()
+        await self.accept()
 
-    def receive(self, text_data):
+    async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         path = text_data_json['path']
         color = text_data_json['color']
         username = text_data_json['username']
 
         # Send message to room group
-        async_to_sync(self.channel_layer.group_send)(
+        await self.channel_layer.group_send(
             self.room_group_name,
             {
                 'type': 'coord',
@@ -77,13 +77,13 @@ class PlayConsumer(WebsocketConsumer):
             }
         )
 
-    def coord(self, event):
+    async def coord(self, event):
         path = event['path']
         color = event['color']
         username = event['username']
 
         # Send message to WebSocket
-        self.send(text_data=json.dumps({
+        await self.send(text_data=json.dumps({
             'path': path,
             'color': color,
             'username': username
