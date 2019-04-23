@@ -51,7 +51,8 @@ function drawingScript2 () {
         usersSocket.send(JSON.stringify({
             'username': username,
             'enter': false,
-            'color': myColor
+            'color': myColor,
+            'random_word': random_word
         }))
         usersSocket.close()
     })
