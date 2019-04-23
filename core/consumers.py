@@ -111,7 +111,7 @@ class UsersConsumer(WebsocketConsumer):
             room.users.remove(user)
             if user.profile.guest:
                 user.delete()
-        users = {person.username:{"guest":person.profile.guest, "color":person.profile.color, "paths":[]} for person in room.users.all()}
+        users = {person.username:{"word":person.profile.word, "guest":person.profile.guest, "color":person.profile.color, "paths":[]} for person in room.users.all()}
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
