@@ -64,6 +64,8 @@ body {
 }
 
 .play-footer {
+    font-family: 'Londrina Solid', cursive;
+    color:black;
     z-index: 5;
     position: fixed;
     left: 0;
@@ -72,9 +74,11 @@ body {
     background-color: white;
     text-align: center;
     height: 7rem;
-    border-top: 3px solid transparent;
+    border-top: 2px solid transparent;
     border-color:rgba(126, 126, 126, 0.221);
     border-image-slice: 1;
+    cursor: default;
+    font-size: 20px;
 }
 
 .head-link {
@@ -199,6 +203,7 @@ input {
     caret-color:rgb(255, 0, 17);
     color: rgb(255, 0, 17);
     background-color : white;
+    font-family: 'Londrina Solid', cursive;
 }
 
 input:focus {
