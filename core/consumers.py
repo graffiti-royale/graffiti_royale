@@ -106,17 +106,11 @@ class UsersConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         enter = text_data_json['enter']
         username = text_data_json['username']
-<<<<<<< HEAD
         random_word = text_data_json['random_word']
+        color = text_data_json['color']
         user, created = User.objects.get_or_create(username=username)
         user.profile.word = random_word
-
-=======
-        color = text_data_json['color']
-
-        user, created = User.objects.get_or_create(username=username)
         user.profile.color = color
->>>>>>> 5fc2bd9af8e30f40e710c1133e6dd6d1ba656c94
         if created:
             user.profile.guest = True
         user.profile.save()
@@ -127,11 +121,7 @@ class UsersConsumer(WebsocketConsumer):
             room.users.remove(user)
             if user.profile.guest:
                 user.delete()
-<<<<<<< HEAD
-        users = {person.username:[person.profile.guest, person.profile.word, []] for person in room.users.all()}
-=======
-        users = {person.username:{"guest":person.profile.guest, "color":person.profile.color, "paths":[]} for person in room.users.all()}
->>>>>>> 5fc2bd9af8e30f40e710c1133e6dd6d1ba656c94
+        users = {person.username:{"word":person.profile.word, "guest":person.profile.guest, "color":person.profile.color, "paths":[]} for person in room.users.all()}
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
