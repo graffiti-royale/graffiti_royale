@@ -23,13 +23,15 @@ function playPageJavaScript () {
   const color = colorsArray[Math.floor(Math.random() * colorsArray.length)]
 
   let username = document.querySelector('.username').dataset.username
+  let random_word = document.querySelector('.username').dataset.word
   let users
 
   usersSocket.onopen = function (event) {
     console.log(username)
     usersSocket.send(JSON.stringify({
       'username': username,
-      'enter': true
+      'enter': true,
+      'random_word': random_word,
     }))
   }
 

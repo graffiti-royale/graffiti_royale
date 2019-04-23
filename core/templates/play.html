@@ -13,8 +13,8 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 <link href="https://fonts.googleapis.com/css?family=Londrina+Sketch|Londrina+Solid" rel="stylesheet">
 <link rel="manifest" href="{% static 'manifest.json' %}">       
-
 </head>
+    
 
 <body class="playfield crosshair fieldlogo" id="playPage">
        
@@ -24,7 +24,11 @@
     <canvas id="drawMap"></canvas>
     
     <canvas id="upcanvas"></canvas>
-    <div class="username" data-username="{{ username }}"></div>
+    <div class="username" data-username="{{ username }}" data-word="{{ random_word }}"></div>
+    <div class="play-footer">
+        <p>This needs the specific word for our users</p>
+        <input type="text" name="wordGuessed">
+    </div>
     {% load static %}
     <script src="{% static 'build/bundle.js' %}"></script>
 

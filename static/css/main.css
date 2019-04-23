@@ -63,6 +63,20 @@ body {
     user-select: none; 
 }
 
+.play-footer {
+    z-index: 5;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    text-align: center;
+    height: 4rem;
+    border-top: 3px solid transparent;
+    border-color:rgba(126, 126, 126, 0.221);
+    border-image-slice: 1;
+}
+
 .head-link {
     color: black;
     text-decoration: none;
@@ -196,6 +210,8 @@ input:focus {
 .login {
     font-family: 'Londrina Solid', cursive;
     font-style: normal;
+    flex-wrap: wrap;
+    text-decoration: none;
 }
 
 .login-form {
