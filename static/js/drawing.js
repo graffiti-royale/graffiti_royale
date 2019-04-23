@@ -1,7 +1,7 @@
 function drawingScript2 () {
   /* Setting up the canvas */
   const drawMap = document.querySelector('#drawMap')
-  const miniMap = document.querySelector('#upcanvas')
+  const miniMap = document.querySelector('#miniMap')
   const drawMapCxt = drawMap.getContext('2d')
   miniMapCxt = miniMap.getContext('2d')
   drawMap.width = window.innerWidth
@@ -19,6 +19,10 @@ function drawingScript2 () {
   let zoomCenter = []
   let xOffset = 0
   let yOffset = 0
+
+  /* Setting up visuals */
+  const bricks = document.querySelector('#bricks')
+  const background = document.querySelector('#background')
 
   /* Setting up personal info */
   let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C', '#13d9f3', '#f313f3', '#f3ef13']
@@ -75,12 +79,14 @@ function drawingScript2 () {
     zoomedOut = false
     xOffset = zoomCenter[0] - drawMap.width / 2
     yOffset = zoomCenter[1] - drawMap.height / 2
-    drawMap.style.zIndex = 3
+    drawMap.style.zIndex = 4
+    miniMap.style.zIndex = 1
   })
 
   drawMap.addEventListener('dblclick', function (event) {
     zoomedOut = true
     drawMap.style.zIndex = 1
+    miniMap.style.zIndex = 4
     drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
   })
 
