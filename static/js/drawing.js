@@ -67,10 +67,18 @@ function drawingScript2 () {
     })
 
     miniMap.addEventListener('dblclick', function(event) {
-        zoomedOut = !zoomedOut
+        zoomedOut = false
         xOffset = zoomCenter[0] - drawMap.width / ZOOMFACTOR / 2
         yOffset = zoomCenter[1] - drawMap.height / ZOOMFACTOR / 2
         console.log(xOffset, yOffset)
+        drawMap.style.zIndex = 3
+        console.log(drawMap.style)
+    })
+
+    drawMap.addEventListener('dblclick', function(event) {
+        zoomedOut = true
+        drawMap.style.zIndex = 1
+        drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
     })
     
     let drawSocket = new WebSocket(`wss://${window.location.host}/ws/draw/${room}/`)    
