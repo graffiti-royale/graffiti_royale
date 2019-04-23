@@ -76,14 +76,6 @@ body {
     text-decoration: none;
 }
 
-/* .buttons {
-    margin: 0;
-    position: absolute;
-    top: 60%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-} */
-
 .play-link {
     color: black;
     text-decoration: none;
@@ -492,19 +484,10 @@ input:focus {
     cursor: pointer;
 }
 
-/* .playfield {
-    background-position: left;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background: linear-gradient(
-        rgba(255, 255, 255, 0.783), 
-        rgba(255, 255, 255, 0.783)),
-        url("https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg");
-} */
-
 .crosshair { cursor: crosshair; }
 
 #drawMap {
+    border: 2px solid black;
     z-index: 1;
     position: absolute;
     top: 0px;
@@ -524,13 +507,6 @@ input:focus {
     left: 0px;
     touch-action: manipulation;
 }
-
-/* .rainbow {
-    border: 5px solid transparent;
-    border-image: linear-gradient(to right, rgb(0, 123, 255) 0%, #18fbff 20%, #ff4797 40%, rgb(255, 0, 17) 60%, rgb(255, 247, 0) 80%, #85ff1b 100%);    border-image-slice: 1;
-    width: 4010px;
-    height:4010px;
-} */
 
 .guest-form {
     margin: auto;
@@ -571,16 +547,38 @@ input:focus {
     background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
 }
 
-/* .fieldlogo{
-    background-position: center;
-    padding: 100px 100px;
+.matchtimer {
+    font-family: 'Londrina Solid', cursive;
+    font-size: 50px;
+    position: absolute;
+    bottom: 2px;
+    -webkit-user-select: none;      
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+}
+
+.roundtimer {
+    font-family: 'Londrina Solid', cursive;
+    font-size: 50px;
+    position: absolute;
+    bottom: 2px;
+    -webkit-user-select: none;      
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+}
+
+.seconds {
     font-family: 'Londrina Sketch', cursive;
-    text-shadow: -.75px 0 rgba(125, 125, 125, 0.027), 0 .75px rgba(125, 125, 125, 0.027), .75px 0 rgba(125, 125, 125, 0.027), 0 -.75px rgba(125, 125, 125, 0.027);
-    justify-content: center;
-    align-items: center;
-    font-size:930px;
-    text-decoration: none;
-    color: rgba(125, 125, 125, 0.027);
-    z-index: -1;
-} */
+    font-size: 80px;
+    color: black;
+    font-style: italic;
+    text-shadow: -.75px 0 black, 0 .75px black, .75px 0 black, 0 -.75px black;
+    -webkit-user-select: none;      
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+}
+
 

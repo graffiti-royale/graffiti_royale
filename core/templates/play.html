@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<div class="rainbow">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,13 +17,18 @@
 </head>
 
 <body class="playfield crosshair fieldlogo" id="playPage">
+       
+    <center><div class="matchtimer">Match starts in <span class="seconds" id="time">10</span></div></center>
+    <!-- <center><div class="roundtimer">Round starts in <span class="seconds" id="time">3</span></div></center> -->
+
     <canvas id="drawMap"></canvas>
+    
     <canvas id="upcanvas"></canvas>
     <div class="username" data-username="{{ username }}"></div>
     {% load static %}
     <script src="{% static 'build/bundle.js' %}"></script>
 
 </body>
-</div>
+
 </html>
 
