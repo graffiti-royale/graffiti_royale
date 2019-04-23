@@ -48,7 +48,6 @@ body {
     color:black;
 }
 
-<<<<<<< HEAD
 .copyright {
     height: 1.5rem;
     color:rgba(113, 113, 113, 0.356);
@@ -62,7 +61,8 @@ body {
     -moz-user-select: none; 
     -ms-user-select: none; 
     user-select: none; 
-=======
+}
+
 .play-footer {
     position: fixed;
     left: 0;
@@ -74,7 +74,6 @@ body {
     border-top: 3px solid transparent;
     border-color:rgba(126, 126, 126, 0.221);
     border-image-slice: 1;
->>>>>>> working_branch
 }
 
 .head-link {
@@ -346,7 +345,6 @@ input:focus {
     text-decoration: none;
     margin: 60px 30px 60px 30px;
     min-width:300px;
-<<<<<<< HEAD
     max-width:800px;
     min-height: 140px;
     max-height: 280px;
@@ -398,8 +396,6 @@ input:focus {
     text-decoration: none;
     margin: 60px 30px 60px 30px;
     min-width:300px;
-=======
->>>>>>> working_branch
     max-width:950px;
     min-height: 300px;
     max-height: auto;
@@ -511,16 +507,6 @@ input:focus {
     cursor: pointer;
 }
 
-/* .playfield {
-    background-position: left;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background: linear-gradient(
-        rgba(255, 255, 255, 0.783), 
-        rgba(255, 255, 255, 0.783)),
-        url("https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg");
-} */
-
 .crosshair { cursor: crosshair; }
 
 #drawMap {
@@ -544,13 +530,6 @@ input:focus {
     touch-action: manipulation;
 }
 
-/* .rainbow {
-    border: 5px solid transparent;
-    border-image: linear-gradient(to right, rgb(0, 123, 255) 0%, #18fbff 20%, #ff4797 40%, rgb(255, 0, 17) 60%, rgb(255, 247, 0) 80%, #85ff1b 100%);    border-image-slice: 1;
-    width: 4010px;
-    height:4010px;
-} */
-
 .guest-form {
     margin: auto;
     text-align: center;
@@ -568,43 +547,6 @@ input:focus {
     min-height: 315px;
     max-height: 700px;
 }
-<<<<<<< HEAD
-=======
-
-.guest-button {
-    text-align: center;
-    height: 4.3rem;
-    width:17rem;
-    margin-right: .5rem;
-    border-radius: 3rem;
-    border: .2rem solid black;
-    color: white;
-    caret-color:rgb(255, 0, 132);
-    background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
-}
-
-.guest-button:hover {
-    text-align: center;
-    margin-right: .5rem;
-    border-radius: 3rem;
-    border: .2rem solid black;
-    caret-color:rgb(255, 0, 132);
-    background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
-}
-
-/* .fieldlogo{
-    background-position: center;
-    padding: 100px 100px;
-    font-family: 'Londrina Sketch', cursive;
-    text-shadow: -.75px 0 rgba(125, 125, 125, 0.027), 0 .75px rgba(125, 125, 125, 0.027), .75px 0 rgba(125, 125, 125, 0.027), 0 -.75px rgba(125, 125, 125, 0.027);
-    justify-content: center;
-    align-items: center;
-    font-size:930px;
-    text-decoration: none;
-    color: rgba(125, 125, 125, 0.027);
-    z-index: -1;
-} */
->>>>>>> working_branch
 
 .guest-button {
     text-align: center;
@@ -627,16 +569,4 @@ input:focus {
     background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
 }
 
-/* .fieldlogo{
-    background-position: center;
-    padding: 100px 100px;
-    font-family: 'Londrina Sketch', cursive;
-    text-shadow: -.75px 0 rgba(125, 125, 125, 0.027), 0 .75px rgba(125, 125, 125, 0.027), .75px 0 rgba(125, 125, 125, 0.027), 0 -.75px rgba(125, 125, 125, 0.027);
-    justify-content: center;
-    align-items: center;
-    font-size:930px;
-    text-decoration: none;
-    color: rgba(125, 125, 125, 0.027);
-    z-index: -1;
-} */
 
