@@ -580,8 +580,11 @@ input:focus {
 #bricks {
     z-index: 3;
     position: absolute;
-    top: 20px;
-    left: 50px;
+    border: 3px solid black;
+    top: 5px;
+    left: 0;
+    right: 0;
+    margin: auto;
     width: 600px;
     height: 600px;
     background: linear-gradient(
@@ -591,11 +594,12 @@ input:focus {
 }
 
 #miniMap {
-    border: 3px solid black;
     z-index: 4;
     position: absolute;
-    top: 20px;
-    left: 50px;
+    top: 5px;
+    left: 0;
+    right: 0;
+    margin: auto;
     touch-action: manipulation;
     cursor: zoom-in;
 }

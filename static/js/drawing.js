@@ -8,9 +8,9 @@ function drawingScript2 () {
   drawMap.height = window.innerHeight
   miniMap.width = 600
   miniMap.height = 600
-  drawMapCxt.shadowBlur = 4
-  drawMapCxt.lineCap = 'round'
-  drawMapCxt.lineWidth = 4
+//   drawMapCxt.shadowBlur = 3
+//   drawMapCxt.lineCap = 'round'
+//   drawMapCxt.lineWidth = 4
 
   let paint
   let zoomedOut = true
@@ -83,8 +83,8 @@ function drawingScript2 () {
     yOffset = zoomCenter[1] - drawMap.height / 2
     drawMap.style.zIndex = 4
     miniMap.style.zIndex = 1
-    let moveX = -1 * ((zoomCenter[0] / ZOOMFACTOR) - (window.innerWidth / 2))
-    let moveY = -1 * ((zoomCenter[1] / ZOOMFACTOR) - (window.innerHeight / 2))
+    let moveX = -1 * (((zoomCenter[0] / ZOOMFACTOR) - (window.innerWidth / 2)) + miniMap.offsetLeft)
+    let moveY = -1 * (((zoomCenter[1] / ZOOMFACTOR) - (window.innerHeight / 2)) + miniMap.offsetTop)
     X = zoomCenter[0] * 100 / miniMap.width / ZOOMFACTOR
     Y = zoomCenter[1] * 100 / miniMap.height / ZOOMFACTOR
     let coord = `${X}% ${Y}%`
@@ -198,9 +198,9 @@ function drawingScript2 () {
         let paths = user['paths']
         drawMapCxt.strokeStyle = color
         drawMapCxt.shadowColor = color
-        drawMapCxt.shadowBlur = 3
+        drawMapCxt.shadowBlur = 4
         drawMapCxt.lineCap = 'round'
-        drawMapCxt.lineWidth = 5
+        drawMapCxt.lineWidth = 6
 
         for (let path of Object.values(paths)) {
           drawMapCxt.beginPath()
