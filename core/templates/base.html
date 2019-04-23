@@ -29,7 +29,11 @@
                     <span>{{ request.user.username }}</span>
                     <a class="logout" href="{% url 'auth_logout' %}">LOG OUT</a>
                     {% else %}
+<<<<<<< HEAD
                     <a class="login head-link dim f2 lh-copy" style="font-size:3vw" href="{% url 'auth_login'%}?next={{request.path}}"><i class="fa fa-user fa-1x"></i>&nbspLOG iN</a>
+=======
+                    <a class="login head-link dim f2 lh-copy" style="font-size:3vw" href="{% url 'auth_login'%}?next={{request.path}}"><i class="fa fa-user fa-1x"></i>&nbspLOGiN</a>
+>>>>>>> working_branch
                     {% endif %}
                     </span>
                 </div>   
