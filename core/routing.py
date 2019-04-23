@@ -1,7 +1,8 @@
-from django.conf.urls import path
+from django.conf.urls import url
+
 from . import consumers
 
 websocket_urlpatterns = [
-    path('ws/<pk:roompk>/draw/', consumers.PlayConsumer),
-    path('ws/<pk:roompk>/users/', consumers.UsersConsumer)
+    url(r'^ws/(?P<roompk>[^/]+)/draw/$', consumers.PlayConsumer),
+    url(r'^ws/(?P<roompk>[^/]+)/users/$', consumers.UsersConsumer)
 ]

@@ -25,11 +25,10 @@ function drawingScript2 () {
   const myColor = colorsArray[Math.floor(Math.random() * colorsArray.length)]
   let random_word = document.querySelector('.user_data').dataset.word
   let username = document.querySelector('.user_data').dataset.username
-  let room = document.querySelector('.user_data').dataset.roompk
+  let room = document.querySelector('.user_data').dataset.room
 
   let userPaths = {}
-  let room = document.URL.split('/')[3]
-  let usersSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/users`)
+  let usersSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/users/`)
   usersSocket.onopen = function (event) {
     console.log(username)
     usersSocket.send(JSON.stringify({
@@ -45,6 +44,7 @@ function drawingScript2 () {
     userPaths = data['users']
     console.log(`Users updated:`)
     console.log(userPaths)
+    console.log(data['room'])
   }
 
   window.addEventListener('beforeunload', function () {
@@ -84,7 +84,7 @@ function drawingScript2 () {
     drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
   })
 
-  let drawSocket = new WebSocket(`wss://${window.location.host}/ws/draw/${room}/`)
+  let drawSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/draw/`)
 
   drawSocket.onmessage = function (event) {
     let data = JSON.parse(event.data)

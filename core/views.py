@@ -7,6 +7,8 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 import random
 
+ROOM_CAP = 5
+
 # Chooses a random word from our Words.csv file
 def get_random_word():
     with open("Words.csv") as word_list:
@@ -28,7 +30,7 @@ def play(request, username):
     random_word = get_random_word()
 
     room.users.add(user)
-    if room.users.count() > 1:
+    if room.users.count() > ROOM_CAP-1:
         room.full=True
     room.save()
 

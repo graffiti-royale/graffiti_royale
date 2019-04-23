@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 
 class PlayConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.roompk = self.scope['url_route']['kwargs']['roompk']
-        self.room_group_name = 'draw_%s' % self.roompk
+        self.room_name = self.scope['url_route']['kwargs']['roompk']
+        self.room_group_name = 'draw_%s' % self.room_name
 
         # Join room group
         await self.channel_layer.group_add(
@@ -48,8 +48,8 @@ class PlayConsumer(AsyncWebsocketConsumer):
 
 class UsersConsumer(WebsocketConsumer):
     def connect(self):
-        self.roompk = self.scope['url_route']['kwargs']['roompk']
-        self.room_group_name = 'users_%s' % self.roompk
+        self.room_name = self.scope['url_route']['kwargs']['roompk']
+        self.room_group_name = 'users_%s' % self.room_name
 
         # Join room group
         async_to_sync(self.channel_layer.group_add)(
@@ -62,12 +62,21 @@ class UsersConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         enter = text_data_json['enter']
+        color = text_data_json['color']
+        word = text_data_json['random_word']
+
         user = User.objects.get(username=text_data_json['username'])
-        room = Room.objects.get(name=text_data_json['room'])
+        room = Room.objects.get(pk=self.room_name)
+        
+        user.profile.color = color
+        user.profile.word = word
+        user.profile.save()
+        
         if not enter:
             room.users.remove(user)
             if user.profile.guest:
                 user.delete()
+
         users = {person.username:{"word":person.profile.word, "guest":person.profile.guest, "color":person.profile.color, "paths":[]} for person in room.users.all()}
 
         # Send message to room group
@@ -84,6 +93,6 @@ class UsersConsumer(WebsocketConsumer):
 
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'users': users
-            'room': self.roompk
+            'users': users,
+            'room': self.room_name
         }))

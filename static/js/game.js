@@ -3,17 +3,17 @@
 
 //This currently only works when you hit the submit button, we will need to find a way to submit when you press the enter key. I tried searching for the answer online, but everything I found needed the use of jQuery.
 
-window.onload = function(){
-    let wordGuessed = document.querySelector(".wordGuessed");
-    let submitWordGuessed = document.querySelector(".submitWordGuessed");
+// window.onload = function(){
+//     let wordGuessed = document.querySelector(".wordGuessed");
+//     let submitWordGuessed = document.querySelector(".submitWordGuessed");
 
-    submitWordGuessed.onclick = function(){console.log(wordGuessed.value)
-        if(wordGuessed.value == "This will be our wordlist from Django"){
+//     submitWordGuessed.onclick = function(){console.log(wordGuessed.value)
+//         if(wordGuessed.value == "This will be our wordlist from Django"){
 
-        }
-    }
+//         }
+//     }
 
 
-}
+// }
 
 
