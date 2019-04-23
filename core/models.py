@@ -11,7 +11,11 @@ class Room(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
     guest = models.BooleanField(default=False)
+<<<<<<< HEAD
     word = models.CharField(max_length=100, null=True)
+=======
+    color = models.TextField(max_length=10, null=True)
+>>>>>>> 5fc2bd9af8e30f40e710c1133e6dd6d1ba656c94
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
