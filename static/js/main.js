@@ -12,7 +12,6 @@ function playPageJavaScript () {
   const ZOOMFACTOR = 4
   let paint
   let myPath = []
-  let pointerCache = []
   let room = document.URL.split('/')[3]
   let drawSocket = new WebSocket(`wss://${window.location.host}/ws/draw/${room}/`)
   let usersSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/users`)
