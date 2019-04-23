@@ -5,6 +5,7 @@ function playPageJavaScript () {
   upContext = upCanvas.getContext('2d')
   canvas.width = window.innerWidth
   canvas.height = window.innerHeight
+  context.imageSmoothingEnabled
   upCanvas.width = window.innerWidth
   upCanvas.height = window.innerHeight
 
@@ -196,6 +197,6 @@ function playPageJavaScript () {
 
 let onPlayPage = document.querySelector('#playPage')
 
-if (onPlayPage) {
-  playPageJavaScript()
-}
+// if (onPlayPage) {
+//   playPageJavaScript()
+// }
