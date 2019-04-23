@@ -4,10 +4,10 @@
 }
 
 body {
-    /* background: linear-gradient(
+    background: linear-gradient(
     rgba(169, 169, 169, 0.151), 
     rgba(169, 169, 169, 0.151)),
-        url("https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg");  */
+        url("https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg"); 
     background-position: left;
     background-repeat: no-repeat;
     background-attachment: fixed;
