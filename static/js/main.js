@@ -3,11 +3,11 @@ function playPageJavaScript () {
   const upCanvas = document.querySelector('#upcanvas')
   context = canvas.getContext('2d')
   upContext = upCanvas.getContext('2d')
-  canvas.width = window.innerWidth
-  canvas.height = window.innerHeight
-  context.imageSmoothingEnabled
-  upCanvas.width = window.innerWidth
-  upCanvas.height = window.innerHeight
+  
+  canvas.width = 600
+  canvas.height = 600
+  upCanvas.width = 600
+  upCanvas.height = 600
 
   const ZOOMFACTOR = 4
   let paint
