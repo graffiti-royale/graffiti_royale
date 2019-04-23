@@ -13,7 +13,6 @@ def tutorial(request):
     return render(request, 'tutorial.html', context={})
 
 def play(request, username):
-    print(username)
     return render(request, 'play.html', context = {"username": username})
     
 def make_guest(request):
