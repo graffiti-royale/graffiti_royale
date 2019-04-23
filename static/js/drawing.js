@@ -66,68 +66,56 @@ function drawingScript2 () {
         userPaths[data['username']]['paths'][userPaths[data['username']]['paths'].length - 1].push(data['point'])
       }
     }
-  }
 
-  drawMap.addEventListener('mousedown', function (event) {
-    paint = true
-    userPaths[username]['paths'].push([[
-      Math.floor(event.pageX) + xOffset,
-      Math.floor(event.pageY) + yOffset
-    ]])
-    drawSocket.send(JSON.stringify({
-      'username': username,
-      'point': [
-        Math.floor(event.pageX) + xOffset,
-        Math.floor(event.pageY) + yOffset
-      ],
-      'new_path': true
-    }))
-  })
+    window.addEventListener('beforeunload', function () {
+        console.log('closing!')
+        usersSocket.send(JSON.stringify({
+            'username': username,
+            'enter': false,
+            'color': myColor,
+            'random_word': random_word
+        }))
+        usersSocket.close()
+    })
 
-  drawMap.addEventListener('mousemove', function (event) {
-    if (paint) {
-      userPaths[username]['paths'][userPaths[username]['paths'].length - 1].push([
-        Math.floor(event.pageX) + xOffset,
-        Math.floor(event.pageY) + yOffset
-      ])
-      drawSocket.send(JSON.stringify({
-        'username': username,
-        'point': [
-          Math.floor(event.pageX) + xOffset,
-          Math.floor(event.pageY) + yOffset
-        ],
-        'new_path': false
-      }))
-    }
-  })
+    miniMap.addEventListener('mousemove', function(event) {
+        if (zoomedOut) {
+            let X = Math.min(
+                Math.max(event.pageX - this.offsetLeft, drawMap.width / ZOOMFACTOR / 2), miniMap.width - drawMap.width / ZOOMFACTOR / 2
+            )*ZOOMFACTOR
+            let Y = Math.min(
+                Math.max(event.pageY - this.offsetTop, drawMap.height / ZOOMFACTOR / 2), 
+                miniMap.height - drawMap.height / ZOOMFACTOR / 2
+            )*ZOOMFACTOR
+            zoomCenter = [Math.floor(X), Math.floor(Y)]
+        }
+    })
 
-  drawMap.addEventListener('mouseup', function () {
-    paint = false
-    console.log(userPaths)
-  })
+    miniMap.addEventListener('dblclick', function(event) {
+        zoomedOut = false
+        xOffset = zoomCenter[0] - drawMap.width / 2
+        yOffset = zoomCenter[1] - drawMap.height / 2
+        console.log(xOffset, yOffset)
+        drawMap.style.zIndex = 3
+        console.log(drawMap.style)
+    })
 
-  drawMap.addEventListener('mouseleave', function () {
-    paint = false
-  })
+    drawMap.addEventListener('dblclick', function(event) {
+        zoomedOut = true
+        drawMap.style.zIndex = 1
+        drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
+    })
+    
+    let drawSocket = new WebSocket(`wss://${window.location.host}/ws/draw/${room}/`)    
 
-  /* Redraw function */
-  function redraw () {
-    miniMapCxt.clearRect(0, 0, miniMap.width * ZOOMFACTOR, miniMap.height * ZOOMFACTOR)
-    for (let user of Object.values(userPaths)) {
-      let color = user['color']
-      let paths = user['paths']
-      miniMapCxt.strokeStyle = color
-      miniMapCxt.shadowColor = color
-      miniMapCxt.shadowBlur = 2
-      miniMapCxt.lineCap = 'round'
-      miniMapCxt.lineWidth = 4
-
-      for (let path of Object.values(paths)) {
-        miniMapCxt.beginPath()
-        miniMapCxt.moveTo(path[0][0], path[0][1])
-        for (i = 1; i < path.length; i++) {
-          miniMapCxt.moveTo(path[i][0], path[i][1])
-          miniMapCxt.lineTo(path[i - 1][0], path[i - 1][1])
+    drawSocket.onmessage = function(event) {
+        let data = JSON.parse(event.data)
+        if (data['username'] != username) {
+            if (data['new_path']) {
+                userPaths[data['username']]['paths'].push(data['point'])
+            } else {
+                userPaths[data['username']]['paths'][userPaths[data['username']]['paths'].length-1].push(data['point'])
+            }
         }
         miniMapCxt.stroke()
       }
