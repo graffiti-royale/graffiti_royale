@@ -16,3 +16,6 @@ https://www.html5rocks.com/en/tutorials/websockets/basics/
 
 PWA Checklist:
 https://developers.google.com/web/progressive-web-apps/checklist
+
+Paper.js:
+http://paperjs.org/tutorials/getting-started/working-with-paper-js/

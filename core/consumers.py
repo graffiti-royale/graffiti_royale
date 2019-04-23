@@ -4,33 +4,33 @@ import json
 from .models import Room
 from django.contrib.auth.models import User
 
-class ChatConsumer(WebsocketConsumer):
-    def connect(self):
+class ChatConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
 
         # Join room group
-        async_to_sync(self.channel_layer.group_add)(
+        await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
         )
 
-        self.accept()
+        await self.accept()
 
-    def disconnect(self, close_code):
+    async def disconnect(self, close_code):
         # Leave room group
-        async_to_sync(self.channel_layer.group_discard)(
+        await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
         )
 
     # Receive message from WebSocket
-    def receive(self, text_data):
+    async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
 
         # Send message to room group
-        async_to_sync(self.channel_layer.group_send)(
+        await self.channel_layer.group_send(
             self.room_group_name,
             {
                 'type': 'chat_message',
@@ -39,11 +39,11 @@ class ChatConsumer(WebsocketConsumer):
         )
 
     # Receive message from room group
-    def chat_message(self, event):
+    async def chat_message(self, event):
         message = event['message']
 
         # Send message to WebSocket
-        self.send(text_data=json.dumps({
+        await self.send(text_data=json.dumps({
             'message': message
         }))
 
@@ -62,30 +62,30 @@ class PlayConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        path = text_data_json['path']
-        color = text_data_json['color']
+        point = text_data_json['point']
+        new_path = text_data_json['new_path']
         username = text_data_json['username']
 
         # Send message to room group
         await self.channel_layer.group_send(
             self.room_group_name,
             {
-                'type': 'coord',
-                'path': path,
-                'color': color,
-                'username': username
+                'type': 'paths',
+                'point': point,
+                'username': username,
+                'new_path': new_path
             }
         )
 
-    async def coord(self, event):
-        path = event['path']
-        color = event['color']
+    async def paths(self, event):
+        point = event['point']
         username = event['username']
+        new_path = event['new_path']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
-            'path': path,
-            'color': color,
+            'new_path': new_path,
+            'point': point,
             'username': username
         }))
 
@@ -111,7 +111,7 @@ class UsersConsumer(WebsocketConsumer):
             room.users.remove(user)
             if user.profile.guest:
                 user.delete()
-        users = {person.username:[person.profile.guest, []] for person in room.users.all()}
+        users = {person.username:{"guest":person.profile.guest, "color":person.profile.color, "paths":[]} for person in room.users.all()}
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
