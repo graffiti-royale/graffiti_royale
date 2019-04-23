@@ -22,7 +22,9 @@ function drawingScript2 () {
 
   /* Setting up visuals */
   const bricks = document.querySelector('#bricks')
+  console.log(bricks)
   const background = document.querySelector('#background')
+  console.log(background)
 
   /* Setting up personal info */
   let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C', '#13d9f3', '#f313f3', '#f3ef13']
@@ -81,12 +83,22 @@ function drawingScript2 () {
     yOffset = zoomCenter[1] - drawMap.height / 2
     drawMap.style.zIndex = 4
     miniMap.style.zIndex = 1
+    let moveX = -1 * ((zoomCenter[0] / ZOOMFACTOR) - (window.innerWidth / 2))
+    let moveY = -1 * ((zoomCenter[1] / ZOOMFACTOR) - (window.innerHeight / 2))
+    X = zoomCenter[0] * 100 / miniMap.width / ZOOMFACTOR
+    Y = zoomCenter[1] * 100 / miniMap.height / ZOOMFACTOR
+    let coord = `${X}% ${Y}%`
+    console.log(coord)
+    bricks.style.transform = `translate(${moveX}px, ${moveY}px) scale(${ZOOMFACTOR}, ${ZOOMFACTOR})`
+    bricks.style.transformOrigin = coord
+    console.log(bricks.style)
   })
 
   drawMap.addEventListener('dblclick', function (event) {
     zoomedOut = true
     drawMap.style.zIndex = 1
     miniMap.style.zIndex = 4
+    bricks.style.transform = "scale(1, 1)"
     drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
   })
 
@@ -228,5 +240,7 @@ function drawingScript2 () {
 let onPlayPage = document.querySelector('#playPage')
 
 if (onPlayPage) {
-  drawingScript2()
+  document.addEventListener('DOMContentLoaded', function() {
+      drawingScript2()
+  })
 }
