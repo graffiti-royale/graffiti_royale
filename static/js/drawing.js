@@ -23,6 +23,7 @@ function drawingScript2 () {
     /* Setting up personal info */
     let colorsArray = ['#070404', '#df4b26', '#040507', '#32ED2C', '#13d9f3', '#f313f3', '#f3ef13']
     const myColor = colorsArray[Math.floor(Math.random() * colorsArray.length)]
+    let random_word = document.querySelector('.username').dataset.word
     let username = document.querySelector('.username').dataset.username
 
     let userPaths = {}
@@ -33,7 +34,8 @@ function drawingScript2 () {
         usersSocket.send(JSON.stringify({
             'username': username,
             'enter': true,
-            'color': myColor
+            'color': myColor,
+            'random_word': random_word
         }))
     }
 
@@ -49,7 +51,8 @@ function drawingScript2 () {
         usersSocket.send(JSON.stringify({
             'username': username,
             'enter': false,
-            'color': myColor
+            'color': myColor,
+            'random_word': random_word
         }))
         usersSocket.close()
     })
