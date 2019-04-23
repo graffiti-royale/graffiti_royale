@@ -71,7 +71,7 @@ body {
     width: 100%;
     background-color: white;
     text-align: center;
-    height: 4rem;
+    height: 7rem;
     border-top: 3px solid transparent;
     border-color:rgba(126, 126, 126, 0.221);
     border-image-slice: 1;
@@ -566,7 +566,7 @@ input:focus {
 
 .matchtimer {
     font-family: 'Londrina Solid', cursive;
-    font-size: 50px;
+    font-size: 40px;
     position: absolute;
     bottom: 2px;
     -webkit-user-select: none;      
@@ -577,7 +577,7 @@ input:focus {
 
 .roundtimer {
     font-family: 'Londrina Solid', cursive;
-    font-size: 50px;
+    font-size: 40px;
     position: absolute;
     bottom: 2px;
     -webkit-user-select: none;      
@@ -588,7 +588,7 @@ input:focus {
 
 .seconds {
     font-family: 'Londrina Sketch', cursive;
-    font-size: 80px;
+    font-size: 50px;
     color: black;
     font-style: italic;
     text-shadow: -.75px 0 black, 0 .75px black, .75px 0 black, 0 -.75px black;

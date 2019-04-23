@@ -18,14 +18,15 @@
 
 <body class="playfield crosshair fieldlogo" id="playPage">
        
-    <center><div class="matchtimer">Match starts in <span class="seconds" id="time">10</span></div></center>
-    <!-- <center><div class="roundtimer">Round starts in <span class="seconds" id="time">3</span></div></center> -->
-
     <canvas id="drawMap"></canvas>
     
     <canvas id="upcanvas"></canvas>
     <div class="username" data-username="{{ username }}" data-word="{{ random_word }}"></div>
     <div class="play-footer">
+
+        <center><div class="matchtimer">Match starts in <span class="seconds" id="time">10</span></div></center>
+        <!-- <center><div class="roundtimer">Round starts in <span class="seconds" id="time">3</span></div></center> -->
+
         <p>This needs the specific word for our users</p>
         <input type="text" name="wordGuessed">
     </div>
