@@ -1,7 +1,7 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import AsyncWebsocketConsumer, WebsocketConsumer
 import json
-from .models import Room, Profile
+from .models import Room
 from django.contrib.auth.models import User
 
 class ChatConsumer(WebsocketConsumer):
@@ -47,7 +47,7 @@ class ChatConsumer(WebsocketConsumer):
             'message': message
         }))
 
-class PlayConsumer(WebsocketConsumer):
+class PlayConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_name = 'play'
         self.room_group_name = 'draw_%s' % self.room_name
@@ -105,17 +105,11 @@ class UsersConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         enter = text_data_json['enter']
-        username = text_data_json['username']
-        user, created = User.objects.get_or_create(username=username)
-        if created:
-            user.profile.guest = True
-            user.profile.save()
-        room, _ = Room.objects.get_or_create(name=self.room_name)
-        if enter:
-            room.users.add(user)
-        else:
+        user = User.objects.get(username=text_data_json['username'])
+        room = Room.objects.get(name=text_data_json['room'])
+        if not enter:
             room.users.remove(user)
-            if text_data_json['guest']:
+            if user.profile.guest:
                 user.delete()
         users = {person.username:[person.profile.guest, []] for person in room.users.all()}
 

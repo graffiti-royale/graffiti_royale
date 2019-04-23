@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.utils.safestring import mark_safe
+from .models import Room, Profile
 import json
 from django.contrib.auth.models import User
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -13,19 +15,26 @@ def tutorial(request):
     return render(request, 'tutorial.html', context={})
 
 def play(request, username):
-    print(username)
-    return render(request, 'play.html', context = {"username": username})
+    user = get_object_or_404(User, username=username)
+    room, _ = Room.objects.get_or_create(full=False)
+    room.users.add(user)
+    if room.users.count() > 1:
+        room.full=True
+    room.save()
+    return render(request, 'play.html', context = {"username": username, "roompk": room.pk})
     
 def make_guest(request):
     return render(request, 'make_guest.html', context={})
 
 def check_guest_name(request):
     data = json.loads(request.body)
-    try:
-        User.objects.get(username=data['username'])
-        return JsonResponse({"message": 'Username already in use.'})
-    except:
-        return JsonResponse({"url": f"play/{data['username']}"})
+    user, created = User.objects.get_or_create(username=data['username'])
+
+    if created:
+        user.profile.guest = True
+        user.profile.save()
+        return JsonResponse({"url": f"play/{user.username}"})
+    return JsonResponse({"message": 'Username already in use.'})
 
 def get_serviceworker(request):
     return render(request, 'sw.js', content_type='application/javascript', context={})

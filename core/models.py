@@ -5,7 +5,8 @@ from django.dispatch import receiver
 
 class Room(models.Model):
     users = models.ManyToManyField(User, related_name='room', blank=True)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, default='Room')
+    full = models.BooleanField(default=False)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
