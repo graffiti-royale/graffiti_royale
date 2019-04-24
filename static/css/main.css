@@ -63,6 +63,25 @@ body {
     user-select: none; 
 }
 
+.play-header {
+    font-family: 'Londrina Solid', cursive;
+    color:black;
+    z-index: 6;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    text-align: center;
+    height: 3.5rem;
+    border-bottom: 4px solid transparent;
+    border-image: linear-gradient(to right, rgb(0, 123, 255) 0%, #18fbff 20%, #ff4797 40%, rgb(255, 0, 17) 60%, rgb(255, 247, 0) 80%, #85ff1b 100%);
+    border-image-slice: 1;
+    cursor: default;
+    justify-content: center;
+    align-items: center;
+}
+
 .play-footer {
     font-family: 'Londrina Solid', cursive;
     color:black;
@@ -75,25 +94,23 @@ body {
     text-align: center;
     height: 6.5rem;
     border-top: 4px solid transparent;
-    border-image: linear-gradient(to right, rgb(0, 123, 255) 0%, #18fbff 20%, #ff4797 40%, rgb(255, 0, 17) 60%, rgb(255, 247, 0) 80%, #85ff1b 100%);
+    border-image: linear-gradient(to left, rgb(0, 123, 255) 0%, #18fbff 20%, #ff4797 40%, rgb(255, 0, 17) 60%, rgb(255, 247, 0) 80%, #85ff1b 100%);
     border-image-slice: 1;
     cursor: default;
-    font-size: 20px;
     justify-content: center;
     align-items: center;
 }
 
 .random-word {
-    font-family: 'Londrina Solid', cursive;
-    font-size: 40px;
+    font-size:30px;
     position: absolute;
-    bottom: 5px;
+    top: 8px;
+    left: 23px;
+    height: 35px;
     -webkit-user-select: none;      
     -moz-user-select: none; 
     -ms-user-select: none; 
     user-select: none; 
-    bottom: 23px;
-    left: 23px;
 }
 
 .submitguess-button {
@@ -131,11 +148,11 @@ body {
 }
 
 #playerspopup {
+    font-size:30px;
     position: absolute;
-    bottom: 23px;
+    top: 8px;
     right: 23px;
-    font-size: 3rem;
-    height: 7rem;
+    height: 35px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -144,32 +161,42 @@ body {
 }
 
 #playerspopup:hover {
+    font-size:30px;
     cursor: pointer;
     color: rgb(255, 0, 17);
     font-style:italic;
 }
 
 #playerspopup:visited {
+    font-size:30px;
     cursor: pointer;
     color: rgb(0, 123, 255);
     font-style:italic;
 }
 
 #playerlist {
+    font-size:20px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     position: absolute;
-    width: 500px;
+    /* width: 418px; */
     max-height: 550%;
-    bottom: 7rem;
+    top: 56px;
     right: 0;
     background: white;
     border: 3px solid black;
-    font-size: 2rem;
+    font-size:30px;
     justify-content: space-evenly;
     display: none;
     border-radius:30px;
+    min-width:300px;
+    overflow: auto;
+    margin:auto;
+    -webkit-user-select: none;      
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
 }
 
 .player {
@@ -638,12 +665,12 @@ input:focus {
     z-index: 3;
     position: absolute;
     border: 3px solid black;
-    top: 5px;
+    top: 3.5rem;
     left: 0;
     right: 0;
     margin: auto;
-    width: 600px;
-    height: 600px;
+    width: 605px;
+    height: 605px;
     background: linear-gradient(
         rgba(255, 255, 255, 0.849), 
         rgba(255, 255, 255, 0.849)),
@@ -653,7 +680,7 @@ input:focus {
 #miniMap {
     z-index: 4;
     position: absolute;
-    top: 5px;
+    top: 3.6rem;
     left: 0;
     right: 0;
     margin: auto;
