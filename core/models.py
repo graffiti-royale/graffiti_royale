@@ -13,6 +13,7 @@ class Profile(models.Model):
     guest = models.BooleanField(default=False)
     word = models.CharField(max_length=100, null=True)
     color = models.TextField(max_length=10, null=True)
+    host = models.BooleanField(default=False)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
