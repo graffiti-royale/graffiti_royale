@@ -659,6 +659,7 @@ input:focus {
     width: 100%;
     height: 700px;
     cursor: default;
+    background-position: center;
 }
 
 #bricks {
@@ -672,8 +673,8 @@ input:focus {
     width: 605px;
     height: 605px;
     background: linear-gradient(
-        rgba(255, 255, 255, 0.849), 
-        rgba(255, 255, 255, 0.849)),
+        rgba(255, 255, 255, 0.900), 
+        rgba(255, 255, 255, 0.900)),
         url("https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg");
 }
 
