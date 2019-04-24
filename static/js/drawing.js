@@ -1,16 +1,17 @@
+// window.onload = function(){
 function drawingScript2 () {
   /* Setting up the canvas */
   const drawMap = document.querySelector('#drawMap')
-  const miniMap = document.querySelector('#miniMap')
+  const miniMap = document.querySelector('#upcanvas')
   const drawMapCxt = drawMap.getContext('2d')
   miniMapCxt = miniMap.getContext('2d')
   drawMap.width = window.innerWidth
   drawMap.height = window.innerHeight
   miniMap.width = 600
   miniMap.height = 600
-//   drawMapCxt.shadowBlur = 3
-//   drawMapCxt.lineCap = 'round'
-//   drawMapCxt.lineWidth = 4
+  drawMapCxt.shadowBlur = 4
+  drawMapCxt.lineCap = 'round'
+  drawMapCxt.lineWidth = 4
 
   let paint
   let zoomedOut = true
@@ -19,12 +20,6 @@ function drawingScript2 () {
   let zoomCenter = []
   let xOffset = 0
   let yOffset = 0
-
-  /* Setting up visuals */
-  const bricks = document.querySelector('#bricks')
-  console.log(bricks)
-  const background = document.querySelector('#background')
-  console.log(background)
 
   /* Setting up personal info */
   let colorsArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
@@ -44,6 +39,8 @@ function drawingScript2 () {
   let wordList = []
 
   let userPaths = {}
+  let wordList = []
+  let cleanedWordList = []
   let usersSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/users/`)
   usersSocket.onopen = function (event) {
     console.log(username)
@@ -104,24 +101,12 @@ function drawingScript2 () {
     zoomedOut = false
     xOffset = zoomCenter[0] - drawMap.width / 2
     yOffset = zoomCenter[1] - drawMap.height / 2
-    drawMap.style.zIndex = 4
-    miniMap.style.zIndex = 1
-    let moveX = -1 * (((zoomCenter[0] / ZOOMFACTOR) - (window.innerWidth / 2)) + miniMap.offsetLeft)
-    let moveY = -1 * (((zoomCenter[1] / ZOOMFACTOR) - (window.innerHeight / 2)) + miniMap.offsetTop)
-    X = zoomCenter[0] * 100 / miniMap.width / ZOOMFACTOR
-    Y = zoomCenter[1] * 100 / miniMap.height / ZOOMFACTOR
-    let coord = `${X}% ${Y}%`
-    console.log(coord)
-    bricks.style.transform = `translate(${moveX}px, ${moveY}px) scale(${ZOOMFACTOR}, ${ZOOMFACTOR})`
-    bricks.style.transformOrigin = coord
-    console.log(bricks.style)
+    drawMap.style.zIndex = 3
   })
 
   drawMap.addEventListener('dblclick', function (event) {
     zoomedOut = true
     drawMap.style.zIndex = 1
-    miniMap.style.zIndex = 4
-    bricks.style.transform = "scale(1, 1)"
     drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
   })
 
@@ -221,9 +206,9 @@ function drawingScript2 () {
         let paths = user['paths']
         drawMapCxt.strokeStyle = color
         drawMapCxt.shadowColor = color
-        drawMapCxt.shadowBlur = 4
+        drawMapCxt.shadowBlur = 3
         drawMapCxt.lineCap = 'round'
-        drawMapCxt.lineWidth = 6
+        drawMapCxt.lineWidth = 5
 
         for (let path of Object.values(paths)) {
           drawMapCxt.beginPath()
@@ -286,7 +271,7 @@ function drawingScript2 () {
 let onPlayPage = document.querySelector('#playPage')
 
 if (onPlayPage) {
-  document.addEventListener('DOMContentLoaded', function() {
-      drawingScript2()
-  })
+  drawingScript2()
 }
+
+// }
