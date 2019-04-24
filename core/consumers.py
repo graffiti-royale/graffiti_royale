@@ -74,12 +74,12 @@ class UsersConsumer(WebsocketConsumer):
         
         if not enter:
             room.users.remove(user)
+            if user.profile.guest:
+                user.delete()
             if room.users.count() == 0:
                 print('empty')
                 room.delete()
                 return
-            if user.profile.guest:
-                user.delete()
 
         users = {person.username:{"word":person.profile.word, "guest":person.profile.guest, "color":person.profile.color, "paths":[]} for person in room.users.all()}
 
