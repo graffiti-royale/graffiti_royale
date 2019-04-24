@@ -19,8 +19,9 @@
 <body class="playfield crosshair fieldlogo" id="playPage">
        
     <canvas id="drawMap"></canvas>
-    
-    <canvas id="upcanvas"></canvas>
+    <div class="image" id="background"></div>
+    <div class="image" id="bricks"></div>
+    <canvas id="miniMap"></canvas>
     <div class="user_data" data-username="{{ username }}" data-word="{{ random_word }}" data-room="{{ roompk }}"></div>
     <div class="play-footer">
 
@@ -31,6 +32,8 @@
 
         <input type="text" name="wordGuessed">
         <input type="submit" class="submitguess-button">
+        <div id="playerspopup"><p>Players</p></div>
+        <div id="playerlist"></div>
 
     </div>
     {% load static %}

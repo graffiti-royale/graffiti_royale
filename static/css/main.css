@@ -128,6 +128,44 @@ body {
     cursor: pointer;
 }
 
+#playerspopup {
+    position: absolute;
+    bottom: 5px;
+    right: 20px;
+    font-size: 3rem;
+    height: 7rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#playerspopup:hover {
+    bottom: 15px;
+    cursor: pointer;
+}
+
+#playerlist {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    position: absolute;
+    width: 500px;
+    max-height: 550%;
+    bottom: 7rem;
+    right: 0;
+    background: white;
+    border: 3px solid black;
+    font-size: 2rem;
+    justify-content: space-evenly;
+    display: none;
+}
+
+.player {
+    height: 3rem;
+    margin: 1rem auto;
+    flex: 1;
+}
+
 .wordGuessed {
     font-size: 40px;
 }
@@ -568,18 +606,38 @@ input:focus {
     left: 0;
     transform: scale(1, 1);
     transform-origin: top left;
+}
+
+#background {
+    z-index: 2;
+    background: rgb(100, 97, 97);
+    width: 100%;
+    height: 700px;
+}
+
+#bricks {
+    z-index: 3;
+    position: absolute;
+    border: 3px solid black;
+    top: 5px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 600px;
+    height: 600px;
     background: linear-gradient(
         rgba(255, 255, 255, 0.783), 
         rgba(255, 255, 255, 0.783)),
         url("https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg");
 }
 
-#upcanvas {
-    border: 3px solid black;
-    z-index: 2;
+#miniMap {
+    z-index: 4;
     position: absolute;
-    top: 20px;
-    left: 50px;
+    top: 5px;
+    left: 0;
+    right: 0;
+    margin: auto;
     touch-action: manipulation;
     cursor: zoom-in;
 }
