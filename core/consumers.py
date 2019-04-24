@@ -70,10 +70,19 @@ class UsersConsumer(WebsocketConsumer):
         
         user.profile.color = color
         user.profile.word = word
+        if len(room.users.all()) == 1:
+            user.profile.host = True
         user.profile.save()
         
         if not enter:
             room.users.remove(user)
+            if user.profile.host:
+                user.profile.host = False
+                user.profile.save()
+                if room.users.count():
+                    next_host = room.users.first().profile
+                    next_host.host = True
+                    next_host.save()
             if user.profile.guest:
                 user.delete()
             if room.users.count() == 0:
@@ -81,22 +90,25 @@ class UsersConsumer(WebsocketConsumer):
                 room.delete()
                 return
 
-        users = {person.username:{"word":person.profile.word, "guest":person.profile.guest, "color":person.profile.color, "paths":[]} for person in room.users.all()}
+        full = room.full
+        users = [[user.username, user.profile.host] for user in room.users.all()]
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
-                'type': 'send_users',
-                'users': users,
+                'type': 'room_status',
+                'full': full,
+                'users': users
             }
         )
 
-    def send_users(self, event):
+    def room_status(self, event):
+        full = event['full']
         users = event['users']
 
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'users': users,
-            'room': self.room_name
+            'full': full,
+            'users': users
         }))

@@ -4,7 +4,7 @@ function guestLoginJavaScript () {
 
   let input = document.querySelector('#guest-name')
   document.querySelector('button').addEventListener('click', function () {
-    name = input.value
+    let name = input.value
     fetch('/checkguestname/', {
       method: 'POST',
       body: JSON.stringify({ 'username': name }),
