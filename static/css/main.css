@@ -73,9 +73,9 @@ body {
     width: 100%;
     background-color: white;
     text-align: center;
-    height: 7rem;
-    border-top: 2px solid transparent;
-    border-color:rgba(126, 126, 126, 0.221);
+    height: 6.5rem;
+    border-top: 4px solid transparent;
+    border-image: linear-gradient(to right, rgb(0, 123, 255) 0%, #18fbff 20%, #ff4797 40%, rgb(255, 0, 17) 60%, rgb(255, 247, 0) 80%, #85ff1b 100%);
     border-image-slice: 1;
     cursor: default;
     font-size: 20px;
@@ -84,14 +84,16 @@ body {
 }
 
 .random-word {
+    font-family: 'Londrina Solid', cursive;
+    font-size: 40px;
+    position: absolute;
+    bottom: 5px;
     -webkit-user-select: none;      
     -moz-user-select: none; 
     -ms-user-select: none; 
     user-select: none; 
-    font-size: 20px;
-    font-style: italic;
-    font-family: 'Londrina Solid', cursive;
-    color:black;
+    bottom: 23px;
+    left: 23px;
 }
 
 .submitguess-button {
@@ -102,7 +104,7 @@ body {
     border: .2rem solid black;
     color: white;
     background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
-    font-size: 40px;
+   
     min-width:70px;
     max-width:150px;
     cursor: pointer;
@@ -130,18 +132,27 @@ body {
 
 #playerspopup {
     position: absolute;
-    bottom: 5px;
-    right: 20px;
+    bottom: 23px;
+    right: 23px;
     font-size: 3rem;
     height: 7rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    color: rgb(0, 123, 255);
+    font-style:italic;
 }
 
 #playerspopup:hover {
-    bottom: 15px;
     cursor: pointer;
+    color: rgb(255, 0, 17);
+    font-style:italic;
+}
+
+#playerspopup:visited {
+    cursor: pointer;
+    color: rgb(0, 123, 255);
+    font-style:italic;
 }
 
 #playerlist {
@@ -158,6 +169,7 @@ body {
     font-size: 2rem;
     justify-content: space-evenly;
     display: none;
+    border-radius:30px;
 }
 
 .player {
@@ -599,7 +611,7 @@ input:focus {
 .crosshair { cursor: crosshair; }
 
 #drawMap {
-    border: 2px solid black;
+    /* border: 4px solid black; */
     z-index: 1;
     position: absolute;
     top: 0;
@@ -610,9 +622,16 @@ input:focus {
 
 #background {
     z-index: 2;
-    background: rgb(100, 97, 97);
+    position: absolute;
+    left: 0;
+    right: 0;
+    background:linear-gradient(
+        rgba(169, 169, 169, 0.151), 
+        rgba(169, 169, 169, 0.151)),
+        url("https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg"); 
     width: 100%;
     height: 700px;
+    cursor: default;
 }
 
 #bricks {
@@ -626,8 +645,8 @@ input:focus {
     width: 600px;
     height: 600px;
     background: linear-gradient(
-        rgba(255, 255, 255, 0.783), 
-        rgba(255, 255, 255, 0.783)),
+        rgba(255, 255, 255, 0.849), 
+        rgba(255, 255, 255, 0.849)),
         url("https://waglerbadenhop.com/wp-content/uploads/2018/07/White-Brick-Wall-Background.jpg");
 }
 
