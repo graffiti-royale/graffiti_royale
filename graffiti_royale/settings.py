@@ -150,4 +150,6 @@ CHANNEL_LAYERS = {
     },
 }
 
+CONN_MAX_AGE = 0
+
 django_heroku.settings(locals())
