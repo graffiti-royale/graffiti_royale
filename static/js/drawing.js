@@ -125,7 +125,7 @@ function drawingScript2 () {
       miniMapCxt.lineCap = 'round'
       miniMapCxt.lineWidth = 4
 
-      for (let path of Object.values(paths)) {
+      for (let path of paths) {
         miniMapCxt.beginPath()
         miniMapCxt.moveTo(path[0][0], path[0][1])
         for (i = 1; i < path.length; i++) {
@@ -159,7 +159,7 @@ function drawingScript2 () {
         drawMapCxt.lineCap = 'round'
         drawMapCxt.lineWidth = 6
 
-        for (let path of Object.values(paths)) {
+        for (let path of paths) {
           drawMapCxt.beginPath()
           drawMapCxt.moveTo(
             (path[0][0] - xOffset),

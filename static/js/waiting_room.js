@@ -33,6 +33,9 @@ function waitingRoomJS () {
     console.log(`Users updated:`)
     console.log(roomData)
     console.log(data['full'])
+    if (data['full']) {
+      window.location.href = `https://${window.location.host}/play/${room}/${username}/`
+    }
   }
 
   window.addEventListener('beforeunload', function () {

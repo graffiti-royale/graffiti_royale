@@ -88,8 +88,6 @@ class UsersConsumer(WebsocketConsumer):
                 user.delete()
             if room.users.count() == 0:
                 print('empty')
-                room.delete()
-                return
 
         full = room.full
         users = [[user.username, user.profile.host] for user in room.users.all()]
