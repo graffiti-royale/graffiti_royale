@@ -17,6 +17,7 @@ channels-redis = "*"
 daphne = "*"
 sendgrid = "*"
 asgiref = "*"
+dj-database-url = "*"
 
 [requires]
 python_version = "3.7"
