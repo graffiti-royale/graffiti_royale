@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div id="waitingroom"></div>
+    <div class="user_data" data-username="{{ username }}" data-word="{{ random_word }}" data-room="{{ roompk }}"></div>
+    
+    <a href="{% url 'play' roompk=roompk username=username %}">PLAY</a>
+    {% load static %}
+    <script src="{% static 'build/bundle.js' %}"></script>
+{% endblock %}

@@ -1,9 +1,9 @@
 function playPageJavaScript () {
   const canvas = document.querySelector('#drawMap')
   const upCanvas = document.querySelector('#upcanvas')
-  context = canvas.getContext('2d')
-  upContext = upCanvas.getContext('2d')
-  
+  const context = canvas.getContext('2d')
+  const upContext = upCanvas.getContext('2d')
+
   canvas.width = 600
   canvas.height = 600
   upCanvas.width = 600
@@ -23,7 +23,7 @@ function playPageJavaScript () {
   const color = colorsArray[Math.floor(Math.random() * colorsArray.length)]
 
   let username = document.querySelector('.username').dataset.username
-  let random_word = document.querySelector('.username').dataset.word
+  let randomWord = document.querySelector('.username').dataset.word
   let users
 
   usersSocket.onopen = function (event) {
@@ -31,7 +31,7 @@ function playPageJavaScript () {
     usersSocket.send(JSON.stringify({
       'username': username,
       'enter': true,
-      'random_word': random_word,
+      'random_word': randomWord
     }))
   }
 

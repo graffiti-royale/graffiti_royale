@@ -24,7 +24,7 @@ def homepage(request):
 def tutorial(request):
     return render(request, 'tutorial.html', context={})
 
-def play(request, username):
+def waiting_room(request, username):
     user = get_object_or_404(User, username=username)
     room, _ = Room.objects.get_or_create(full=False)
     random_word = get_random_word()
@@ -34,12 +34,29 @@ def play(request, username):
         room.full=True
     room.save()
 
-    return render(request, 'play.html', context = {
+    return render(request, 'waiting_room.html', context = {
         "username": username,
         "roompk": room.pk,
         "random_word": random_word,
         "ROOM_CAP": ROOM_CAP
-        })
+    })
+
+def play(request, roompk, username):
+    room = get_object_or_404(Room, pk=roompk)
+
+    room_data = {
+        person.username:{
+            "word":person.profile.word,
+            "guest":person.profile.guest,
+            "color":person.profile.color,
+            "paths":[],
+            "roompk": roompk
+        } for person in room.users.all()
+    }
+
+    room_data = json.dumps(room_data)
+
+    return render(request, 'play.html', context = {"room_data":room_data,})
     
 def make_guest(request):
     return render(request, 'make_guest.html', context={})
@@ -51,7 +68,7 @@ def check_guest_name(request):
     if created:
         user.profile.guest = True
         user.profile.save()
-        return JsonResponse({"url": f"play/{user.username}"})
+        return JsonResponse({"url": f"waiting-room/{user.username}"})
     return JsonResponse({"message": 'Username already in use.'})
 
 def get_serviceworker(request):
