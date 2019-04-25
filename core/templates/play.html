@@ -12,25 +12,29 @@
     {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 <link href="https://fonts.googleapis.com/css?family=Londrina+Sketch|Londrina+Solid" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css" integrity="sha384-Mmxa0mLqhmOeaE8vgOSbKacftZcsNYDjQzuCOm6D02luYSzBG8vpaOykv9lFQ51Y" crossorigin="anonymous">
 <link rel="manifest" href="{% static 'manifest.json' %}">       
 </head>
     
 
 <body class="playfield crosshair fieldlogo" id="playPage">
        
+    <div class="play-header">
+            <p class="random-word">WORD: {{ random_word }}</p>    
+            <div id="playerspopup"><p><i class="fas fa-caret-down"></i>&nbsp<i class="fas fa-users"></i></p></div>
+            <div id="playerlist"></div>
+    </div>
+  
     <canvas id="drawMap"></canvas>
     <div class="image" id="background"></div>
     <div class="image" id="bricks"></div>
     <canvas id="miniMap"></canvas>
+   
     <div class="play-footer">
-
-        <p class="random-word">WORD: {{ random_word }}</p>
-
+       
         <input type="text" name="wordGuessed">
-        <input type="submit" class="submitguess-button">
-        <div id="playerspopup"><p>PLAYERS</p></div>
-        <div id="playerlist"></div>
-
+        <input type="submit" class="submitguess-button" value="GUESS">
+     
     </div>
     <div id="room-data" data-room-data="{{ room_data }}"></div>
     {% load static %}
