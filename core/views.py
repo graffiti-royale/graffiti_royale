@@ -69,18 +69,5 @@ def check_guest_name(request):
         return JsonResponse({"url": f"waiting-room/{user.username}"})
     return JsonResponse({"message": 'Username already in use.'})
 
-def add_score(request):
-    data = json.loads(request.body)
-    user1 = User.objects.get(username=data[0])
-    user2 = User.objects.get(username=data[1])
-    user1.profile.round_score += 1
-    user2.profile.round_score += 1
-    user1.profile.save()
-    user2.profile.save()
-    return JsonResponse({
-        user1.username: user1.profile.round_score, 
-        user2.username: user2.profile.round_score
-    })
-
 def get_serviceworker(request):
     return render(request, 'sw.js', content_type='application/javascript', context={})

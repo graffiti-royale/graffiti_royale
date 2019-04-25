@@ -112,3 +112,41 @@ class UsersConsumer(WebsocketConsumer):
             'full': full,
             'users': users
         }))
+
+class ScoreConsumer(WebsocketConsumer):
+    def connect(self):
+        self.room_name = self.scope['url_route']['kwargs']['roompk']
+        self.room_group_name = 'users_%s' % self.room_name
+
+        # Join room group
+        async_to_sync(self.channel_layer.group_add)(
+            self.room_group_name,
+            self.channel_name
+        )
+
+        self.accept()
+
+    def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        user1 = text_data_json['user1']
+        user2 = text_data_json['user2']
+
+        # Send message to room group
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name,
+            {
+                'type': 'add_score',
+                'user1': user1,
+                'user2': user2
+            }
+        )
+
+    def add_score(self, event):
+        user1 = event['user1']
+        user2 = event['user2']
+
+        # Send message to WebSocket
+        self.send(text_data=json.dumps({
+            'user1': user1,
+            'user2': user2
+        }))

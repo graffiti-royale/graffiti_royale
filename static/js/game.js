@@ -33,25 +33,24 @@ if (onPlayPage) {
   var display = document.querySelector('#time')
   startTimer(tenSeconds, display)
 
+  const scoreSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/score/`)
   let guess = document.querySelector('#wordGuessed')
-  const Cookies = require('cookies-js')
+
   document.querySelector('.submtguess-button').addEventListener('click', function () {
     let result = checkGuess(guess)
     if (result) {
-      fetch('/add-score/', {
-        method: 'POST',
-        body: JSON.stringify({ 'users': result }),
-        headers: {
-          'X-CSRFToken': Cookies.get('csrftoken'),
-          'Content-Type': 'application/json'
-        }
-      }).then(response => response.json()).then(function (data) {
-        for (let username of Object.keys(data)) {
-          roomData[username]['score'] = data[username]
-        }
-      })
+      scoreSocket.send(JSON.stringify({
+        'user1': result[0],
+        'user2': result[1]
+      }))
     }
   })
+
+  scoreSocket.onmessage = function (event) {
+    let data = JSON.parse(event.data)
+    roomData[data['user1']]['score'] += 1
+    roomData[data['user2']]['score'] += 1
+  }
 }
 
 module.exports = {

@@ -28,7 +28,6 @@ urlpatterns = [
     path('tutorial/', views.tutorial, name='tutorial'),
     path('makeguest/', views.make_guest, name='make_guest'),
     path('checkguestname/', views.check_guest_name, name='check_guest'),
-    path('add-score/', views.add_score, name='add_score'),
     path('sw.js', views.get_serviceworker, name='sw.js'),
 ]
 
