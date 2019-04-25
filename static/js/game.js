@@ -1,5 +1,11 @@
 
-function checkGuess(guess)
+function checkGuess (guess) {
+  for (let user of Object.keys(roomData)) {
+    if (guess.toLowerCase() === user['word']) {
+      return [username, user]
+    } else { return false }
+  }
+}
 
 // Timer
 function startTimer (duration, display) {
@@ -26,6 +32,26 @@ if (onPlayPage) {
 
   var display = document.querySelector('#time')
   startTimer(tenSeconds, display)
+
+  let guess = document.querySelector('#wordGuessed')
+  const Cookies = require('cookies-js')
+  document.querySelector('.submtguess-button').addEventListener('click', function () {
+    let result = checkGuess(guess)
+    if (result) {
+      fetch('/add-score/', {
+        method: 'POST',
+        body: JSON.stringify({ 'users': result }),
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken'),
+          'Content-Type': 'application/json'
+        }
+      }).then(response => response.json()).then(function (data) {
+        for (let username of Object.keys(data)) {
+          roomData[username]['score'] = data[username]
+        }
+      })
+    }
+  })
 }
 
 module.exports = {

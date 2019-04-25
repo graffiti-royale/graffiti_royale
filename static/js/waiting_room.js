@@ -14,7 +14,6 @@ function waitingRoomJS () {
   let randomWord = document.querySelector('.user_data').dataset.word
   let username = document.querySelector('.user_data').dataset.username
   let room = document.querySelector('.user_data').dataset.room
-  let wordList = []
 
   let roomData = {}
   let usersSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/users/`)
