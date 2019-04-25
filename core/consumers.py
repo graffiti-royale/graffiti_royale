@@ -74,21 +74,21 @@ class UsersConsumer(WebsocketConsumer):
             user.profile.host = True
         user.profile.save()
         
-        if not enter:
-            room.users.remove(user)
-            if user.profile.host:
-                user.profile.host = False
-                user.profile.save()
-                if room.users.count():
-                    next_host = room.users.first().profile
-                    next_host.host = True
-                    next_host.save()
-            if user.profile.guest:
-                user.delete()
-            if room.users.count() == 0:
-                print('empty')
-                room.delete()
-                return
+        # if not enter:
+        #     room.users.remove(user)
+        #     if user.profile.host:
+        #         user.profile.host = False
+        #         user.profile.save()
+        #         if room.users.count():
+        #             next_host = room.users.first().profile
+        #             next_host.host = True
+        #             next_host.save()
+        #     if user.profile.guest:
+        #         user.delete()
+        #     if room.users.count() == 0:
+        #         print('empty')
+        #         room.delete()
+        #         return
 
         full = room.full
         users = [[user.username, user.profile.host] for user in room.users.all()]
