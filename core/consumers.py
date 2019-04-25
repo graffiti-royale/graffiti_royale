@@ -68,6 +68,7 @@ class UsersConsumer(WebsocketConsumer):
 
         user = User.objects.get(username=text_data_json['username'])
         room = Room.objects.get(pk=self.room_name)
+        full = room.full
         
         user.profile.color = color
         user.profile.word = word
@@ -75,23 +76,18 @@ class UsersConsumer(WebsocketConsumer):
             user.profile.host = True
         user.profile.save()
         
-        if not enter:
+        if not enter and not full:
             room.users.remove(user)
-            if user.profile.host:
-                user.profile.host = False
-                user.profile.save()
-                if room.users.count():
-                    next_host = room.users.first().profile
-                    next_host.host = True
-                    next_host.save()
             if user.profile.guest:
                 user.delete()
-            if room.users.count() == 0:
-                print('empty')
-                room.delete()
-                return
+            # if user.profile.host:
+            #     user.profile.host = False
+            #     user.profile.save()
+            #     if room.users.count():
+            #         next_host = room.users.first().profile
+            #         next_host.host = True
+            #         next_host.save()
 
-        full = room.full
         users = [[user.username, user.profile.host] for user in room.users.all()]
 
         # Send message to room group
@@ -113,4 +109,42 @@ class UsersConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps({
             'full': full,
             'users': users
+        }))
+
+class ScoreConsumer(WebsocketConsumer):
+    def connect(self):
+        self.room_name = self.scope['url_route']['kwargs']['roompk']
+        self.room_group_name = 'score_%s' % self.room_name
+
+        # Join room group
+        async_to_sync(self.channel_layer.group_add)(
+            self.room_group_name,
+            self.channel_name
+        )
+
+        self.accept()
+
+    def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        user1 = text_data_json['user1']
+        user2 = text_data_json['user2']
+
+        # Send message to room group
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name,
+            {
+                'type': 'add_score',
+                'user1': user1,
+                'user2': user2
+            }
+        )
+
+    def add_score(self, event):
+        user1 = event['user1']
+        user2 = event['user2']
+
+        # Send message to WebSocket
+        self.send(text_data=json.dumps({
+            'user1': user1,
+            'user2': user2
         }))

@@ -6,7 +6,6 @@
     <center><div class="matchtimer">Match starts in <span class="seconds" id="time">10</span></div></center>
     <!-- <center><div class="roundtimer">Round starts in <span class="seconds" id="time">3</span></div></center> -->
 
-    <a href="{% url 'play' roompk=roompk username=username %}">PLAY</a>
     {% load static %}
     <script src="{% static 'build/bundle.js' %}"></script>
 {% endblock %}

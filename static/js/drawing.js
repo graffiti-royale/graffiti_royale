@@ -1,5 +1,6 @@
 function drawingScript2 () {
   let roomData = document.querySelector('#room-data').dataset.roomData
+  console.log(roomData)
   roomData = JSON.parse(roomData)
   const drawMap = document.querySelector('#drawMap')
   const miniMap = document.querySelector('#miniMap')
@@ -59,7 +60,8 @@ function drawingScript2 () {
     drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
   })
 
-  let drawSocket = new WebSocket(`wss://${window.location.host}/ws/${roomData['roompk']}/draw/`)
+  const room = document.querySelector('#room-data').dataset.roompk
+  let drawSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/draw/`)
 
   drawSocket.onmessage = function (event) {
     let data = JSON.parse(event.data)
@@ -125,7 +127,7 @@ function drawingScript2 () {
       miniMapCxt.lineCap = 'round'
       miniMapCxt.lineWidth = 4
 
-      for (let path of Object.values(paths)) {
+      for (let path of paths) {
         miniMapCxt.beginPath()
         miniMapCxt.moveTo(path[0][0], path[0][1])
         for (i = 1; i < path.length; i++) {
@@ -159,7 +161,7 @@ function drawingScript2 () {
         drawMapCxt.lineCap = 'round'
         drawMapCxt.lineWidth = 6
 
-        for (let path of Object.values(paths)) {
+        for (let path of paths) {
           drawMapCxt.beginPath()
           drawMapCxt.moveTo(
             (path[0][0] - xOffset),
@@ -183,16 +185,6 @@ function drawingScript2 () {
       }
     }
   }
-
-  popup = document.querySelector('#playerspopup')
-  playerList = document.querySelector('#playerlist')
-  popup.addEventListener('click', function (e) {
-    if (!playerList.style.display || playerList.style.display === 'none') {
-      playerList.style.display = 'flex'
-    } else {
-      playerList.style.display = 'none'
-    }
-  })
 
   var start = null
   function step (timestamp) {
