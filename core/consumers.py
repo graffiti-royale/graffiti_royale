@@ -90,6 +90,7 @@ class UsersConsumer(WebsocketConsumer):
             #         next_host.save()
 
         users = [[user.username, user.profile.host] for user in room.users.all()]
+        close_old_connections()
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
@@ -100,7 +101,6 @@ class UsersConsumer(WebsocketConsumer):
                 'users': users
             }
         )
-        close_old_connections()
 
     # Receive message from room group
     def room_status(self, event):
