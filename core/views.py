@@ -26,8 +26,11 @@ def tutorial(request):
     return render(request, 'tutorial.html', context={})
 
 def waiting_room(request, username):
+    close_old_connections()
     user = get_object_or_404(User, username=username)
+    close_old_connections()
     room, _ = Room.objects.get_or_create(full=False)
+    close_old_connections()
     random_word = get_random_word()
 
     room.users.add(user)
@@ -44,7 +47,9 @@ def waiting_room(request, username):
     })
 
 def play(request, roompk, username):
+    close_old_connections()
     room = get_object_or_404(Room, pk=roompk)
+    close_old_connections()
 
     room_data = {
         person.username:{
@@ -66,6 +71,7 @@ def make_guest(request):
 
 def check_guest_name(request):
     data = json.loads(request.body)
+    close_old_connections()
     user, created = User.objects.get_or_create(username=data['username'])
     close_old_connections()
 

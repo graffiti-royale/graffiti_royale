@@ -67,15 +67,22 @@ class UsersConsumer(WebsocketConsumer):
         color = text_data_json['color']
         word = text_data_json['random_word']
 
+        close_old_connections()
         user = User.objects.get(username=text_data_json['username'])
+        close_old_connections()
         room = Room.objects.get(pk=self.room_name)
+        close_old_connections()
         full = room.full
+        close_old_connections()
         
         user.profile.color = color
+        close_old_connections()
         user.profile.word = word
+        close_old_connections()
         if len(room.users.all()) == 1:
             user.profile.host = True
         user.profile.save()
+        close_old_connections()
         
         if not enter and not full:
             room.users.remove(user)
@@ -89,6 +96,7 @@ class UsersConsumer(WebsocketConsumer):
             #         next_host.host = True
             #         next_host.save()
 
+        close_old_connections()
         users = [[user.username, user.profile.host] for user in room.users.all()]
         close_old_connections()
 
