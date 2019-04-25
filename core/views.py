@@ -5,6 +5,7 @@ import json
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.db import close_old_connections
 import random
 
 ROOM_CAP = 5
@@ -33,6 +34,7 @@ def waiting_room(request, username):
     if room.users.count() > ROOM_CAP-1:
         room.full=True
     room.save()
+    close_old_connections()
 
     return render(request, 'waiting_room.html', context = {
         "username": username,
@@ -53,6 +55,7 @@ def play(request, roompk, username):
             "score": 0
         } for person in room.users.all()
     }
+    close_old_connections()
 
     room_data = json.dumps(room_data)
 
@@ -64,10 +67,12 @@ def make_guest(request):
 def check_guest_name(request):
     data = json.loads(request.body)
     user, created = User.objects.get_or_create(username=data['username'])
+    close_old_connections()
 
     if created:
         user.profile.guest = True
         user.profile.save()
+        close_old_connections()
         return JsonResponse({"url": f"waiting-room/{user.username}"})
     return JsonResponse({"message": 'Username already in use.'})
 
