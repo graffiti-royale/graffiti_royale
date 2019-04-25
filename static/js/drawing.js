@@ -186,16 +186,6 @@ function drawingScript2 () {
     }
   }
 
-  popup = document.querySelector('#playerspopup')
-  playerList = document.querySelector('#playerlist')
-  popup.addEventListener('click', function (e) {
-    if (!playerList.style.display || playerList.style.display === 'none') {
-      playerList.style.display = 'flex'
-    } else {
-      playerList.style.display = 'none'
-    }
-  })
-
   var start = null
   function step (timestamp) {
     redraw()

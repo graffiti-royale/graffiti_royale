@@ -118,7 +118,7 @@ class UsersConsumer(WebsocketConsumer):
 class ScoreConsumer(WebsocketConsumer):
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['roompk']
-        self.room_group_name = 'users_%s' % self.room_name
+        self.room_group_name = 'score_%s' % self.room_name
 
         # Join room group
         async_to_sync(self.channel_layer.group_add)(
