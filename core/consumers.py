@@ -2,7 +2,9 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import AsyncWebsocketConsumer, WebsocketConsumer
 import json
 from .models import Room
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+
+ROOM_CAP = 5
 
 class PlayConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -64,22 +66,26 @@ class UsersConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         enter = text_data_json['enter']
         color = text_data_json['color']
+        username = text_data_json['username']
         word = text_data_json['random_word']
 
-        user = User.objects.get(username=text_data_json['username'])
         room = Room.objects.get(pk=self.room_name)
+        room.JSON += f'"{username}": '+'{"word": '+f'{word}, "color": {color}, "paths": []'+'}'
+        room.users += 1
+        if room.users > ROOM_CAP-1:
+            room.full=True
+        room.save()
         full = room.full
         
-        user.profile.color = color
-        user.profile.word = word
-        if len(room.users.all()) == 1:
-            user.profile.host = True
-        user.profile.save()
+        if room.users == 1:
+            host = True
+        else:
+            host = False
         
         if not enter and not full:
-            room.users.remove(user)
-            if user.profile.guest:
-                user.delete()
+            room.users -= 1
+            # if user.profile.guest:
+            #     user.delete()
             # if user.profile.host:
             #     user.profile.host = False
             #     user.profile.save()
@@ -88,15 +94,13 @@ class UsersConsumer(WebsocketConsumer):
             #         next_host.host = True
             #         next_host.save()
 
-        users = [[user.username, user.profile.host] for user in room.users.all()]
-
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
                 'type': 'room_status',
                 'full': full,
-                'users': users
+                'users': room.JSON
             }
         )
 

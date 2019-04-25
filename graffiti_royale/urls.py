@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.default.urls')),
     path('', views.homepage, name='homepage'),
-    path('waiting-room/<str:username>/', views.waiting_room, name='waitin_room'),
+    path('waiting-room/<int:roompk>/<str:username>/', views.waiting_room, name='waitin_room'),
     path('play/<int:roompk>/<str:username>/', views.play, name='play'),
     path('tutorial/', views.tutorial, name='tutorial'),
     path('makeguest/', views.make_guest, name='make_guest'),
