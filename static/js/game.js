@@ -1,13 +1,5 @@
 const { drawingScript2 } = require('./drawing')
 
-function checkGuess (guess) {
-  for (let user of Object.keys(roomData)) {
-    if (guess.toLowerCase() === user['word']) {
-      return [username, user]
-    } else { return false }
-  }
-}
-
 // Timer
 function startTimer (duration, display) {
   var timer = duration; var minutes; var seconds
@@ -29,17 +21,31 @@ function startTimer (duration, display) {
 let onPlayPage = document.querySelector('#playPage')
 
 if (onPlayPage) {
-  // var tenSeconds = 10
-
-  var display = document.querySelector('#time')
-  startTimer(tenSeconds, display)
+  const username = window.location.href.split('/')[5]
+  const room = document.querySelector('#room-data').dataset.roompk
+  const roomData = JSON.parse(document.querySelector('#room-data').dataset.roomData)
 
   const scoreSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/score/`)
   let guess = document.querySelector('#wordGuessed')
+  let guessedWords = []
 
-  document.querySelector('.submtguess-button').addEventListener('click', function () {
-    let result = checkGuess(guess)
+  function checkGuess (guess, guessedWords) {
+    if (!guessedWords.includes(guess)) {
+      for (let user of Object.keys(roomData)) {
+        if (guess === roomData[user]['word'] && username !== user) {
+          return [username, user]
+        }
+      }
+    }
+    return false
+  }
+
+  document.querySelector('.submitguess-button').addEventListener('click', function () {
+    let word = guess.value.toLowerCase()
+    let result = checkGuess(word, guessedWords)
+    console.log(result)
     if (result) {
+      guessedWords.push(word)
       scoreSocket.send(JSON.stringify({
         'user1': result[0],
         'user2': result[1]
@@ -51,6 +57,7 @@ if (onPlayPage) {
     let data = JSON.parse(event.data)
     roomData[data['user1']]['score'] += 1
     roomData[data['user2']]['score'] += 1
+    console.log(roomData)
   }
   // var display = document.querySelector('#time')
   // startTimer(tenSeconds, display)
