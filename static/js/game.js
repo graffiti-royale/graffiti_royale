@@ -1,4 +1,6 @@
 
+function checkGuess(guess)
+
 // Timer
 function startTimer (duration, display) {
   var timer = duration; var minutes; var seconds
