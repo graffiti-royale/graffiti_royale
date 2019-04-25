@@ -50,13 +50,13 @@ def play(request, roompk, username):
             "guest":person.profile.guest,
             "color":person.profile.color,
             "paths":[],
-            "roompk": roompk
+            "score": 0
         } for person in room.users.all()
     }
 
     room_data = json.dumps(room_data)
 
-    return render(request, 'play.html', context = {"room_data":room_data,})
+    return render(request, 'play.html', context = {"room_data":room_data, "roompk":roompk})
     
 def make_guest(request):
     return render(request, 'make_guest.html', context={})
