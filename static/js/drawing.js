@@ -47,10 +47,8 @@ function drawingScript2 () {
     X = zoomCenter[0] * 100 / miniMap.width / ZOOMFACTOR
     Y = zoomCenter[1] * 100 / miniMap.height / ZOOMFACTOR
     let coord = `${X}% ${Y}%`
-    console.log(coord)
     bricks.style.transform = `translate(${moveX}px, ${moveY}px) scale(${ZOOMFACTOR}, ${ZOOMFACTOR})`
     bricks.style.transformOrigin = coord
-    console.log(bricks.style)
   })
 
   drawMap.addEventListener('dblclick', function (event) {
@@ -118,16 +116,16 @@ function drawingScript2 () {
   /* Redraw function */
   function redraw () {
     miniMapCxt.clearRect(0, 0, miniMap.width * ZOOMFACTOR, miniMap.height * ZOOMFACTOR)
-    for (let user of Object.keys(roomData)) {
-      let color = roomData[user]['color']
-      let paths = roomData[user]['paths']
+    for (let user of Object.values(roomData)) {
+      let color = user['color']
+      let paths = user['paths']
       miniMapCxt.strokeStyle = color
       miniMapCxt.shadowColor = color
       miniMapCxt.shadowBlur = 2
       miniMapCxt.lineCap = 'round'
       miniMapCxt.lineWidth = 4
 
-      for (let path of Object.keys(paths)) {
+      for (let path of Object.values(paths)) {
         miniMapCxt.beginPath()
         miniMapCxt.moveTo(path[0][0], path[0][1])
         for (i = 1; i < path.length; i++) {
