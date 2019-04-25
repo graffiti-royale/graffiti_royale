@@ -10,7 +10,6 @@ self.addEventListener('install', e => {
       return cache.addAll([
         '/',
         "{% static 'css/main.css' %}",
-        "{% static 'js/guest_login.js' %}",
         "{% static 'js/tutorial.js' %}",
         /*
           DEAR READER,
