@@ -5,6 +5,7 @@ import json
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from channels.db import database_sync_to_async
 import random
 
 ROOM_CAP = 5
@@ -24,6 +25,7 @@ def homepage(request):
 def tutorial(request):
     return render(request, 'tutorial.html', context={})
 
+@database_sync_to_async
 def waiting_room(request, username):
     user = get_object_or_404(User, username=username)
     room, _ = Room.objects.get_or_create(full=False)
@@ -41,6 +43,7 @@ def waiting_room(request, username):
         "ROOM_CAP": ROOM_CAP
     })
 
+@database_sync_to_async
 def play(request, roompk, username):
     room = get_object_or_404(Room, pk=roompk)
 
@@ -61,6 +64,7 @@ def play(request, roompk, username):
 def make_guest(request):
     return render(request, 'make_guest.html', context={})
 
+@database_sync_to_async
 def check_guest_name(request):
     data = json.loads(request.body)
     user, created = User.objects.get_or_create(username=data['username'])
