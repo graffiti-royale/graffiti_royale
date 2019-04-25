@@ -68,6 +68,7 @@ class UsersConsumer(WebsocketConsumer):
 
         user = User.objects.get(username=text_data_json['username'])
         room = Room.objects.get(pk=self.room_name)
+        full = room.full
         
         user.profile.color = color
         user.profile.word = word
@@ -75,21 +76,18 @@ class UsersConsumer(WebsocketConsumer):
             user.profile.host = True
         user.profile.save()
         
-        if not enter:
+        if not enter and not full:
             room.users.remove(user)
-            if user.profile.host:
-                user.profile.host = False
-                user.profile.save()
-                if room.users.count():
-                    next_host = room.users.first().profile
-                    next_host.host = True
-                    next_host.save()
             if user.profile.guest:
                 user.delete()
-            if room.users.count() == 0:
-                print('empty')
+            # if user.profile.host:
+            #     user.profile.host = False
+            #     user.profile.save()
+            #     if room.users.count():
+            #         next_host = room.users.first().profile
+            #         next_host.host = True
+            #         next_host.save()
 
-        full = room.full
         users = [[user.username, user.profile.host] for user in room.users.all()]
 
         # Send message to room group
