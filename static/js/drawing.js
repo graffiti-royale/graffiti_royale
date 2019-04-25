@@ -1,16 +1,15 @@
 function drawingScript2 () {
-  /* Setting up the canvas */
+  let roomData = document.querySelector('#room-data').dataset.roomData
+  roomData = JSON.parse(roomData)
   const drawMap = document.querySelector('#drawMap')
   const miniMap = document.querySelector('#miniMap')
   const drawMapCxt = drawMap.getContext('2d')
   const miniMapCxt = miniMap.getContext('2d')
+  const username = window.location.href.split('/')[5]
   drawMap.width = window.innerWidth
   drawMap.height = window.innerHeight
   miniMap.width = 600
   miniMap.height = 600
-  //   drawMapCxt.shadowBlur = 3
-  //   drawMapCxt.lineCap = 'round'
-  //   drawMapCxt.lineWidth = 4
 
   let paint
   let zoomedOut = true
@@ -22,9 +21,7 @@ function drawingScript2 () {
 
   /* Setting up visuals */
   const bricks = document.querySelector('#bricks')
-  console.log(bricks)
   const background = document.querySelector('#background')
-  console.log(background)
 
   miniMap.addEventListener('mousemove', function (event) {
     if (zoomedOut) {
@@ -50,10 +47,8 @@ function drawingScript2 () {
     X = zoomCenter[0] * 100 / miniMap.width / ZOOMFACTOR
     Y = zoomCenter[1] * 100 / miniMap.height / ZOOMFACTOR
     let coord = `${X}% ${Y}%`
-    console.log(coord)
     bricks.style.transform = `translate(${moveX}px, ${moveY}px) scale(${ZOOMFACTOR}, ${ZOOMFACTOR})`
     bricks.style.transformOrigin = coord
-    console.log(bricks.style)
   })
 
   drawMap.addEventListener('dblclick', function (event) {
@@ -64,22 +59,22 @@ function drawingScript2 () {
     drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
   })
 
-  let drawSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/draw/`)
+  let drawSocket = new WebSocket(`wss://${window.location.host}/ws/${roomData['roompk']}/draw/`)
 
   drawSocket.onmessage = function (event) {
     let data = JSON.parse(event.data)
-    if (data['username'] != username) {
+    if (data['username'] !== username) {
       if (data['new_path']) {
-        userPaths[data['username']]['paths'].push(data['point'])
+        roomData[data['username']]['paths'].push(data['point'])
       } else {
-        userPaths[data['username']]['paths'][userPaths[data['username']]['paths'].length - 1].push(data['point'])
+        roomData[data['username']]['paths'][roomData[data['username']]['paths'].length - 1].push(data['point'])
       }
     }
   }
 
   drawMap.addEventListener('mousedown', function (event) {
     paint = true
-    userPaths[username]['paths'].push([[
+    roomData[username]['paths'].push([[
       Math.floor(event.pageX) + xOffset,
       Math.floor(event.pageY) + yOffset
     ]])
@@ -95,7 +90,7 @@ function drawingScript2 () {
 
   drawMap.addEventListener('mousemove', function (event) {
     if (paint) {
-      userPaths[username]['paths'][userPaths[username]['paths'].length - 1].push([
+      roomData[username]['paths'][roomData[username]['paths'].length - 1].push([
         Math.floor(event.pageX) + xOffset,
         Math.floor(event.pageY) + yOffset
       ])
@@ -121,7 +116,7 @@ function drawingScript2 () {
   /* Redraw function */
   function redraw () {
     miniMapCxt.clearRect(0, 0, miniMap.width * ZOOMFACTOR, miniMap.height * ZOOMFACTOR)
-    for (let user of Object.values(userPaths)) {
+    for (let user of Object.values(roomData)) {
       let color = user['color']
       let paths = user['paths']
       miniMapCxt.strokeStyle = color
@@ -155,7 +150,7 @@ function drawingScript2 () {
 
     if (!zoomedOut) {
       drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
-      for (let user of Object.values(userPaths)) {
+      for (let user of Object.values(roomData)) {
         let color = user['color']
         let paths = user['paths']
         drawMapCxt.strokeStyle = color
@@ -205,8 +200,6 @@ function drawingScript2 () {
     window.requestAnimationFrame(step)
   }
   window.requestAnimationFrame(step)
-
-  module.exports = {}
 }
 
 // This is currently not bundling into our bundle.js, so none of it works on the site.
@@ -229,3 +222,5 @@ if (onPlayPage) {
     drawingScript2()
   })
 }
+
+module.exports = { drawingScript2: drawingScript2 }

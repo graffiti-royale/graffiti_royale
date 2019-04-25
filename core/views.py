@@ -41,8 +41,7 @@ def waiting_room(request, username):
         "ROOM_CAP": ROOM_CAP
     })
 
-def play(request, username, roompk):
-    user = get_object_or_404(User, username=username)
+def play(request, roompk, username):
     room = get_object_or_404(Room, pk=roompk)
 
     room_data = {
@@ -50,11 +49,14 @@ def play(request, username, roompk):
             "word":person.profile.word,
             "guest":person.profile.guest,
             "color":person.profile.color,
-            "paths":[]
+            "paths":[],
+            "roompk": roompk
         } for person in room.users.all()
     }
 
-    return render(request, 'play.html', context = {"room_data":room_data})
+    room_data = json.dumps(room_data)
+
+    return render(request, 'play.html', context = {"room_data":room_data,})
     
 def make_guest(request):
     return render(request, 'make_guest.html', context={})
