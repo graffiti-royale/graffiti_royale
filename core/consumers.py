@@ -3,6 +3,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer, WebsocketConsumer
 import json
 from .models import Room
 from django.contrib.auth.models import User
+from django.db import close_old_connections
 
 class PlayConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -99,6 +100,7 @@ class UsersConsumer(WebsocketConsumer):
                 'users': users
             }
         )
+        close_old_connections()
 
     # Receive message from room group
     def room_status(self, event):
