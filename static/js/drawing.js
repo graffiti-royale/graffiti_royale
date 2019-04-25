@@ -167,17 +167,20 @@ function drawingScript2 () {
             (path[0][0] - xOffset),
             (path[0][1] - yOffset)
           )
-          for (let i = 1; i < path.length; i++) {
-            miniMapCxt.moveTo(
-              path[i][0] - xOffset,
-              path[i][1] - yOffset
+          for (i = 2; i < path.length; i++) {
+            drawMapCxt.moveTo(
+              (path[i][0] - xOffset),
+              (path[i][1] - yOffset)
             )
-            miniMapCxt.lineTo(
-              path[i - 1][0] - xOffset,
-              path[i - 1][1] - yOffset
+            drawMapCxt.arcTo(
+              (path[i - 1][0] - xOffset),
+              (path[i - 1][1] - yOffset),
+              (path[i - 2][0] - xOffset),
+              (path[i - 2][1] - yOffset),
+              2
             )
           }
-          miniMapCxt.stroke()
+          drawMapCxt.stroke()
         }
       }
     }
