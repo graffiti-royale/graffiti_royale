@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+import dj_database_url
 import django_heroku
 import os
 
@@ -149,7 +150,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
-ASGI_THREADS=10
-CONN_MAX_AGE=0
 
+DATABASES['default'] = dj_database_url.config()
 django_heroku.settings(locals())
