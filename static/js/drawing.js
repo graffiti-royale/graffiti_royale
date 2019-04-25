@@ -1,5 +1,6 @@
 function drawingScript2 () {
   let roomData = document.querySelector('#room-data').dataset.roomData
+  console.log(roomData)
   roomData = JSON.parse(roomData)
   const drawMap = document.querySelector('#drawMap')
   const miniMap = document.querySelector('#miniMap')
@@ -59,7 +60,8 @@ function drawingScript2 () {
     drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
   })
 
-  let drawSocket = new WebSocket(`wss://${window.location.host}/ws/${roomData['roompk']}/draw/`)
+  const room = document.querySelector('#room-data').dataset.roompk
+  let drawSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/draw/`)
 
   drawSocket.onmessage = function (event) {
     let data = JSON.parse(event.data)

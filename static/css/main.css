@@ -205,7 +205,7 @@ body {
     flex: 1;
 }
 
-.wordGuessed {
+#wordGuessed {
     font-size: 40px;
 }
 
