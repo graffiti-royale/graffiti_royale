@@ -59,6 +59,7 @@ class UsersConsumer(WebsocketConsumer):
 
         self.accept()
 
+    # Receive message from WebSocket
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         enter = text_data_json['enter']
@@ -103,6 +104,7 @@ class UsersConsumer(WebsocketConsumer):
             }
         )
 
+    # Receive message from room group
     def room_status(self, event):
         full = event['full']
         users = event['users']
