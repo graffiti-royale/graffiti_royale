@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Room, Profile
+from .models import Room
 
 # Register your models here.
 
@@ -7,6 +7,6 @@ from .models import Room, Profile
 class RoomAdmin(admin.ModelAdmin):
     pass
 
-@admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
-    pass
+# @admin.register(Profile)
+# class ProfileAdmin(admin.ModelAdmin):
+#     pass

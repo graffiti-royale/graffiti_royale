@@ -90,6 +90,8 @@ DATABASES = {
     }
 }
 
+CONN_MAX_AGE = 0
+
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
 
@@ -150,6 +152,5 @@ CHANNEL_LAYERS = {
     },
 }
 
-CONN_MAX_AGE = 0
-
+django_heroku.core.MAX_CONN_AGE = 0
 django_heroku.settings(locals())

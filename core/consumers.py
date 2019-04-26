@@ -2,7 +2,7 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import AsyncWebsocketConsumer, WebsocketConsumer
 import json
 from .models import Room
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 
 class PlayConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -46,10 +46,10 @@ class PlayConsumer(AsyncWebsocketConsumer):
             'username': username
         }))
 
-class UsersConsumer(WebsocketConsumer):
+class StartConsumer(WebsocketConsumer):
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['roompk']
-        self.room_group_name = 'users_%s' % self.room_name
+        self.room_group_name = 'start_%s' % self.room_name
 
         # Join room group
         async_to_sync(self.channel_layer.group_add)(
@@ -61,54 +61,20 @@ class UsersConsumer(WebsocketConsumer):
 
     # Receive message from WebSocket
     def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        enter = text_data_json['enter']
-        color = text_data_json['color']
-        word = text_data_json['random_word']
-
-        user = User.objects.get(username=text_data_json['username'])
-        room = Room.objects.get(pk=self.room_name)
-        full = room.full
         
-        user.profile.color = color
-        user.profile.word = word
-        if len(room.users.all()) == 1:
-            user.profile.host = True
-        user.profile.save()
-        
-        if not enter and not full:
-            room.users.remove(user)
-            if user.profile.guest:
-                user.delete()
-            # if user.profile.host:
-            #     user.profile.host = False
-            #     user.profile.save()
-            #     if room.users.count():
-            #         next_host = room.users.first().profile
-            #         next_host.host = True
-            #         next_host.save()
-
-        users = [[user.username, user.profile.host] for user in room.users.all()]
-
-        # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
-                'type': 'room_status',
-                'full': full,
-                'users': users
+                'type': 'start',
             }
         )
 
     # Receive message from room group
-    def room_status(self, event):
-        full = event['full']
-        users = event['users']
+    def start(self, event):
 
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'full': full,
-            'users': users
+            'start': 'start'
         }))
 
 class ScoreConsumer(WebsocketConsumer):
