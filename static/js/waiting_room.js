@@ -36,12 +36,17 @@ function waitingRoomJS () {
     var seconds = Math.floor(((distance % (1000 * 60)) / 1000))
 
     // Display the result in the element with id="demo"
-    document.getElementById('time').innerHTML = minutes + ':' + seconds
+    if (seconds > 9) {
+      document.getElementById('time').innerHTML = minutes + ':' + seconds
+    } else {
+      document.getElementById('time').innerHTML = minutes + ':0' + seconds
+    }
 
     // If the count down is finished, write some text
-    if (distance < 0) {
-      clearInterval(x)
-      document.getElementById('time').innerHTML = 'EXPIRED'
+    if (document.getElementById('time').innerHTML === '0:00') {
+      startSocket.send(JSON.stringify({
+        'startgame': true
+      }))
     }
   }, 1000)
 }
