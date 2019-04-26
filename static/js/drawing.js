@@ -22,7 +22,6 @@ function drawingScript2 () {
 
   /* Setting up visuals */
   const bricks = document.querySelector('#bricks')
-  const background = document.querySelector('#background')
 
   miniMap.addEventListener('mousemove', function (event) {
     if (zoomedOut) {
@@ -38,24 +37,26 @@ function drawingScript2 () {
   })
 
   miniMap.addEventListener('dblclick', function (event) {
-    zoomedOut = false
-    xOffset = zoomCenter[0] - drawMap.width / 2
-    yOffset = zoomCenter[1] - drawMap.height / 2
     drawMap.style.zIndex = 4
     miniMap.style.zIndex = 1
+    zoomedOut = false
+    paint = false
+    xOffset = zoomCenter[0] - drawMap.width / 2
+    yOffset = zoomCenter[1] - drawMap.height / 2
     let moveX = -1 * (((zoomCenter[0] / ZOOMFACTOR) - (window.innerWidth / 2)) + miniMap.offsetLeft)
     let moveY = -1 * (((zoomCenter[1] / ZOOMFACTOR) - (window.innerHeight / 2)) + miniMap.offsetTop)
-    X = zoomCenter[0] * 100 / miniMap.width / ZOOMFACTOR
-    Y = zoomCenter[1] * 100 / miniMap.height / ZOOMFACTOR
+    let X = zoomCenter[0] * 100 / miniMap.width / ZOOMFACTOR
+    let Y = zoomCenter[1] * 100 / miniMap.height / ZOOMFACTOR
     let coord = `${X}% ${Y}%`
     bricks.style.transform = `translate(${moveX}px, ${moveY}px) scale(${ZOOMFACTOR}, ${ZOOMFACTOR})`
     bricks.style.transformOrigin = coord
   })
 
   drawMap.addEventListener('dblclick', function (event) {
-    zoomedOut = true
     drawMap.style.zIndex = 1
     miniMap.style.zIndex = 4
+    zoomedOut = true
+    paint = false
     bricks.style.transform = 'scale(1, 1)'
     drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
   })
@@ -77,14 +78,14 @@ function drawingScript2 () {
   drawMap.addEventListener('mousedown', function (event) {
     paint = true
     roomData[username]['paths'].push([[
-      Math.floor(event.pageX) + xOffset,
-      Math.floor(event.pageY) + yOffset
+      event.pageX + xOffset,
+      event.pageY + yOffset
     ]])
     drawSocket.send(JSON.stringify({
       'username': username,
       'point': [
-        Math.floor(event.pageX) + xOffset,
-        Math.floor(event.pageY) + yOffset
+        event.pageX + xOffset,
+        event.pageY + yOffset
       ],
       'new_path': true
     }))
@@ -93,14 +94,14 @@ function drawingScript2 () {
   drawMap.addEventListener('mousemove', function (event) {
     if (paint) {
       roomData[username]['paths'][roomData[username]['paths'].length - 1].push([
-        Math.floor(event.pageX) + xOffset,
-        Math.floor(event.pageY) + yOffset
+        event.pageX + xOffset,
+        event.pageY + yOffset
       ])
       drawSocket.send(JSON.stringify({
         'username': username,
         'point': [
-          Math.floor(event.pageX) + xOffset,
-          Math.floor(event.pageY) + yOffset
+          event.pageX + xOffset,
+          event.pageY + yOffset
         ],
         'new_path': false
       }))
@@ -167,17 +168,14 @@ function drawingScript2 () {
             (path[0][0] - xOffset),
             (path[0][1] - yOffset)
           )
-          for (i = 2; i < path.length; i++) {
+          for (i = 1; i < path.length; i++) {
             drawMapCxt.moveTo(
               (path[i][0] - xOffset),
               (path[i][1] - yOffset)
             )
-            drawMapCxt.arcTo(
+            drawMapCxt.lineTo(
               (path[i - 1][0] - xOffset),
-              (path[i - 1][1] - yOffset),
-              (path[i - 2][0] - xOffset),
-              (path[i - 2][1] - yOffset),
-              2
+              (path[i - 1][1] - yOffset)
             )
           }
           drawMapCxt.stroke()
