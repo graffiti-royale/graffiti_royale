@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.db import close_old_connections
 import random
 
-ROOM_CAP = 20
+ROOM_CAP = 45
 
 # Chooses a random word from our Words.csv file
 def get_random_word():
