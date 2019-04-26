@@ -23,7 +23,9 @@ let onPlayPage = document.querySelector('#playPage')
 if (onPlayPage) {
   const username = window.location.href.split('/')[5]
   const room = document.querySelector('#room-data').dataset.roompk
-  const roomData = JSON.parse(document.querySelector('#room-data').dataset.roomData)
+  let roomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
+  roomData = JSON.parse(roomData)
+  console.log(roomData)
   document.querySelector('.random-word').innerHTML = `WORD: ${roomData[username]['word'].toUpperCase()}`
 
   let popup = document.querySelector('#playerspopup')
