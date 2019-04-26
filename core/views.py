@@ -6,9 +6,9 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.db import close_old_connections
-import random
+import random, time
 
-ROOM_CAP = 2
+ROOM_CAP = 5
 
 # Chooses a random word from our Words.csv file
 def get_random_word():
@@ -51,13 +51,13 @@ def waiting_room(request, roompk, username):
         room.full=True
     room.save()
     full = room.full
-    time = room.createdAt
+    timer = int(time.mktime(room.createdAt.timetuple())) * 1000
     close_old_connections()
 
     return render(request, 'waiting_room.html', context = {
         "full": full,
         "roompk": roompk,
-        "time": time,
+        "time": timer,
         "username": username
     })
 

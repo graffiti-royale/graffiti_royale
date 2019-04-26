@@ -17,8 +17,9 @@ function waitingRoomJS () {
     window.location.href = `https://${window.location.host}/play/${room}/${username}/`
   }
 
-  var countDownDate = new Date(document.querySelector('.user_data').dataset.starttime).getTime()
-  console.log(document.querySelector('.user_data').dataset.starttime)
+  let roomTime = document.querySelector('.user_data').dataset.starttime
+  console.log(roomTime)
+  let countDownDate = new Date(parseInt(roomTime, 10))
   console.log(countDownDate)
 
   // Update the count down every 1 second
@@ -31,8 +32,8 @@ function waitingRoomJS () {
     console.log(distance)
 
     // Time calculations for days, hours, minutes and seconds
-    var minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60)) + 2)
-    var seconds = Math.floor(((distance % (1000 * 60)) / 1000) + 60)
+    var minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60)) - 58)
+    var seconds = Math.floor(((distance % (1000 * 60)) / 1000))
 
     // Display the result in the element with id="demo"
     document.getElementById('time').innerHTML = minutes + ':' + seconds
