@@ -151,4 +151,6 @@ CHANNEL_LAYERS = {
     },
 }
 
+dj_database_url.config()
+
 django_heroku.settings(locals())
