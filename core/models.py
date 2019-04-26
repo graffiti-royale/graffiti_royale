@@ -8,3 +8,4 @@ class Room(models.Model):
     name = models.CharField(max_length=50, default='Room')
     full = models.BooleanField(default=False)
     JSON = models.TextField(max_length=1000, default='')
+    createdAt = models.DateTimeField(auto_now_add=True)

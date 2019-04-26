@@ -51,11 +51,13 @@ def waiting_room(request, roompk, username):
         room.full=True
     room.save()
     full = room.full
+    time = room.createdAt
     close_old_connections()
 
     return render(request, 'waiting_room.html', context = {
         "full": full,
         "roompk": roompk,
+        "time": time,
         "username": username
     })
 
