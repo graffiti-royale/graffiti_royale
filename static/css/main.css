@@ -821,7 +821,7 @@ input:focus {
 }
 
 .player-queue {
-    float:right;
+    float: right;
     text-align: left;
     border: .2rem solid black;
     box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
@@ -832,7 +832,7 @@ input:focus {
     border-radius: 30px;
     text-decoration: none;
     margin: 10px 30px 40px 30px;
-    min-width:500px;
+    min-width:300px;
     max-width:510px;
     min-height: auto;
     max-height: auto;
