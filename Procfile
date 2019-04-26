@@ -1,1 +1,1 @@
-web: daphne graffiti_royale.asgi:application --port $PORT --bind 0.0.0.0
+web: bin/start-pgbouncer-stunnel daphne graffiti_royale.asgi:application --port $PORT --bind 0.0.0.0
