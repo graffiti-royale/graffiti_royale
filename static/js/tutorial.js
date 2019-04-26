@@ -7,7 +7,7 @@ function tutorialJavaScript () {
   let firstP = document.querySelector('#firstP')
   let secondP = document.querySelector('#secondP')
 
-  let headerArray = ['Welcome!', 'Welcome!', 'Welcome!']
+  let headerArray = ['WELCOME!', 'WELCOME!', 'WELCOME!']
 
   let firstPArray = ['In GRAFFiTi ROYALE, your goal is to gain as many points as possible by drawing a word and guessing the illustrated words of your opponents to ensure victory. In classic Royale style gameplay, only one player will claim Victory Royale.', "That's right! In GRAFFiTi ROYALE, you can draw on and over other players’ drawings, but there are still a few rules to ensure a fun experience for all:", 'While staying true to the nature of word guessing games, GRAFFiTi ROYALE works a bit differently to accomodate for a much larger player pool.']
 

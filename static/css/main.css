@@ -257,7 +257,7 @@ body {
     font-style: italic;
 }
 
-.profile-link {
+/* .profile-link {
     color: black;
     text-decoration: none;
 }
@@ -288,7 +288,7 @@ body {
     text-shadow: -1.5px 0 black, 0 1.5px black, 1.5px 0 black, 0 -1.5px black;
     font-family: 'Londrina Solid', cursive;
     font-style: italic;
-}
+} */
 
 .tutorial-link {
     color: black;
@@ -331,7 +331,7 @@ input {
     border-radius: 3rem;
     border: .2rem solid black;
     caret-color:rgb(255, 0, 17);
-    color: rgb(255, 0, 17);
+    color:black;
     background-color : white;
     font-family: 'Londrina Solid', cursive;
     font-size:30px;
@@ -842,3 +842,43 @@ input:focus {
     user-select: none; 
 }
 
+.waiting-room-banner {
+    display: flex;
+    justify-content: space-between;
+    /* justify-content: center; */
+    align-items: center;
+    align-items: center;
+    padding: 4.5rem 4.5rem;
+    color: black;
+    background-color: white;
+    font-style: italic;
+    /* border-bottom: .2rem solid black; */
+    border-bottom: 7px solid transparent;
+    border-image: linear-gradient(to right, rgb(0, 123, 255) 0%, #18fbff 20%, #ff4797 40%, rgb(255, 0, 17) 60%, rgb(255, 247, 0) 80%, #85ff1b 100%);
+    border-image-slice: 1;
+    /* border-radius:0px 0px 30px 30px; */
+    box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
+    /* height: 1rem; */
+}
+
+.waiting-room-logo {
+    display: flex;
+    max-height: 3rem;
+    min-height: 2rem;
+    font-family: 'Londrina Sketch', cursive;
+    text-shadow: -.75px 0 black, 0 .75px black, .75px 0 black, 0 -.75px black;
+    justify-content: center;
+    align-items: center;
+    font-size:130px;
+    text-decoration: none;
+    color: black;
+    -webkit-user-select: none;      
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+}
+
+/* .waiting-room-logo:visited {
+    text-decoration: none;
+    color:black;
+} */

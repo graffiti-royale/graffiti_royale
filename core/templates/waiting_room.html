@@ -1,10 +1,43 @@
-{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Graffiti Royale{% endblock %}</title>
+        {% block meta %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="theme-color" content="#3367D6"/>
+        {% endblock %}
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css" integrity="sha384-Mmxa0mLqhmOeaE8vgOSbKacftZcsNYDjQzuCOm6D02luYSzBG8vpaOykv9lFQ51Y" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover.css">
+        <link href="https://fonts.googleapis.com/css?family=Londrina+Sketch|Londrina+Solid" rel="stylesheet">       
+        <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+        <link rel="manifest" href="{% static 'manifest.json' %}">
+    
+    </head>
+    
+    <body>
+        <header>
+            <center><div class="waiting-room-banner">
+            <a class="waiting-room-logo" style="font-size:9vw"><div><p>WAiTiNG ROOM</p></div></a>
+                 <div>
+                    <span>
+                    <a class="login head-link dim f2 lh-copy" style="font-size:3vw" href="{% url 'homepage'%}"><i class="fas fa-home fa-1x"></i>&nbspHOME</a>&nbsp&nbsp&nbsp
+                    <a class="login head-link dim f2 lh-copy" style="font-size:3vw" href="{% url 'homepage'%}?next={{request.path}}"><i class="fas fa-scroll fa-1x"></i>&nbspHiNTS</a>
+                    </span>
+                </div>   
+            </div></center>
+        </header>
+
 {% block content %}
     <div id="waitingroom"></div>
     <div class="user_data" data-full="{{ full }}" data-room="{{ roompk }}" data-username="{{ username }}"></div>
     
     <div class="protips">
-    <div class="protips-title">Protips</div>
+    <div class="protips-title">HiNTS</div>
     <ul>
         <li>Draw the word displayed at the top left</li>
         <li>Doubletap to zoom in/out</li>
@@ -21,10 +54,13 @@
     <!-- <center><div class="roundtimer">Round starts in <span class="seconds" id="time">3</span></div></center> -->
 
     <div class="player-queue">
-    <div class="player-queue-title">Player Queue</div>
+    <div class="player-queue-title">CURRENT PLAYERS</div>
 
     </div>
 
     {% load static %}
     <script src="{% static 'build/bundle.js' %}"></script>
 {% endblock %}
+
+</body>
+</html>
