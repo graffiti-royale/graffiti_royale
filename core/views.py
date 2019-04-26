@@ -5,6 +5,7 @@ import json
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.db import close_old_connections
 import random
 
 ROOM_CAP = 5
@@ -57,6 +58,7 @@ def waiting_room(request, roompk, username):
     })
 
 def play(request, roompk, username):
+    close_old_connections()
     room = get_object_or_404(Room, pk=roompk)
     room_data = "{"+room.JSON+"}"
     return render(request, 'play.html', context = {"room_data":room_data, "roompk":roompk})

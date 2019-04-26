@@ -2,7 +2,12 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import AsyncWebsocketConsumer, WebsocketConsumer
 import json
 from .models import Room
+<<<<<<< HEAD
 # from django.contrib.auth.models import User
+=======
+from django.contrib.auth.models import User
+from django.db import close_old_connections
+>>>>>>> master
 
 class PlayConsumer(AsyncWebsocketConsumer):
     async def connect(self):
