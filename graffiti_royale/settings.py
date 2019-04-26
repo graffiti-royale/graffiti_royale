@@ -151,6 +151,4 @@ CHANNEL_LAYERS = {
     },
 }
 
-DATABASES['default'] = dj_database_url.config(ssl_require=True)
-
 django_heroku.settings(locals())
