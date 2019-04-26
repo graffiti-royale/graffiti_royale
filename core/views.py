@@ -27,6 +27,7 @@ def tutorial(request):
 
 def waiting_room(request, roompk, username):
     username = username
+    close_old_connections()
     room = Room.objects.get(pk=roompk)
     word = get_random_word()
     colors_list = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
@@ -50,6 +51,7 @@ def waiting_room(request, roompk, username):
         room.full=True
     room.save()
     full = room.full
+    close_old_connections()
 
     return render(request, 'waiting_room.html', context = {
         "full": full,
