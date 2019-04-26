@@ -1,1 +1,1 @@
-web: gunicorn graffiti_royale.asgi:application -b 0.0.0.0:$PORT -w 4 -k uvicorn.workers.UvicornWorker --forwarded-allow-ips "*"
+web: gunicorn graffiti_royale.asgi:application -b 0.0.0.0:$PORT -w 4 -k uvicorn.workers.UvicornWorker
