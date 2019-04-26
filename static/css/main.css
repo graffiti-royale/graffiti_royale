@@ -791,7 +791,7 @@ input:focus {
 .matchtimer {
     font-family: 'Londrina Solid', cursive;
     font-size: 40px;
-    position: absolute;
+    position: absolute center;
     -webkit-user-select: none;      
     -moz-user-select: none; 
     -ms-user-select: none; 
@@ -821,7 +821,7 @@ input:focus {
 }
 
 .player-queue {
-    float: right;
+    position: absolute center;
     text-align: left;
     border: .2rem solid black;
     box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
