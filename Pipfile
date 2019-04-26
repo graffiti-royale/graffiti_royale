@@ -9,12 +9,10 @@ prospector = "*"
 [packages]
 django = "*"
 psycopg2 = "*"
-django-registration-redux = "*"
 django-heroku = "*"
 gunicorn = "*"
 channels = "*"
 channels-redis = "*"
-sendgrid = "*"
 uvicorn = "*"
 
 [requires]
