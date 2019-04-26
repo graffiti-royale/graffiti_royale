@@ -152,5 +152,8 @@ CHANNEL_LAYERS = {
     },
 }
 
-django_heroku.MAX_CONN_AGE = 0
+django_heroku.core.MAX_CONN_AGE = 0
 django_heroku.settings(locals())
+
+# if 'DATABASE_URL' in os.environ:
+#     DATABASES['default'] = dj_database_url.config(conn_max_age=0, ssl_require=True)
