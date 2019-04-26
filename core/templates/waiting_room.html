@@ -35,10 +35,14 @@
 {% block content %}
     <div id="waitingroom"></div>
     <div class="user_data" data-full="{{ full }}" data-room="{{ roompk }}" data-username="{{ username }}"></div>
+    <div id="room_data" data-JSON="{{ JSON }}"></div>
 
    <center><div class="matchtimer"><i class="far fa-clock"></i>&nbspMatch starts in... <span class="seconds" id="time">10</span></div>
     <div class="player-queue">
-    <div class="player-queue-title">CURRENT PLAYERS</div>
+    <div class="player-queue-title">
+        CURRENT PLAYERS
+        <div id="current_players"></div>
+    </div>
     </div></center>
 
     {% load static %}

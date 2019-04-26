@@ -56,7 +56,8 @@ def waiting_room(request, roompk, username):
     return render(request, 'waiting_room.html', context = {
         "full": full,
         "roompk": roompk,
-        "username": username
+        "username": username,
+        "JSON": room.JSON
     })
 
 def play(request, roompk, username):
