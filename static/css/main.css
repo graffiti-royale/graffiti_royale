@@ -107,7 +107,19 @@ body {
     font-size:30px;
     position: absolute;
     top: 8px;
-    left: 23px;
+    left: 40px;
+    height: 35px;
+    -webkit-user-select: none;      
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+}
+
+.score {
+    font-size:30px;
+    position: absolute;
+    top: 8px;
+    left: 15px;
     height: 35px;
     -webkit-user-select: none;      
     -moz-user-select: none; 

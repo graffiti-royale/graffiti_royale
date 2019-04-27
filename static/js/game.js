@@ -24,12 +24,18 @@ if (onPlayPage) {
   const username = window.location.href.split('/')[5]
   const room = document.querySelector('#room-data').dataset.roompk
   let roomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
+  let startTime = document.querySelector('#room-data').dataset.starttime
+  startTime = new Date(parseInt(startTime, 10))
+  const timer = document.querySelector('#timer')
+  console.log(startTime)
   roomData = JSON.parse(roomData)
   console.log(roomData)
   document.querySelector('.random-word').innerHTML = `WORD: ${roomData[username]['word'].toUpperCase()}`
 
   let popup = document.querySelector('#playerspopup')
   let playerList = document.querySelector('#playerlist')
+  let score = document.querySelector('.score')
+  score.style.color = roomData[username]['color']
 
   for (let user of Object.keys(roomData)) {
     let userDiv = document.createElement('div')
@@ -82,10 +88,29 @@ if (onPlayPage) {
     roomData[data['user2']]['score'] += 1
     document.querySelector(`#${data['user1']}`).innerHTML = `${data['user1']}: ${roomData[data['user1']]['score']}`
     document.querySelector(`#${data['user2']}`).innerHTML = `${data['user2']}: ${roomData[data['user2']]['score']}`
+    score.innerHTML = `${roomData[username]['score']}`
+    console.log(score.innerHTML)
   }
-  // var display = document.querySelector('#time')
-  // startTimer(tenSeconds, display)
-  /* Setting up the canvas */
+
+  // Update the count down every 1 second
+  let x = setInterval(function () {
+    // Get todays date and time
+    let now = new Date().getTime()
+
+    // Find the distance between now and the count down date
+    let distance = now - startTime
+
+    // Time calculations for days, hours, minutes and seconds
+    let minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60))) + 60
+    let seconds = Math.floor(((distance % (1000 * 60)) / 1000)) + 60
+
+    // Display the result in the element with id="demo"
+    if (seconds > 9) {
+      timer.innerHTML = minutes + ':' + seconds
+    } else {
+      timer.innerHTML = minutes + ':0' + seconds
+    }
+  }, 1000)
 
   drawingScript2()
 }
