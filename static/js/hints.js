@@ -1,5 +1,5 @@
 
-<div class='hints'>
+/* <div class='hints'>
 <div class='hints-title'>HiNTS</div>
 
 Draw the word displayed at the top left
@@ -9,4 +9,4 @@ You must be zoomed in to draw
 +1 point if your drawing is guessed
 Draw or guess at any time
 View scoreboard by tapping&nbsp<i class='fas fa-caret-down scoreboard-icon' />&nbsp<i class='fas fa-users scoreboard-icon' />
-Highest score after time is up, wins
+Highest score after time is up, wins */

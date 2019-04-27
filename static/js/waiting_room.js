@@ -16,6 +16,36 @@ function waitingRoomJS () {
   startSocket.onmessage = function () {
     window.location.href = `https://${window.location.host}/play/${room}/${username}/`
   }
+
+  let roomTime = document.querySelector('.user_data').dataset.starttime
+  let countDownDate = new Date(parseInt(roomTime, 10))
+
+  // Update the count down every 1 second
+  let x = setInterval(function () {
+    // Get todays date and time
+    let now = new Date().getTime()
+
+    // Find the distance between now and the count down date
+    let distance = countDownDate - now
+
+    // Time calculations for days, hours, minutes and seconds
+    let minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60)) - 58)
+    let seconds = Math.floor(((distance % (1000 * 60)) / 1000))
+
+    // Display the result in the element with id="demo"
+    if (seconds > 9) {
+      document.getElementById('time').innerHTML = minutes + ':' + seconds
+    } else {
+      document.getElementById('time').innerHTML = minutes + ':0' + seconds
+    }
+
+    // If the count down is finished, write some text
+    if (document.getElementById('time').innerHTML === '0:00') {
+      startSocket.send(JSON.stringify({
+        'startgame': true
+      }))
+    }
+  }, 1000)
 }
 
 document.addEventListener('DOMContentLoaded', function () {
