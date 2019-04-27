@@ -7,8 +7,9 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.db import close_old_connections
 import random, time
+import datetime
 
-ROOM_CAP = 5
+ROOM_CAP = 2
 
 # Chooses a random word from our Words.csv file
 def get_random_word():
@@ -65,7 +66,11 @@ def play(request, roompk, username):
     close_old_connections()
     room = get_object_or_404(Room, pk=roompk)
     room_data = "{"+room.JSON+"}"
-    return render(request, 'play.html', context = {"room_data":room_data, "roompk":roompk})
+    if room.gameStart is None:
+        room.gameStart = datetime.datetime.utcnow()
+        room.save()
+    start = int(time.mktime(room.gameStart.timetuple())) * 1000
+    return render(request, 'play.html', context = {"room_data":room_data, "roompk":roompk, "start": start})
     
 def make_guest(request):
     return render(request, 'make_guest.html', context={})
