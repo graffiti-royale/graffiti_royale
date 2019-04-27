@@ -1,5 +1,31 @@
 const { drawingScript2 } = require('./drawing')
 
+console.log(roomData)
+
+if (onPlayPage) {
+  document.addEventListener('DOMContentLoaded', function () {
+    // Setting up constants
+    const username = window.location.href.split('/')[5]
+    const room = document.querySelector('#room-data').dataset.roompk
+    const rawRoomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
+    const roomData = JSON.parse(rawRoomData)
+    const timer = document.querySelector('#timer')
+    const rawStartTime = document.querySelector('#room-data').dataset.starttime
+    const startTime = new Date(parseInt(rawStartTime, 10))
+    const popup = document.querySelector('#playerspopup')
+    const playerList = document.querySelector('#playerlist')
+    const score = document.querySelector('.score')
+    const onPlayPage = document.querySelector('#playPage')
+    const guessInputField = document.querySelector('#wordGuessed')
+
+    htmlSetup(roomData, score, playerList)
+    connectDrawSocket()
+    connectScoreSocket()
+    setTimer()
+    drawingScript2()
+  })
+}
+
 // Timer
 function startTimer (duration, display) {
   var timer = duration; var minutes; var seconds
@@ -18,23 +44,8 @@ function startTimer (duration, display) {
   }, 1000)
 }
 
-let onPlayPage = document.querySelector('#playPage')
-
-if (onPlayPage) {
-  const username = window.location.href.split('/')[5]
-  const room = document.querySelector('#room-data').dataset.roompk
-  let roomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
-  let startTime = document.querySelector('#room-data').dataset.starttime
-  startTime = new Date(parseInt(startTime, 10))
-  const timer = document.querySelector('#timer')
-  console.log(startTime)
-  roomData = JSON.parse(roomData)
-  console.log(roomData)
+function htmlSetup (roomData, score, playerList) {
   document.querySelector('.random-word').innerHTML = `WORD: ${roomData[username]['word'].toUpperCase()}`
-
-  let popup = document.querySelector('#playerspopup')
-  let playerList = document.querySelector('#playerlist')
-  let score = document.querySelector('.score')
   score.style.color = roomData[username]['color']
 
   for (let user of Object.keys(roomData)) {
@@ -52,34 +63,25 @@ if (onPlayPage) {
       playerList.style.display = 'none'
     }
   })
+}
 
+function connectScoreSocket(roomData) {
   const scoreSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/score/`)
-  let guess = document.querySelector('#wordGuessed')
   let guessedWords = []
 
-  function checkGuess (guess, guessedWords) {
-    if (!guessedWords.includes(guess)) {
-      for (let user of Object.keys(roomData)) {
-        if (guess === roomData[user]['word'] && username !== user) {
-          return [username, user]
-        }
-      }
-    }
-    return false
-  }
-
   document.querySelector('.submitguess-button').addEventListener('click', function () {
-    let word = guess.value.toLowerCase()
+    let word = guessInputField.value.toLowerCase()
     let result = checkGuess(word, guessedWords)
     console.log(result)
     if (result) {
-      guess.style.border = '.2rem solid lightgreen'
+
+      guessInputField.style.border = '.2rem solid lightgreen'
       guessedWords.push(word)
       scoreSocket.send(JSON.stringify({
         'user1': result[0],
         'user2': result[1]
       }))
-    } else { guess.style.border = '.2rem solid red' }
+    } else { guessInputField.style.border = '.2rem solid red' }
   })
 
   scoreSocket.onmessage = function (event) {
@@ -91,7 +93,9 @@ if (onPlayPage) {
     score.innerHTML = `${roomData[username]['score']}`
     console.log(score.innerHTML)
   }
+}
 
+function setTimer()
   // Update the count down every 1 second
   let x = setInterval(function () {
     // Get todays date and time
@@ -111,8 +115,17 @@ if (onPlayPage) {
       timer.innerHTML = minutes + ':0' + seconds
     }
   }, 1000)
+}
 
-  drawingScript2()
+function checkGuess (guess, guessedWords) {
+  if (!guessedWords.includes(guess)) {
+    for (let user of Object.keys(roomData)) {
+      if (guess === roomData[user]['word'] && username !== user) {
+        return [username, user]
+      }
+    }
+  }
+  return false
 }
 
 module.exports = {
