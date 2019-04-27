@@ -1,19 +1,30 @@
 const { drawingScript2 } = require('./drawing')
 
 // Timer
-function startTimer (duration, display) {
-  var timer = duration; var minutes; var seconds
-  setInterval(function () {
-    minutes = parseInt(timer / 60, 10)
-    seconds = parseInt(timer % 60, 10)
+function startTimer (startTime) {
+  let startCountDown = document.querySelector('#start-count-down')
+  let countDownHolder = document.querySelector('#count-down-holder')
+  console.log(countDownHolder.style.display)
+  // startCountDown.style.height = window.innerHeight
+  let x = setInterval(function () {
+    // Get todays date and time
+    let now = new Date().getTime()
 
-    minutes = minutes < 10 ? +minutes : minutes
-    seconds = seconds < 10 ? +seconds : seconds
+    // Find the distance between now and the count down date
+    let distance = (startTime - now)
 
-    display.textContent = seconds
+    // Time calculations for days, hours, minutes and seconds
+    let seconds = Math.floor(((distance % (1000 * 60)) / 1000)) - 50
+    console.log(seconds)
 
-    if (--timer < 0) {
-      timer = duration
+    // Display the result in the element with id="demo"
+    startCountDown.innerHTML = seconds
+    if (startCountDown.innerHTML === '0') {
+      startCountDown.innerHTML = 'DRAW!'
+    } else if (startCountDown.innerHTML === '-1') {
+      countDownHolder.removeChild(startCountDown)
+      document.querySelector('#playPage').removeChild(countDownHolder)
+      clearInterval(x)
     }
   }, 1000)
 }
@@ -98,7 +109,7 @@ if (onPlayPage) {
     let now = new Date().getTime()
 
     // Find the distance between now and the count down date
-    let distance = startTime - now
+    let distance = (startTime - now) + 10000
 
     // Time calculations for days, hours, minutes and seconds
     let minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60))) - 58
@@ -112,6 +123,7 @@ if (onPlayPage) {
     }
   }, 1000)
 
+  startTimer(startTime)
   drawingScript2()
 }
 
