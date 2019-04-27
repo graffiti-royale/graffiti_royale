@@ -17,6 +17,18 @@ def get_random_word():
         lines = [line.strip() for line in word_list]
     return random.choice(lines).lower()
 
+def get_number_of_rounds(initial_player_count):
+    if initial_player_count <= 5:
+        return 1
+    if initial_player_count <= 10:
+        return 2
+    if initial_player_count <= 20:
+        return 3
+    if initial_player_count <= 40:
+        return 4
+    if initial_player_count <= 80:
+        return 5
+    return 6
 
 # Create your views here.
 
