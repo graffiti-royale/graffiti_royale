@@ -53,7 +53,7 @@ function waitingRoomJS () {
         numPlayers += 1
       }
       numberOfPlayers.innerText = ''
-      numberOfPlayers.innerText = `${numPlayers}/${roomCap}`
+      numberOfPlayers.innerText = `${numPlayers}/${roomCap} `
 
       // // respond to a ping message with a pong message that includes both usernames
       // startSocket.send(JSON.stringify({
