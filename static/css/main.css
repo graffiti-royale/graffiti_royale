@@ -50,7 +50,7 @@ body {
     color:black;
 }
 
-.copyright {
+.credits {
     height: 1.3rem;
     color:rgba(113, 113, 113, 0.356);
     font-family: 'Londrina Solid', cursive;
@@ -164,28 +164,79 @@ body {
 #playerspopup {
     font-size:30px;
     position: absolute;
-    top: 8px;
-    right: 23px;
-    height: 35px;
+    top: 3.4px;
+    right: 10px;
+    height: 46px;
+    width:100px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    color: rgb(0, 123, 255);
-    font-style:italic;
+    justify-content: center;
+    text-align: center;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    color: white;
+    background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
+    margin: 0rem .5rem 0rem .5rem;
+    cursor: pointer;
 }
 
 #playerspopup:hover {
-    font-size:30px;
+    text-align: center;
+    margin: 0rem .5rem 0rem .5rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    color:white;
+    background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
     cursor: pointer;
-    color: rgb(255, 0, 17);
-    font-style:italic;
 }
 
 #playerspopup:visited {
-    font-size:30px;
+    background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
     cursor: pointer;
-    color: rgb(0, 123, 255);
-    font-style:italic;
+}
+
+#playerspopuptutorial {
+    font-size:30px;
+    top: 3.4px;
+    right: 10px;
+    height: 46px;
+    width:100px;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    color: white;
+    background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
+    margin: 0rem .5rem 0rem .5rem;
+    -webkit-user-select: none;      
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none;
+    cursor: default;
+}
+
+#playerspopuptutorial:hover {
+    text-align: center;
+    margin: 0rem .5rem 0rem .5rem;
+    border-radius: 3rem;
+    border: .2rem solid black;
+    color:white;
+    background-image: linear-gradient(to bottom, #ff4797, rgb(255, 0, 17));
+    -webkit-user-select: none;      
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+    cursor: default;
+}
+
+#playerspopuptutorial:visited {
+    background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
+    -webkit-user-select: none;      
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+    cursor: default;
 }
 
 #playerlist {
@@ -623,15 +674,17 @@ input:focus {
 
 .next {
     color:rgb(0, 123, 255);
+    cursor: pointer;
 }
 
 .next:hover {
-    cursor: default;
+    cursor: pointer;
     color:rgb(255, 0, 17);
 }
 
 .next:visited {
     color:rgb(0, 123, 255);
+    cursor: pointer;
 }
   
   /* The Close Button */
@@ -732,6 +785,7 @@ input:focus {
     color: white;
     caret-color:rgb(255, 0, 132);
     background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
+    cursor:pointer;
 }
 
 .guest-button:hover {
@@ -755,11 +809,11 @@ input:focus {
 }
 
 .seconds {
-    font-family: 'Londrina Sketch', cursive;
+    font-family: 'Londrina Solid', cursive;
     font-size: 50px;
     color: red;
     font-style: italic;
-    text-shadow: -.75px 0 red, 0 .75px red, .75px 0 red, 0 -.75px red;
+    /* text-shadow: -.75px 0 red, 0 .75px red, .75px 0 red, 0 -.75px red; */
     -webkit-user-select: none;      
     -moz-user-select: none; 
     -ms-user-select: none; 
@@ -895,3 +949,8 @@ input:focus {
     text-decoration: none;
     color:black;
 } */
+
+.current-players {
+    font-family: 'Londrina Solid', cursive;
+    text-shadow: -.5px 0 white, 0 .5px white, .5px 0 white, 0 -.5px white;
+}

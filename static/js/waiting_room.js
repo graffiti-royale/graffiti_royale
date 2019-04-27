@@ -4,9 +4,11 @@ function waitingRoomJS () {
   let room = document.querySelector('.user_data').dataset.room
   let username = document.querySelector('.user_data').dataset.username
   let roomData = document.querySelector('#room_data').dataset.json.replace(/\\/g, '')
+  let roomCap = document.querySelector('#room_data').dataset.roomCap
   roomData = `{${roomData}}`
   roomData = JSON.parse(roomData)
   let currentPlayers = document.querySelector('#current_players')
+  let numberOfPlayers = document.querySelector('#number-of-players')
   console.log(username)
   console.log(full)
   let usersAtPing = {}
@@ -15,6 +17,7 @@ function waitingRoomJS () {
 
   startSocket.onopen = function (event) {
     console.log('connected')
+    console.log('open', roomData)
     let messageType
     if (full === 'True') {
       messageType = 'startgame'
@@ -30,7 +33,7 @@ function waitingRoomJS () {
 
   startSocket.onmessage = function (event) {
     let data = JSON.parse(event.data)
-    console.log('message')
+    console.log('message', roomData)
 
     if (data['type'] === 'start') {
       // start the match!!!!
@@ -41,11 +44,16 @@ function waitingRoomJS () {
       console.log(roomData)
       // respond to a ping by updating the users in the room directly (using the html room_data)
       currentPlayers.innerHTML = ''
+      let numPlayers = 0
       for (let player of Object.keys(roomData)) {
         let playerDiv = document.createElement('div')
+        playerDiv.style.color = roomData[player]['color']
         playerDiv.innerText = player
         currentPlayers.appendChild(playerDiv)
+        numPlayers += 1
       }
+      numberOfPlayers.innerText = ''
+      numberOfPlayers.innerText = `${numPlayers}/${roomCap} `
 
       // // respond to a ping message with a pong message that includes both usernames
       // startSocket.send(JSON.stringify({
