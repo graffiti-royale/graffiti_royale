@@ -22,6 +22,10 @@
     <div class="play-header">
             <p class="random-word">WORD: {{ random_word }}</p>    
             <input type="submit" id="playerspopup" value="SCORES"/>
+            <div>
+                <span class="random-word">WORD: {{ random_word }}</span>
+                <span class="score">0 </span>
+            </div>    
             <div id="playerlist"></div>
     </div>
   
@@ -32,11 +36,12 @@
    
     <div class="play-footer">
        
+        <div id="timer"></div>
         <input type="text" id="wordGuessed">
         <input type="submit" class="submitguess-button" value="GUESS">
      
     </div>
-    <div id="room-data" data-room-data="{{ room_data }}" data-roompk="{{ roompk }}"></div>
+    <div id="room-data" data-room-data="{{ room_data }}" data-roompk="{{ roompk }}" data-starttime="{{ start }}"></div>
     {% load static %}
     <script src="{% static 'build/bundle.js' %}"></script>
 

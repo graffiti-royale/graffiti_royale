@@ -61,20 +61,59 @@ class StartConsumer(WebsocketConsumer):
 
     # Receive message from WebSocket
     def receive(self, text_data):
-        
-        async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name,
-            {
-                'type': 'start',
-            }
-        )
+        text_data = json.loads(text_data)
+        message_type = text_data['messageType']
+        print(message_type)
+        # Send message of type 'start' to room group if the room is full
+        if message_type == 'startgame':
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name,
+                {
+                    'type': 'start',
+                }
+            )
+        # Send message of type 'ping' to room group if the room still has space
+        elif message_type == 'ping':
+            # print(text_data['roomData'])
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name,
+                {
+                    'type': 'ping',
+                    'roomData': text_data['roomData'],
+                    'username': text_data['username']
+                }
+            )
+        # Send message of type 'pong' as the response to a 'ping' message
+        elif message_type == 'pong':
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name,
+                {
+                    'type': 'pong',
+                    'ponger': text_data['ponger'],
+                    'pinger': text_data['pinger']
+                }
+            )
 
-    # Receive message from room group
-    def start(self, event):
-
-        # Send message to WebSocket
+    def start(self, text_data):
+        # Send message of type 'start' to WebSocket if the room is full
         self.send(text_data=json.dumps({
-            'start': 'start'
+            'type': 'start'
+        }))
+
+    def ping(self, text_data):
+        # Pass the ping message to the WebSocket
+        self.send(text_data=json.dumps({
+            'type': 'ping',
+            'roomData': text_data['roomData'],
+            'pinger': text_data['username']
+        }))
+
+    def pong(self, text_data):
+        # Pass the username data that we received from a pong message to the WebSocket
+        self.send(text_data=json.dumps({
+            'type': 'pong',
+            'ponger': text_data['ponger'],
+            'pinger': text_data['pinger']
         }))
 
 class ScoreConsumer(WebsocketConsumer):

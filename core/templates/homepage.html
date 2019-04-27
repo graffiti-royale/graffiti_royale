@@ -5,12 +5,7 @@
 
 {% block content %}
 <body id="homePage">
-<center><a class="head-link" href="
-  {% if request.user.is_authenticated %}
-    {% url 'play' username=request.user.username %}
-  {% else %}
-    {% url 'make_guest' %}
-  {% endif %}">
+<center><a class="head-link" href="{% url 'make_guest' %}">
   <h2 class="play hvr-bob hvr-glow"><i class="fas fa-spray-can white"></i>&nbspPLAY</h2></a></center>
 <center><a class="tutorial-link tutorial-button"><h2 class="tutorial hvr-bob hvr-glow"><i class="fas fa-scroll white"></i>&nbspTUTORiAL</h2></a></center>
 
