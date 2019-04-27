@@ -785,6 +785,7 @@ input:focus {
     color: white;
     caret-color:rgb(255, 0, 132);
     background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
+    cursor:pointer;
 }
 
 .guest-button:hover {
