@@ -9,7 +9,7 @@ from django.db import close_old_connections
 import random, time
 import datetime
 
-ROOM_CAP = 5
+ROOM_CAP = 2
 
 # Chooses a random word from our Words.csv file
 def get_random_word():
@@ -69,6 +69,7 @@ def play(request, roompk, username):
     close_old_connections()
     room = get_object_or_404(Room, pk=roompk)
     room_data = "{"+room.JSON+"}"
+    room.full = True
     if room.gameStart is None:
         room.gameStart = datetime.datetime.utcnow()
         room.save()

@@ -94,7 +94,7 @@ function waitingRoomJS () {
     }
 
     // If the count down is finished, write some text
-    if (document.getElementById('time').innerHTML === '0:00') {
+    if (minutes + seconds <= 0) {
       startSocket.send(JSON.stringify({
         'messageType': 'startgame'
       }))
