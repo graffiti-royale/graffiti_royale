@@ -9,7 +9,7 @@ from django.db import close_old_connections
 import random, time
 import datetime
 
-ROOM_CAP = 2
+ROOM_CAP = 5
 
 # Chooses a random word from our Words.csv file
 def get_random_word():
@@ -58,6 +58,7 @@ def waiting_room(request, roompk, username):
     return render(request, 'waiting_room.html', context = {
         "full": full,
         "roompk": roompk,
+        "JSON": room.JSON,
         "time": timer,
         "username": username
     })

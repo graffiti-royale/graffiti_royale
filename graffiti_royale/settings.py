@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'registration',
     'channels',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -92,9 +91,6 @@ DATABASES = {
 
 CONN_MAX_AGE = 0
 
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
-
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -138,10 +134,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-
-
-ACCOUNT_ACTIVATION_DAYS = 7
-LOGIN_REDIRECT_URL = '/'
 
 ASGI_APPLICATION = "graffiti_royale.routing.application"
 CHANNEL_LAYERS = {
