@@ -164,12 +164,13 @@ body {
 #playerspopup {
     font-size:30px;
     position: absolute;
-    top: 3.5px;
-    right: 23px;
-    height: 45px;
+    top: 3.4px;
+    right: 10px;
+    height: 46px;
+    width:100px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     text-align: center;
     border-radius: 3rem;
     border: .2rem solid black;
@@ -196,11 +197,12 @@ body {
 
 #playerspopuptutorial {
     font-size:30px;
-    top: 3.5px;
-    right: 23px;
-    height: 45px;
+    top: 3.4px;
+    right: 10px;
+    height: 46px;
+    width:100px;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     text-align: center;
     border-radius: 3rem;
     border: .2rem solid black;
@@ -783,6 +785,7 @@ input:focus {
     color: white;
     caret-color:rgb(255, 0, 132);
     background-image: linear-gradient(to bottom, #18fbff, rgb(0, 123, 255));
+    cursor:pointer;
 }
 
 .guest-button:hover {
@@ -806,11 +809,11 @@ input:focus {
 }
 
 .seconds {
-    font-family: 'Londrina Sketch', cursive;
+    font-family: 'Londrina Solid', cursive;
     font-size: 50px;
     color: red;
     font-style: italic;
-    text-shadow: -.75px 0 red, 0 .75px red, .75px 0 red, 0 -.75px red;
+    /* text-shadow: -.75px 0 red, 0 .75px red, .75px 0 red, 0 -.75px red; */
     -webkit-user-select: none;      
     -moz-user-select: none; 
     -ms-user-select: none; 
@@ -946,3 +949,8 @@ input:focus {
     text-decoration: none;
     color:black;
 } */
+
+.current-players {
+    font-family: 'Londrina Solid', cursive;
+    text-shadow: -.5px 0 white, 0 .5px white, .5px 0 white, 0 -.5px white;
+}
