@@ -98,7 +98,7 @@ if (onPlayPage) {
     let now = new Date().getTime()
 
     // Find the distance between now and the count down date
-    let distance = startTime - now
+    let distance = (startTime - now) + 5000
 
     // Time calculations for days, hours, minutes and seconds
     let minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60))) - 58
