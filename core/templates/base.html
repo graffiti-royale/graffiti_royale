@@ -21,19 +21,9 @@
     
     <body>
         <header>
-            <div class="banner">
+            <center><div class="banner">
             <a href="{% url 'homepage' %}" class="logo" style="font-size:9vw"><div><p>GRAFFiTi ROYALE</p></div></a>
-                 <div>
-                    <span>
-                    {% if request.user.is_authenticated %}
-                    <span>{{ request.user.username }}</span>
-                    <a class="logout" href="{% url 'auth_logout' %}">LOGOUT</a>
-                    {% else %}
-                    <a class="login head-link dim f2 lh-copy" style="font-size:3vw" href="{% url 'auth_login'%}?next={{request.path}}"><i class="fa fa-user fa-1x"></i>&nbspLOGiN</a>
-                    {% endif %}
-                    </span>
-                </div>   
-            </div>
+            </div></center>
         </header>
         
     {% block content %}{% endblock %}

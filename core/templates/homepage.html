@@ -5,14 +5,8 @@
 
 {% block content %}
 <body id="homePage">
-<center><a class="head-link" href="
-  {% if request.user.is_authenticated %}
-    {% url 'play' username=request.user.username %}
-  {% else %}
-    {% url 'make_guest' %}
-  {% endif %}">
+<center><a class="head-link" href="{% url 'make_guest' %}">
   <h2 class="play hvr-bob hvr-glow"><i class="fas fa-spray-can white"></i>&nbspPLAY</h2></a></center>
-<center><a class="profile-link" href=""><h2 class="profile hvr-bob hvr-glow"><i class="fas fa-address-card white"></i>&nbspPROFiLE</h2></a></center>
 <center><a class="tutorial-link tutorial-button"><h2 class="tutorial hvr-bob hvr-glow"><i class="fas fa-scroll white"></i>&nbspTUTORiAL</h2></a></center>
 
 <div id="myModal" class="modal">
@@ -24,7 +18,7 @@
     <center><span class="next"><i class="fas fa-chevron-circle-right fa-2x"></i></span></center>
   </div>
 </div>
-<center><div class="copyright">© 2019 Graffiti Royale Rob Taylor, Michael Taylor, Christian Medlin, Ryan Catrine</div></center>
+<!-- <center><div class="copyright">© 2019 Graffiti Royale Rob Taylor, Michael Taylor, Christian Medlin, Ryan Catrine</div></center> -->
 </body>
 
 <script src="{% static 'build/bundle.js' %}"></script>

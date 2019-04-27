@@ -1,16 +1,16 @@
 function drawingScript2 () {
-  /* Setting up the canvas */
+  let roomData = document.querySelector('#room-data').dataset.roomData
+  console.log(roomData)
+  roomData = JSON.parse(roomData)
   const drawMap = document.querySelector('#drawMap')
   const miniMap = document.querySelector('#miniMap')
   const drawMapCxt = drawMap.getContext('2d')
   const miniMapCxt = miniMap.getContext('2d')
+  const username = window.location.href.split('/')[5]
   drawMap.width = window.innerWidth
   drawMap.height = window.innerHeight
   miniMap.width = 600
   miniMap.height = 600
-  //   drawMapCxt.shadowBlur = 3
-  //   drawMapCxt.lineCap = 'round'
-  //   drawMapCxt.lineWidth = 4
 
   let paint
   let zoomedOut = true
@@ -106,8 +106,6 @@ function drawingScript2 () {
     }
   })
 
-  // UNFINISHED
-
   // Determines which point the minimap is currently on when using a touch screen.
   miniMap.addEventListener('touchmove', function (event) {
     if (zoomedOut) {
@@ -127,32 +125,30 @@ function drawingScript2 () {
 
   // When the user double clicks with a mouse, zooms IN on the canvas.
   miniMap.addEventListener('dblclick', function (event) {
-    zoomedOut = false
-    xOffset = zoomCenter[0] - drawMap.width / 2
-    yOffset = zoomCenter[1] - drawMap.height / 2
     drawMap.style.zIndex = 4
     miniMap.style.zIndex = 1
+    zoomedOut = false
+    paint = false
+    xOffset = zoomCenter[0] - drawMap.width / 2
+    yOffset = zoomCenter[1] - drawMap.height / 2
     let moveX = -1 * (((zoomCenter[0] / ZOOMFACTOR) - (window.innerWidth / 2)) + miniMap.offsetLeft)
     let moveY = -1 * (((zoomCenter[1] / ZOOMFACTOR) - (window.innerHeight / 2)) + miniMap.offsetTop)
-    X = zoomCenter[0] * 100 / miniMap.width / ZOOMFACTOR
-    Y = zoomCenter[1] * 100 / miniMap.height / ZOOMFACTOR
+    let X = zoomCenter[0] * 100 / miniMap.width / ZOOMFACTOR
+    let Y = zoomCenter[1] * 100 / miniMap.height / ZOOMFACTOR
     let coord = `${X}% ${Y}%`
-    console.log(coord)
     bricks.style.transform = `translate(${moveX}px, ${moveY}px) scale(${ZOOMFACTOR}, ${ZOOMFACTOR})`
     bricks.style.transformOrigin = coord
-    console.log(bricks.style)
   })
 
   // When the user double clicks with a mouse, zooms OUT of the canvas.
   drawMap.addEventListener('dblclick', function (event) {
-    zoomedOut = true
     drawMap.style.zIndex = 1
     miniMap.style.zIndex = 4
+    zoomedOut = true
+    paint = false
     bricks.style.transform = 'scale(1, 1)'
     drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
   })
-
-  // UNFINISHED
 
   // When the user double taps, zooms IN on the canvas.
   var timeout
@@ -184,15 +180,16 @@ function drawingScript2 () {
     lastTap = currentTime
   })
 
+  const room = document.querySelector('#room-data').dataset.roompk
   let drawSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/draw/`)
 
   drawSocket.onmessage = function (event) {
     let data = JSON.parse(event.data)
-    if (data['username'] != username) {
+    if (data['username'] !== username) {
       if (data['new_path']) {
-        userPaths[data['username']]['paths'].push(data['point'])
+        roomData[data['username']]['paths'].push(data['point'])
       } else {
-        userPaths[data['username']]['paths'][userPaths[data['username']]['paths'].length - 1].push(data['point'])
+        roomData[data['username']]['paths'][roomData[data['username']]['paths'].length - 1].push(data['point'])
       }
     }
   }
@@ -200,15 +197,15 @@ function drawingScript2 () {
   // When the user clicks with a mouse, this begins tracking the movement of the mouse.
   drawMap.addEventListener('mousedown', function (event) {
     paint = true
-    userPaths[username]['paths'].push([[
-      Math.floor(event.pageX) + xOffset,
-      Math.floor(event.pageY) + yOffset
+    roomData[username]['paths'].push([[
+      event.pageX + xOffset,
+      event.pageY + yOffset
     ]])
     drawSocket.send(JSON.stringify({
       'username': username,
       'point': [
-        Math.floor(event.pageX) + xOffset,
-        Math.floor(event.pageY) + yOffset
+        event.pageX + xOffset,
+        event.pageY + yOffset
       ],
       'new_path': true
     }))
@@ -235,15 +232,15 @@ function drawingScript2 () {
   // When the user drags their mouse while the button is clicked, this will draw the path of the user's mouse.
   drawMap.addEventListener('mousemove', function (event) {
     if (paint) {
-      userPaths[username]['paths'][userPaths[username]['paths'].length - 1].push([
-        Math.floor(event.pageX) + xOffset,
-        Math.floor(event.pageY) + yOffset
+      roomData[username]['paths'][roomData[username]['paths'].length - 1].push([
+        event.pageX + xOffset,
+        event.pageY + yOffset
       ])
       drawSocket.send(JSON.stringify({
         'username': username,
         'point': [
-          Math.floor(event.pageX) + xOffset,
-          Math.floor(event.pageY) + yOffset
+          event.pageX + xOffset,
+          event.pageY + yOffset
         ],
         'new_path': false
       }))
@@ -286,7 +283,7 @@ function drawingScript2 () {
   /* Redraw function */
   function redraw () {
     miniMapCxt.clearRect(0, 0, miniMap.width * ZOOMFACTOR, miniMap.height * ZOOMFACTOR)
-    for (let user of Object.values(userPaths)) {
+    for (let user of Object.values(roomData)) {
       let color = user['color']
       let paths = user['paths']
       miniMapCxt.strokeStyle = color
@@ -295,7 +292,7 @@ function drawingScript2 () {
       miniMapCxt.lineCap = 'round'
       miniMapCxt.lineWidth = 4
 
-      for (let path of Object.values(paths)) {
+      for (let path of paths) {
         miniMapCxt.beginPath()
         miniMapCxt.moveTo(path[0][0], path[0][1])
         for (i = 1; i < path.length; i++) {
@@ -320,7 +317,7 @@ function drawingScript2 () {
 
     if (!zoomedOut) {
       drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
-      for (let user of Object.values(userPaths)) {
+      for (let user of Object.values(roomData)) {
         let color = user['color']
         let paths = user['paths']
         drawMapCxt.strokeStyle = color
@@ -329,23 +326,20 @@ function drawingScript2 () {
         drawMapCxt.lineCap = 'round'
         drawMapCxt.lineWidth = 6
 
-        for (let path of Object.values(paths)) {
+        for (let path of paths) {
           drawMapCxt.beginPath()
           drawMapCxt.moveTo(
             (path[0][0] - xOffset),
             (path[0][1] - yOffset)
           )
-          for (i = 2; i < path.length; i++) {
+          for (i = 1; i < path.length; i++) {
             drawMapCxt.moveTo(
               (path[i][0] - xOffset),
               (path[i][1] - yOffset)
             )
-            drawMapCxt.arcTo(
+            drawMapCxt.lineTo(
               (path[i - 1][0] - xOffset),
-              (path[i - 1][1] - yOffset),
-              (path[i - 2][0] - xOffset),
-              (path[i - 2][1] - yOffset),
-              2
+              (path[i - 1][1] - yOffset)
             )
           }
           drawMapCxt.stroke()
@@ -354,24 +348,12 @@ function drawingScript2 () {
     }
   }
 
-  popup = document.querySelector('#playerspopup')
-  playerList = document.querySelector('#playerlist')
-  popup.addEventListener('click', function (e) {
-    if (!playerList.style.display || playerList.style.display === 'none') {
-      playerList.style.display = 'flex'
-    } else {
-      playerList.style.display = 'none'
-    }
-  })
-
   var start = null
   function step (timestamp) {
     redraw()
     window.requestAnimationFrame(step)
   }
   window.requestAnimationFrame(step)
-
-  module.exports = {}
 }
 
 let onPlayPage = document.querySelector('#playPage')
@@ -381,3 +363,5 @@ if (onPlayPage) {
     drawingScript2()
   })
 }
+
+module.exports = { drawingScript2: drawingScript2 }

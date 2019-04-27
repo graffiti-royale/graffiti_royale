@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'registration',
     'channels',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -90,8 +89,7 @@ DATABASES = {
     }
 }
 
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
+CONN_MAX_AGE = 0
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -118,6 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'America/New_York'
+USE_TZ = True 
 
 USE_I18N = True
 
@@ -136,10 +135,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-
-ACCOUNT_ACTIVATION_DAYS = 7
-LOGIN_REDIRECT_URL = '/'
-
 ASGI_APPLICATION = "graffiti_royale.routing.application"
 CHANNEL_LAYERS = {
     'default': {
@@ -150,6 +145,5 @@ CHANNEL_LAYERS = {
     },
 }
 
-CONN_MAX_AGE = 0
-
+django_heroku.core.MAX_CONN_AGE = 0
 django_heroku.settings(locals())

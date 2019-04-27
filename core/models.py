@@ -2,23 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import datetime
 
 class Room(models.Model):
-    users = models.ManyToManyField(User, related_name='room', blank=True)
+    users = models.IntegerField(default=0)
     name = models.CharField(max_length=50, default='Room')
     full = models.BooleanField(default=False)
-
-class Profile(models.Model):
-    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
-    guest = models.BooleanField(default=False)
-    word = models.CharField(max_length=100, null=True)
-    color = models.TextField(max_length=10, null=True)
-
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+    JSON = models.TextField(max_length=1000, default='')
+    createdAt = models.DateTimeField(auto_now_add=True)
+    gameStart = models.DateTimeField(null=True)
