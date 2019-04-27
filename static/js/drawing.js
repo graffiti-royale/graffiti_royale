@@ -23,6 +23,7 @@ function drawingScript2 () {
   /* Setting up visuals */
   const bricks = document.querySelector('#bricks')
 
+  // Determines which point the minimap is currently on when using a mouse.
   miniMap.addEventListener('mousemove', function (event) {
     if (zoomedOut) {
       let X = Math.min(
@@ -36,6 +37,24 @@ function drawingScript2 () {
     }
   })
 
+  // Determines which point the minimap is currently on when using a touch screen.
+  miniMap.addEventListener('touchmove', function (event) {
+    if (zoomedOut) {
+      event.preventDefault()
+      event.stopImmediatePropagation()
+
+      let X = Math.min(
+        Math.max(event.touches[0].pageX - this.offsetLeft, drawMap.width / ZOOMFACTOR / 2), miniMap.width - drawMap.width / ZOOMFACTOR / 2
+      ) * ZOOMFACTOR
+      let Y = Math.min(
+        Math.max(event.touches[0].pageY - this.offsetTop, drawMap.height / ZOOMFACTOR / 2),
+        miniMap.height - drawMap.height / ZOOMFACTOR / 2
+      ) * ZOOMFACTOR
+      zoomCenter = [Math.floor(X), Math.floor(Y)]
+    }
+  }, { passive: false })
+
+  // When the user double clicks with a mouse, zooms IN on the canvas.
   miniMap.addEventListener('dblclick', function (event) {
     drawMap.style.zIndex = 4
     miniMap.style.zIndex = 1
@@ -52,6 +71,7 @@ function drawingScript2 () {
     bricks.style.transformOrigin = coord
   })
 
+  // When the user double clicks with a mouse, zooms OUT of the canvas.
   drawMap.addEventListener('dblclick', function (event) {
     drawMap.style.zIndex = 1
     miniMap.style.zIndex = 4
@@ -59,6 +79,36 @@ function drawingScript2 () {
     paint = false
     bricks.style.transform = 'scale(1, 1)'
     drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
+  })
+
+  // When the user double taps, zooms IN on the canvas.
+  var timeout
+  var lastTap = 0
+  miniMap.addEventListener('touchend', function (event) {
+    var currentTime = new Date().getTime()
+    var tapLength = currentTime - lastTap
+    clearTimeout(timeout)
+    if (tapLength < 300 && tapLength > 0) {
+      zoomedOut = false
+      xOffset = zoomCenter[0] - drawMap.width / 2
+      yOffset = zoomCenter[1] - drawMap.height / 2
+      drawMap.style.zIndex = 4
+      miniMap.style.zIndex = 1
+      let moveX = -1 * (((zoomCenter[0] / ZOOMFACTOR) - (window.innerWidth / 2)) + miniMap.offsetLeft)
+      let moveY = -1 * (((zoomCenter[1] / ZOOMFACTOR) - (window.innerHeight / 2)) + miniMap.offsetTop)
+      X = zoomCenter[0] * 100 / miniMap.width / ZOOMFACTOR
+      Y = zoomCenter[1] * 100 / miniMap.height / ZOOMFACTOR
+      let coord = `${X}% ${Y}%`
+      console.log(coord)
+      bricks.style.transform = `translate(${moveX}px, ${moveY}px) scale(${ZOOMFACTOR}, ${ZOOMFACTOR})`
+      bricks.style.transformOrigin = coord
+      console.log(bricks.style)
+      event.preventDefault()
+    } else {
+      // This will trigger if it is a single tap.
+      clearTimeout(timeout)
+    }
+    lastTap = currentTime
   })
 
   const room = document.querySelector('#room-data').dataset.roompk
@@ -75,6 +125,7 @@ function drawingScript2 () {
     }
   }
 
+  // When the user clicks with a mouse, this begins tracking the movement of the mouse.
   drawMap.addEventListener('mousedown', function (event) {
     paint = true
     roomData[username]['paths'].push([[
@@ -91,6 +142,25 @@ function drawingScript2 () {
     }))
   })
 
+  // This will detect when a user touches their screen and will begin tracking the movement of their
+  // big, ugly, smelly fingers.
+  drawMap.addEventListener('touchstart', function (event) {
+    paint = true
+    userPaths[username]['paths'].push([[
+      Math.floor(event.touches[0].pageX) + xOffset,
+      Math.floor(event.touches[0].pageY) + yOffset
+    ]])
+    drawSocket.send(JSON.stringify({
+      'username': username,
+      'point': [
+        Math.floor(event.touches[0].pageX) + xOffset,
+        Math.floor(event.touches[0].pageY) + yOffset
+      ],
+      'new_path': true
+    }))
+  })
+
+  // When the user drags their mouse while the button is clicked, this will draw the path of the user's mouse.
   drawMap.addEventListener('mousemove', function (event) {
     if (paint) {
       roomData[username]['paths'][roomData[username]['paths'].length - 1].push([
@@ -108,10 +178,35 @@ function drawingScript2 () {
     }
   })
 
+  // UNFINISHED
+
+  // This will control the drawing when the user moves their smelly fingers.
+  drawMap.addEventListener('touchmove', function (event) {
+    if (paint) {
+      event.preventDefault()
+      event.stopImmediatePropagation()
+
+      userPaths[username]['paths'][userPaths[username]['paths'].length - 1].push([
+        Math.floor(event.touches[0].pageX) + xOffset,
+        Math.floor(event.touches[0].pageY) + yOffset
+      ])
+      drawSocket.send(JSON.stringify({
+        'username': username,
+        'point': [
+          Math.floor(event.touches[0].pageX) + xOffset,
+          Math.floor(event.touches[0].pageY) + yOffset
+        ],
+        'new_path': false
+      }))
+    }
+  }, { passive: false })
+
+  // Stops drawing when the user lets go of their mouse button.
   drawMap.addEventListener('mouseup', function () {
     paint = false
   })
 
+  // Stops drawing when a user mouses off of the canvas.
   drawMap.addEventListener('mouseleave', function () {
     paint = false
   })
@@ -191,19 +286,6 @@ function drawingScript2 () {
   }
   window.requestAnimationFrame(step)
 }
-
-// This is currently not bundling into our bundle.js, so none of it works on the site.
-// We will likely need an array of all currently active words, then I can correctly see if one of the words was submitted. I will need to talk to Michael to figure out how to index up our score when correctly submitting a word.
-
-// This currently only works when you hit the submit button, we will need to find a way to submit when you press the enter key. I tried searching for the answer online, but everything I found needed the use of jQuery.
-
-// let wordGuessed = document.querySelector(".wordGuessed");
-// let submitWordGuessed = document.querySelector(".submitWordGuessed");
-
-// submitWordGuessed.onclick = function(){console.log(wordGuessed.value)
-//     if(wordGuessed.value == "This will be our wordlist from Django"){
-//     }
-// }
 
 let onPlayPage = document.querySelector('#playPage')
 
