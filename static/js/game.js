@@ -8,8 +8,9 @@ if (onPlayPage) {
     const username = window.location.href.split('/')[5]
     const rawRoomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
     const roomData = JSON.parse(rawRoomData)
-    console.log(roomData)
     let score = document.querySelector('.score')
+
+    console.log(roomData)
 
     htmlSetup(roomData, score, username)
     connectScoreSocket(roomData, score, username)
