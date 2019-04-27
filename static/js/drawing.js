@@ -221,7 +221,7 @@ function drawingScript2 () {
       miniMapCxt.shadowColor = color
       miniMapCxt.shadowBlur = 2
       miniMapCxt.lineCap = 'round'
-      miniMapCxt.lineWidth = 4
+      miniMapCxt.lineWidth = 8
 
       for (let path of paths) {
         miniMapCxt.beginPath()
@@ -255,7 +255,7 @@ function drawingScript2 () {
         drawMapCxt.shadowColor = color
         drawMapCxt.shadowBlur = 4
         drawMapCxt.lineCap = 'round'
-        drawMapCxt.lineWidth = 6
+        drawMapCxt.lineWidth = 12
 
         for (let path of paths) {
           drawMapCxt.beginPath()
