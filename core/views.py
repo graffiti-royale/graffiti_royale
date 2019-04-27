@@ -60,7 +60,8 @@ def waiting_room(request, roompk, username):
         "roompk": roompk,
         "JSON": room.JSON,
         "time": timer,
-        "username": username
+        "username": username,
+        "ROOM_CAP": ROOM_CAP
     })
 
 def play(request, roompk, username):
