@@ -100,25 +100,3 @@ document.addEventListener('DOMContentLoaded', function () {
     waitingRoomJS()
   }
 })
-
-// Adding players and their color
-let inWaitingRoom = document.querySelector('#waitingroom')
-
-if (inWaitingRoom) {
-  const username = window.location.href.split('/')[5]
-  const room = document.querySelector('#room-data').dataset.roompk
-  let roomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
-  roomData = JSON.parse(roomData)
-  console.log(roomData)
-  document.querySelector('.random-word').innerHTML = `WORD: ${roomData[username]['word'].toUpperCase()}`
-
-  let popup = document.querySelector('#playerspopup')
-  let playerList = document.querySelector('#playerlist')
-
-  for (let user of Object.keys(roomData)) {
-    let userDiv = document.createElement('div')
-    userDiv.style.color = roomData[user]['color']
-    userDiv.id = user
-    userDiv.innerHTML = `${user}: 0`
-    playerList.appendChild(userDiv)
-  }
