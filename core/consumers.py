@@ -74,11 +74,13 @@ class StartConsumer(WebsocketConsumer):
             )
         # Send message of type 'ping' to room group if the room still has space
         elif message_type == 'ping':
+            # print(text_data['roomData'])
             async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name,
                 {
                     'type': 'ping',
-                    'username': text_data['username'],
+                    'roomData': text_data['roomData'],
+                    'username': text_data['username']
                 }
             )
         # Send message of type 'pong' as the response to a 'ping' message
@@ -102,6 +104,7 @@ class StartConsumer(WebsocketConsumer):
         # Pass the ping message to the WebSocket
         self.send(text_data=json.dumps({
             'type': 'ping',
+            'roomData': text_data['roomData'],
             'pinger': text_data['username']
         }))
 

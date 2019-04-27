@@ -23,6 +23,7 @@ function waitingRoomJS () {
     }
     startSocket.send(JSON.stringify({
       'messageType': messageType,
+      'roomData': roomData,
       'username': username
     }))
   }
@@ -36,6 +37,8 @@ function waitingRoomJS () {
       window.location.href = `https://${window.location.host}/play/${room}/${username}/`
     } else if (data['type'] === 'ping') {
       console.log('ping')
+      roomData = data['roomData']
+      console.log(roomData)
       // respond to a ping by updating the users in the room directly (using the html room_data)
       currentPlayers.innerHTML = ''
       for (let player of Object.keys(roomData)) {
