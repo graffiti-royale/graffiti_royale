@@ -15,6 +15,7 @@ function waitingRoomJS () {
 
   startSocket.onopen = function (event) {
     console.log('connected')
+    console.log('open', roomData)
     let messageType
     if (full === 'True') {
       messageType = 'startgame'
@@ -30,7 +31,7 @@ function waitingRoomJS () {
 
   startSocket.onmessage = function (event) {
     let data = JSON.parse(event.data)
-    console.log('message')
+    console.log('message', roomData)
 
     if (data['type'] === 'start') {
       // start the match!!!!
@@ -43,6 +44,7 @@ function waitingRoomJS () {
       currentPlayers.innerHTML = ''
       for (let player of Object.keys(roomData)) {
         let playerDiv = document.createElement('div')
+        playerDiv.style.color = roomData[player]['color']
         playerDiv.innerText = player
         currentPlayers.appendChild(playerDiv)
       }
@@ -88,7 +90,7 @@ function waitingRoomJS () {
     // If the count down is finished, write some text
     if (document.getElementById('time').innerHTML === '0:00') {
       startSocket.send(JSON.stringify({
-        'startgame': true
+        'messageType': 'startgame'
       }))
     }
   }, 1000)
@@ -100,25 +102,3 @@ document.addEventListener('DOMContentLoaded', function () {
     waitingRoomJS()
   }
 })
-
-// Adding players and their color
-let inWaitingRoom = document.querySelector('#waitingroom')
-
-if (inWaitingRoom) {
-  const username = window.location.href.split('/')[5]
-  const room = document.querySelector('#room-data').dataset.roompk
-  let roomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
-  roomData = JSON.parse(roomData)
-  console.log(roomData)
-  document.querySelector('.random-word').innerHTML = `WORD: ${roomData[username]['word'].toUpperCase()}`
-
-  let popup = document.querySelector('#playerspopup')
-  let playerList = document.querySelector('#playerlist')
-
-  for (let user of Object.keys(roomData)) {
-    let userDiv = document.createElement('div')
-    userDiv.style.color = roomData[user]['color']
-    userDiv.id = user
-    userDiv.innerHTML = `${user}: 0`
-    playerList.appendChild(userDiv)
-  }
