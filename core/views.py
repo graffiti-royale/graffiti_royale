@@ -49,7 +49,9 @@ def waiting_room(request, roompk, username):
     room.users += 1
     if room.users > ROOM_CAP-1:
         room.full=True
+    print(room.JSON)
     room.save()
+    print(room.JSON)
     full = room.full
     timer = int(time.mktime(room.createdAt.timetuple())) * 1000
     close_old_connections()
@@ -59,7 +61,8 @@ def waiting_room(request, roompk, username):
         "roompk": roompk,
         "JSON": room.JSON,
         "time": timer,
-        "username": username
+        "username": username,
+        "ROOM_CAP": ROOM_CAP
     })
 
 def play(request, roompk, username):

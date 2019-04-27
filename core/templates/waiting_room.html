@@ -25,8 +25,8 @@
             <a class="waiting-room-logo" style="font-size:9vw"><div><p>WAiTiNG ROOM</p></div></a>
                  <div>
                     <span>
-                    <a class="login head-link dim f2 lh-copy" style="font-size:3vw" href="{% url 'homepage'%}"><i class="fas fa-home fa-1x"></i>&nbspHOME</a>&nbsp&nbsp&nbsp
-                    <a class="login head-link dim f2 lh-copy" style="font-size:3vw" href="{% url 'homepage'%}?next={{request.path}}"><i class="fas fa-scroll fa-1x"></i>&nbspHiNTS</a>
+                    <a class="login head-link dim f2 lh-copy" style="font-size:3vw" href="{% url 'homepage'%}?next={{request.path}}"><i class="fas fa-scroll fa-1x"></i>&nbspHiNTS</a>&nbsp&nbsp&nbsp
+                    <a class="login head-link dim f2 lh-copy" style="font-size:3vw" href="{% url 'homepage'%}"><i class="fas fa-door-open fa-1x"></i>&nbspEXiT</a>
                     </span>
                 </div>   
             </div></center>
@@ -34,10 +34,10 @@
 
 {% block content %}
     <div id="waitingroom"></div>
-    <div id="room_data" data-json="{{ JSON }}"></div>
+    <div id="room_data" data-json="{{ JSON }}" data-room-cap="{{ ROOM_CAP }}"></div>
     <div class="user_data" data-full="{{ full }}" data-room="{{ roompk }}" data-username="{{ username }}" data-starttime="{{ time }}"></div>
 
-    <center><div class="matchtimer">Match starts in <span class="seconds" id="time"></span></div></center>
+    <center><div class="matchtimer"><span id="number-of-players"></span>Match starts in <span class="seconds" id="time"></span></div></center>
     <div class="player-queue">
     <div class="player-queue-title">
         CURRENT PLAYERS
