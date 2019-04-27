@@ -66,6 +66,7 @@ def play(request, roompk, username):
     close_old_connections()
     room = get_object_or_404(Room, pk=roompk)
     room_data = "{"+room.JSON+"}"
+    room.full = True
     if room.gameStart is None:
         room.gameStart = datetime.datetime.utcnow()
         room.save()
