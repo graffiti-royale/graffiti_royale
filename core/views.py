@@ -9,7 +9,7 @@ from django.db import close_old_connections
 import random, time
 import datetime
 
-ROOM_CAP = 5
+ROOM_CAP = 2
 
 # Chooses a random word from our Words.csv file
 def get_random_word():
@@ -31,16 +31,15 @@ def waiting_room(request, roompk, username):
     close_old_connections()
     room = Room.objects.get(pk=roompk)
     word = get_random_word()
-    colors_list = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
-    '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
-    '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
-    '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
-    '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
-    '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
-    '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
-    '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
-    '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
-    '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF']
+    colors_list = ['#FF6633', '#FFB399', '#FF33FF', '#00B3E6', '#3366E6',
+    '#999966', '#99FF99', '#B34D4D', '#80B300', '#809900',
+    '#E6B3B3', '#6680B3', '#66991A', '#FF99E6', '#FF1A66',
+    '#E6331A', '#33FFCC', '#66994D', '#B366CC', '#4D8000',
+    '#B33300', '#CC80CC', '#66664D', '#991AFF', '#E666FF',
+    '#4DB3FF', '#1AB399', '#E666B3', '#33991A', '#CC9999',
+    '#00E680', '#4D8066', '#809980', '#1AFF33', '#FF3380',
+    '#66E64D', '#4D80CC', '#9900B3', '#E64D66', '#4DB380',
+    '#FF4D4D', '#99E6E6', '#6666FF']
     color = random.choice(colors_list)
 
     if room.JSON:
@@ -69,6 +68,7 @@ def play(request, roompk, username):
     close_old_connections()
     room = get_object_or_404(Room, pk=roompk)
     room_data = "{"+room.JSON+"}"
+    room.full = True
     if room.gameStart is None:
         room.gameStart = datetime.datetime.utcnow()
         room.save()

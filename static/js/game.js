@@ -98,11 +98,11 @@ if (onPlayPage) {
     let now = new Date().getTime()
 
     // Find the distance between now and the count down date
-    let distance = now - startTime
+    let distance = startTime - now
 
     // Time calculations for days, hours, minutes and seconds
-    let minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60))) + 60
-    let seconds = Math.floor(((distance % (1000 * 60)) / 1000)) + 60
+    let minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60))) - 58
+    let seconds = Math.floor(((distance % (1000 * 60)) / 1000))
 
     // Display the result in the element with id="demo"
     if (seconds > 9) {
