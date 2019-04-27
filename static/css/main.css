@@ -954,3 +954,20 @@ input:focus {
     font-family: 'Londrina Solid', cursive;
     text-shadow: -.5px 0 white, 0 .5px white, .5px 0 white, 0 -.5px white;
 }
+
+#count-down-holder {
+    width: 100%;
+    z-index: 10;
+    font-size: 10rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 900px;
+}
+
+#start-count-down {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
