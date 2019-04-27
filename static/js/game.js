@@ -1,26 +1,18 @@
 const { drawingScript2 } = require('./drawing')
 
-console.log(roomData)
+const onPlayPage = document.querySelector('#playPage')
 
 if (onPlayPage) {
   document.addEventListener('DOMContentLoaded', function () {
     // Setting up constants
     const username = window.location.href.split('/')[5]
-    const room = document.querySelector('#room-data').dataset.roompk
     const rawRoomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
     const roomData = JSON.parse(rawRoomData)
-    const timer = document.querySelector('#timer')
-    const rawStartTime = document.querySelector('#room-data').dataset.starttime
-    const startTime = new Date(parseInt(rawStartTime, 10))
-    const popup = document.querySelector('#playerspopup')
-    const playerList = document.querySelector('#playerlist')
-    const score = document.querySelector('.score')
-    const onPlayPage = document.querySelector('#playPage')
-    const guessInputField = document.querySelector('#wordGuessed')
+    console.log(roomData)
+    let score = document.querySelector('.score')
 
-    htmlSetup(roomData, score, playerList)
-    connectDrawSocket()
-    connectScoreSocket()
+    htmlSetup(roomData, score, username)
+    connectScoreSocket(roomData, score, username)
     setTimer()
     drawingScript2()
   })
@@ -44,7 +36,10 @@ function startTimer (duration, display) {
   }, 1000)
 }
 
-function htmlSetup (roomData, score, playerList) {
+function htmlSetup (roomData, score, username) {
+  const playerList = document.querySelector('#playerlist')
+  const popup = document.querySelector('#playerspopup')
+
   document.querySelector('.random-word').innerHTML = `WORD: ${roomData[username]['word'].toUpperCase()}`
   score.style.color = roomData[username]['color']
 
@@ -65,16 +60,18 @@ function htmlSetup (roomData, score, playerList) {
   })
 }
 
-function connectScoreSocket(roomData) {
+function connectScoreSocket (roomData, score, username) {
+  const room = document.querySelector('#room-data').dataset.roompk
   const scoreSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/score/`)
+  const guessInputField = document.querySelector('#wordGuessed')
+
   let guessedWords = []
 
   document.querySelector('.submitguess-button').addEventListener('click', function () {
     let word = guessInputField.value.toLowerCase()
-    let result = checkGuess(word, guessedWords)
+    let result = checkGuess(word, guessedWords, roomData, username)
     console.log(result)
     if (result) {
-
       guessInputField.style.border = '.2rem solid lightgreen'
       guessedWords.push(word)
       scoreSocket.send(JSON.stringify({
@@ -95,7 +92,11 @@ function connectScoreSocket(roomData) {
   }
 }
 
-function setTimer()
+function setTimer () {
+  const timerDiv = document.querySelector('#timer')
+  const rawStartTime = document.querySelector('#room-data').dataset.starttime
+  const startTime = new Date(parseInt(rawStartTime, 10))
+
   // Update the count down every 1 second
   let x = setInterval(function () {
     // Get todays date and time
@@ -110,14 +111,14 @@ function setTimer()
 
     // Display the result in the element with id="demo"
     if (seconds > 9) {
-      timer.innerHTML = minutes + ':' + seconds
+      timerDiv.innerHTML = minutes + ':' + seconds
     } else {
-      timer.innerHTML = minutes + ':0' + seconds
+      timerDiv.innerHTML = minutes + ':0' + seconds
     }
   }, 1000)
 }
 
-function checkGuess (guess, guessedWords) {
+function checkGuess (guess, guessedWords, roomData, username) {
   if (!guessedWords.includes(guess)) {
     for (let user of Object.keys(roomData)) {
       if (guess === roomData[user]['word'] && username !== user) {
