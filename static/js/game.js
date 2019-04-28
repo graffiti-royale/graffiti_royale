@@ -37,17 +37,18 @@ if (onPlayPage) {
     const rawStartTime = document.querySelector('#room-data').dataset.starttime
     const startTime = parseInt(rawStartTime, 10)
     const targetTimes = []
-    for (let i = 1; i <= rounds; i++) {
-      targetTimes.push(startTime + (10000 * i))
-      targetTimes.push(startTime + (((1000 * 120) + 10000)) * i)
+    for (let i = 0; i < rounds; i++) {
+      targetTimes.push(startTime + (((1000 * 120) + 10000) * i) + 10000)
+      targetTimes.push(startTime + (((1000 * 120) + 10000) * i) + ((1000 * 120) + 10000))
     }
     let score = document.querySelector('.score')
+    let currentRound = 0
 
     console.log(roomData)
 
     htmlSetup(roomData, score, username)
     connectScoreSocket(roomData, score, username)
-    startTimer(targetTimes[0], roundTimer, targetTimes[1])
+    switchPhase(startTimer, currentRound, targetTimes)
     drawingScript2()
     console.log(rounds)
   })
@@ -109,7 +110,7 @@ function connectScoreSocket (roomData, score, username) {
   }
 }
 
-function startTimer (targetTime, roundTimer, roundEndTime) {
+function startTimer (targetTime, currentRound, targetTimes) {
   let startCountDown = document.querySelector('#start-count-down')
   let countDownHolder = document.querySelector('#count-down-holder')
   startCountDown.style.display = 'block'
@@ -132,14 +133,15 @@ function startTimer (targetTime, roundTimer, roundEndTime) {
       startCountDown.innerHTML = 'DRAW!'
     } else if (startCountDown.innerHTML === '59') {
       startCountDown.style.display = 'none'
+      startCountDown.innerHTML = ''
       countDownHolder.style.display = 'none'
-      roundTimer(roundEndTime)
+      switchPhase(roundTimer, currentRound, targetTimes)
       clearInterval(x)
     }
   }, 1000)
 }
 
-function roundTimer (targetTime) {
+function roundTimer (targetTime, currentRound, targetTimes) {
   const timerDiv = document.querySelector('#timer')
   timerDiv.style.display = 'block'
 
@@ -157,6 +159,8 @@ function roundTimer (targetTime) {
 
     if (minutes === 59) {
       timerDiv.style.display = 'none'
+      timerDiv.innerHTML = ''
+      switchPhase(startTimer, currentRound, targetTimes)
       clearInterval(x)
     }
 
@@ -167,6 +171,17 @@ function roundTimer (targetTime) {
       timerDiv.innerHTML = minutes + ':0' + seconds
     }
   }, 1000)
+}
+
+function switchPhase (timer, currentRound, targetTimes) {
+  if (timer === startTimer) {
+    currentRound++
+    let index = (currentRound - 1) * 2
+    startTimer(targetTimes[index], currentRound, targetTimes)
+  } else {
+    let index = ((currentRound - 1) * 2) + 1
+    roundTimer(targetTimes[index], currentRound, targetTimes)
+  }
 }
 
 function checkGuess (guess, guessedWords, roomData, username) {
