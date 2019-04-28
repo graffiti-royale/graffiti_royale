@@ -9,7 +9,7 @@ from django.db import close_old_connections
 import random, time
 import datetime
 
-ROOM_CAP = 2
+ROOM_CAP = 11
 
 # Chooses a random word from our Words.csv file
 def get_random_word():
@@ -17,8 +17,18 @@ def get_random_word():
         lines = [line.strip() for line in word_list]
     return random.choice(lines).lower()
 
-
-# Create your views here.
+def get_number_of_rounds(initial_player_count):
+    if initial_player_count <= 5:
+        return 1
+    if initial_player_count <= 10:
+        return 2
+    if initial_player_count <= 20:
+        return 3
+    if initial_player_count <= 40:
+        return 4
+    if initial_player_count <= 80:
+        return 5
+    return 6
 
 def homepage(request):
     return render(request, 'homepage.html', context={})
@@ -47,6 +57,7 @@ def waiting_room(request, roompk, username):
     else:
         room.JSON = f'"{username}": '+'{"word": '+f'"{word}", "color": "{color}", "paths": [], "score": 0'+"}"
     room.users += 1
+    room.rounds=get_number_of_rounds(room.users)
     if room.users > ROOM_CAP-1:
         room.full=True
     print(room.JSON)
@@ -74,7 +85,12 @@ def play(request, roompk, username):
         room.gameStart = datetime.datetime.utcnow()
         room.save()
     start = int(time.mktime(room.gameStart.timetuple())) * 1000
-    return render(request, 'play.html', context = {"room_data":room_data, "roompk":roompk, "start": start})
+    return render(request, 'play.html', context = {
+        "room_data": room_data,
+        "roompk": roompk,
+        "start": start,
+        "rounds": room.rounds
+    })
     
 def make_guest(request):
     return render(request, 'make_guest.html', context={})

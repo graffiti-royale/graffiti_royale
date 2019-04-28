@@ -9,6 +9,7 @@ if (onPlayPage) {
     const rawRoomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
     const roomData = JSON.parse(rawRoomData)
     const rawStartTime = document.querySelector('#room-data').dataset.starttime
+    const rounds = document.querySelector('#room-data').dataset.rounds
     const startTime = new Date(parseInt(rawStartTime, 10))
     let score = document.querySelector('.score')
 
@@ -19,6 +20,7 @@ if (onPlayPage) {
     roundTimer(startTime)
     startTimer(startTime)
     drawingScript2()
+    console.log(rounds)
   })
 }
 
