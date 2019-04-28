@@ -287,12 +287,4 @@ function drawingScript2 () {
   window.requestAnimationFrame(step)
 }
 
-let onPlayPage = document.querySelector('#playPage')
-
-if (onPlayPage) {
-  document.addEventListener('DOMContentLoaded', function () {
-    drawingScript2()
-  })
-}
-
 module.exports = { drawingScript2: drawingScript2 }
