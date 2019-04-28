@@ -30,8 +30,6 @@ def get_number_of_rounds(initial_player_count):
         return 5
     return 6
 
-# Create your views here.
-
 def homepage(request):
     return render(request, 'homepage.html', context={})
 

@@ -34,8 +34,18 @@
 
 {% block content %}
     <div id="waitingroom"></div>
-    <div id="room_data" data-json="{{ JSON }}" data-room-cap="{{ ROOM_CAP }}"></div>
-    <div class="user_data" data-full="{{ full }}" data-room="{{ roompk }}" data-username="{{ username }}" data-starttime="{{ time }}"></div>
+
+    <div id="room_data"
+        data-json="{{ JSON }}"
+        data-room-cap="{{ ROOM_CAP }}">
+    </div>
+
+    <div class="user_data"
+        data-full="{{ full }}"
+        data-room="{{ roompk }}"
+        data-username="{{ username }}"
+        data-starttime="{{ time }}">
+    </div>
 
     <center><div class="matchtimer"><span id="number-of-players"></span>MATCH STARTS iN <span class="seconds" id="time"></span></div>
     <div class="player-queue">
