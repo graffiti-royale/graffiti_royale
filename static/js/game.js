@@ -1,29 +1,5 @@
 const { drawingScript2 } = require('./drawing')
 
-const onPlayPage = document.querySelector('#playPage')
-
-if (onPlayPage) {
-  document.addEventListener('DOMContentLoaded', function () {
-    // Setting up constants
-    const username = window.location.href.split('/')[5]
-    const rawRoomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
-    const roomData = JSON.parse(rawRoomData)
-    const rawStartTime = document.querySelector('#room-data').dataset.starttime
-    const rounds = document.querySelector('#room-data').dataset.rounds
-    const startTime = new Date(parseInt(rawStartTime, 10))
-    let score = document.querySelector('.score')
-
-    console.log(roomData)
-
-    htmlSetup(roomData, score, username)
-    connectScoreSocket(roomData, score, username)
-    roundTimer(startTime)
-    startTimer(startTime)
-    drawingScript2()
-    console.log(rounds)
-  })
-}
-
 function checkScores (roomData, username) {
   let names = []
   let index
@@ -48,32 +24,34 @@ function checkScores (roomData, username) {
   return true
 }
 
-function startTimer (startTime) {
-  let startCountDown = document.querySelector('#start-count-down')
-  let countDownHolder = document.querySelector('#count-down-holder')
-  console.log(countDownHolder.style.display)
-  // startCountDown.style.height = window.innerHeight
-  let x = setInterval(function () {
-    // Get todays date and time
-    let now = new Date().getTime()
+// Timer
+const onPlayPage = document.querySelector('#playPage')
 
-    // Find the distance between now and the count down date
-    let distance = (startTime - now)
-
-    // Time calculations for days, hours, minutes and seconds
-    let seconds = Math.floor(((distance % (1000 * 60)) / 1000)) - 50
-    console.log(seconds)
-
-    // Display the result in the element with id="demo"
-    startCountDown.innerHTML = seconds
-    if (startCountDown.innerHTML === '0') {
-      startCountDown.innerHTML = 'DRAW!'
-    } else if (startCountDown.innerHTML === '-1') {
-      countDownHolder.removeChild(startCountDown)
-      document.querySelector('#playPage').removeChild(countDownHolder)
-      clearInterval(x)
+if (onPlayPage) {
+  document.addEventListener('DOMContentLoaded', function () {
+    // Setting up constants
+    const username = window.location.href.split('/')[5]
+    const rawRoomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
+    const roomData = JSON.parse(rawRoomData)
+    const rounds = document.querySelector('#room-data').dataset.rounds
+    const rawStartTime = document.querySelector('#room-data').dataset.starttime
+    const startTime = parseInt(rawStartTime, 10)
+    const targetTimes = []
+    for (let i = 0; i < rounds; i++) {
+      targetTimes.push(startTime + (((1000 * 120) + 10000) * i) + 10000)
+      targetTimes.push(startTime + (((1000 * 120) + 10000) * i) + ((1000 * 120) + 10000))
     }
-  }, 1000)
+    let score = document.querySelector('.score')
+    let currentRound = 0
+
+    console.log(roomData)
+
+    htmlSetup(roomData, score, username)
+    connectScoreSocket(roomData, score, username)
+    switchPhase(startTimer, currentRound, targetTimes)
+    drawingScript2()
+    console.log(rounds)
+  })
 }
 
 function htmlSetup (roomData, score, username) {
@@ -132,8 +110,40 @@ function connectScoreSocket (roomData, score, username) {
   }
 }
 
-function roundTimer (startTime) {
+function startTimer (targetTime, currentRound, targetTimes) {
+  let startCountDown = document.querySelector('#start-count-down')
+  let countDownHolder = document.querySelector('#count-down-holder')
+  startCountDown.style.display = 'block'
+  countDownHolder.style.display = 'block'
+  // startCountDown.style.height = window.innerHeight
+  let x = setInterval(function () {
+    // Get todays date and time
+    let now = new Date().getTime()
+
+    // Find the distance between now and the count down date
+    let distance = (targetTime - now)
+
+    // Time calculations for days, hours, minutes and seconds
+    let seconds = Math.floor(((distance % (1000 * 60)) / 1000))
+    console.log(seconds)
+
+    // Display the result in the element with id="demo"
+    startCountDown.innerHTML = seconds
+    if (startCountDown.innerHTML === '0') {
+      startCountDown.innerHTML = 'DRAW!'
+    } else if (startCountDown.innerHTML === '59') {
+      startCountDown.style.display = 'none'
+      startCountDown.innerHTML = ''
+      countDownHolder.style.display = 'none'
+      switchPhase(roundTimer, currentRound, targetTimes)
+      clearInterval(x)
+    }
+  }, 1000)
+}
+
+function roundTimer (targetTime, currentRound, targetTimes) {
   const timerDiv = document.querySelector('#timer')
+  timerDiv.style.display = 'block'
 
   // Update the count down every 1 second
   let x = setInterval(function () {
@@ -141,11 +151,18 @@ function roundTimer (startTime) {
     let now = new Date().getTime()
 
     // Find the distance between now and the count down date
-    let distance = (startTime - now) + 10000
+    let distance = (targetTime - now)
 
     // Time calculations for days, hours, minutes and seconds
-    let minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60))) - 58
+    let minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60)))
     let seconds = Math.floor(((distance % (1000 * 60)) / 1000))
+
+    if (minutes === 59) {
+      timerDiv.style.display = 'none'
+      timerDiv.innerHTML = ''
+      switchPhase(startTimer, currentRound, targetTimes)
+      clearInterval(x)
+    }
 
     // Display the result in the element with id="demo"
     if (seconds > 9) {
@@ -154,6 +171,17 @@ function roundTimer (startTime) {
       timerDiv.innerHTML = minutes + ':0' + seconds
     }
   }, 1000)
+}
+
+function switchPhase (timer, currentRound, targetTimes) {
+  if (timer === startTimer) {
+    currentRound++
+    let index = (currentRound - 1) * 2
+    startTimer(targetTimes[index], currentRound, targetTimes)
+  } else {
+    let index = ((currentRound - 1) * 2) + 1
+    roundTimer(targetTimes[index], currentRound, targetTimes)
+  }
 }
 
 function checkGuess (guess, guessedWords, roomData, username) {
@@ -165,6 +193,24 @@ function checkGuess (guess, guessedWords, roomData, username) {
     }
   }
   return false
+}
+
+function endRound (roomData, username) {
+  if (checkScores(roomData, username)) {
+    // If you made it to the next round:
+    console.log(`Round over.  Standings: ${roomData}`)
+  } else {
+    // If your score didn't qualify you for the next round:
+    endGame(roomData, username)
+  }
+}
+
+function endGame (roomData, username) {
+  console.log(`Game Over.  Standings: ${roomData}.`)
+  // Go to homepage after 10 seconds:
+  setTimeout(function () {
+    window.location.href = `https://${window.location.host}`
+  }, 10000)
 }
 
 module.exports = {}
