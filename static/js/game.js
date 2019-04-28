@@ -161,7 +161,6 @@ function roundTimer (targetTime, currentRound, targetTimes) {
       timerDiv.style.display = 'none'
       timerDiv.innerHTML = ''
       switchPhase(startTimer, currentRound, targetTimes)
-      document.querySelector('#round-trigger').innerHTML++
       clearInterval(x)
     }
 
@@ -178,6 +177,7 @@ function switchPhase (timer, currentRound, targetTimes) {
   if (timer === startTimer) {
     currentRound++
     let index = (currentRound - 1) * 2
+    document.querySelector('#round-trigger').innerHTML++
     startTimer(targetTimes[index], currentRound, targetTimes)
   } else {
     let index = ((currentRound - 1) * 2) + 1

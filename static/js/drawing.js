@@ -14,7 +14,7 @@ function drawingScript2 () {
 
   let paint
   let zoomedOut = true
-  const ZOOMFACTOR = 8
+  let ZOOMFACTOR = 14
   miniMapCxt.scale(1 / ZOOMFACTOR, 1 / ZOOMFACTOR)
   let zoomCenter = []
   let xOffset = 0
@@ -226,7 +226,7 @@ function drawingScript2 () {
       for (let path of paths) {
         miniMapCxt.beginPath()
         miniMapCxt.moveTo(path[0][0], path[0][1])
-        for (i = 1; i < path.length; i++) {
+        for (let i = 1; i < path.length; i++) {
           miniMapCxt.moveTo(path[i][0], path[i][1])
           miniMapCxt.lineTo(path[i - 1][0], path[i - 1][1])
         }
@@ -263,7 +263,7 @@ function drawingScript2 () {
             (path[0][0] - xOffset),
             (path[0][1] - yOffset)
           )
-          for (i = 1; i < path.length; i++) {
+          for (let i = 1; i < path.length; i++) {
             drawMapCxt.moveTo(
               (path[i][0] - xOffset),
               (path[i][1] - yOffset)
@@ -294,6 +294,9 @@ function drawingScript2 () {
       bricks.style.transform = 'scale(1, 1)'
       drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
       round = document.querySelector('#round-trigger').innerHTML
+      let oldFactor = ZOOMFACTOR
+      ZOOMFACTOR -= 2
+      miniMapCxt.scale(oldFactor / ZOOMFACTOR, oldFactor / ZOOMFACTOR)
     }
     window.requestAnimationFrame(step)
   }
