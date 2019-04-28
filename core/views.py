@@ -9,7 +9,7 @@ from django.db import close_old_connections
 import random, time
 import datetime
 
-ROOM_CAP = 8
+ROOM_CAP = 1
 
 # Chooses a random word from our Words.csv file
 def get_random_word():

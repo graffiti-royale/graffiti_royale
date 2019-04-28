@@ -34,42 +34,45 @@ if (onPlayPage) {
     const rawRoomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
     const roomData = JSON.parse(rawRoomData)
     const rawStartTime = document.querySelector('#room-data').dataset.starttime
-    const startTime = new Date(parseInt(rawStartTime, 10))
+    const startTime = parseInt(rawStartTime, 10)
+    const roundOneEnd = startTime + ((1000 * 120) + 10000)
+    const roundOneStart = startTime + 10000
     let score = document.querySelector('.score')
 
     console.log(roomData)
 
     htmlSetup(roomData, score, username)
     connectScoreSocket(roomData, score, username)
-    roundTimer(startTime)
-    startTimer(startTime)
+    roundTimer(roundOneEnd)
+    startTimer(roundOneStart)
     drawingScript2()
   })
 }
 
-function startTimer (startTime) {
+function startTimer (targetTime, roundTimer) {
   let startCountDown = document.querySelector('#start-count-down')
   let countDownHolder = document.querySelector('#count-down-holder')
-  console.log(countDownHolder.style.display)
+  startCountDown.style.display = 'block'
+  countDownHolder.style.display = 'block'
   // startCountDown.style.height = window.innerHeight
   let x = setInterval(function () {
     // Get todays date and time
     let now = new Date().getTime()
 
     // Find the distance between now and the count down date
-    let distance = (startTime - now)
+    let distance = (targetTime - now)
 
     // Time calculations for days, hours, minutes and seconds
-    let seconds = Math.floor(((distance % (1000 * 60)) / 1000)) - 50
+    let seconds = Math.floor(((distance % (1000 * 60)) / 1000))
     console.log(seconds)
 
     // Display the result in the element with id="demo"
     startCountDown.innerHTML = seconds
     if (startCountDown.innerHTML === '0') {
       startCountDown.innerHTML = 'DRAW!'
-    } else if (startCountDown.innerHTML === '-1') {
-      countDownHolder.removeChild(startCountDown)
-      document.querySelector('#playPage').removeChild(countDownHolder)
+    } else if (startCountDown.innerHTML === '59') {
+      startCountDown.style.display = 'none'
+      countDownHolder.style.display = 'none'
       clearInterval(x)
     }
   }, 1000)
@@ -131,7 +134,7 @@ function connectScoreSocket (roomData, score, username) {
   }
 }
 
-function roundTimer (startTime) {
+function roundTimer (targetTime) {
   const timerDiv = document.querySelector('#timer')
 
   // Update the count down every 1 second
@@ -140,10 +143,10 @@ function roundTimer (startTime) {
     let now = new Date().getTime()
 
     // Find the distance between now and the count down date
-    let distance = (startTime - now) + 10000
+    let distance = (targetTime - now)
 
     // Time calculations for days, hours, minutes and seconds
-    let minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60))) - 58
+    let minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60)))
     let seconds = Math.floor(((distance % (1000 * 60)) / 1000))
 
     // Display the result in the element with id="demo"
@@ -166,24 +169,4 @@ function checkGuess (guess, guessedWords, roomData, username) {
   return false
 }
 
-function setRoundTimer (targetTime) {
-  let x = setInterval(function () {
-    // Get todays date and time
-    let now = new Date().getTime()
-
-    // Find the distance between now and the count down date
-    let distance = (targetTime - now)
-
-    // Time calculations for days, hours, minutes and seconds
-    let minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60)))
-    let seconds = Math.floor(((distance % (1000 * 60)) / 1000))
-
-    // Display the result in the element with id="demo"
-    if (seconds > 9) {
-      timer.innerHTML = minutes + ':' + seconds
-    } else {
-      timer.innerHTML = minutes + ':0' + seconds
-    }
-  }, 1000)
-}
 module.exports = {}
