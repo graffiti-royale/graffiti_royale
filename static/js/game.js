@@ -57,16 +57,25 @@ if (onPlayPage) {
 function htmlSetup (roomData, score, username) {
   const playerList = document.querySelector('#playerlist')
   const popup = document.querySelector('#playerspopup')
+  const scoresModal = document.querySelector('#player-scores')
 
   document.querySelector('.random-word').innerHTML = `WORD: ${roomData[username]['word'].toUpperCase()}`
   score.style.color = roomData[username]['color']
 
   for (let user of Object.keys(roomData)) {
+    // Create divs for score popup
     let userDiv = document.createElement('div')
     userDiv.style.color = roomData[user]['color']
     userDiv.id = user
     userDiv.innerHTML = `${user}: 0`
     playerList.appendChild(userDiv)
+
+    // Create divs for score modal
+    let userModalDiv = document.createElement('div')
+    userModalDiv.style.color = roomData[user]['color']
+    userModalDiv.id = `${user}-modal`
+    userModalDiv.innerHTML = `${user}: 0`
+    scoresModal.appendChild(userModalDiv)
   }
 
   popup.addEventListener('click', function (e) {
@@ -105,6 +114,8 @@ function connectScoreSocket (roomData, score, username) {
     roomData[data['user2']]['score'] += 1
     document.querySelector(`#${data['user1']}`).innerHTML = `${data['user1']}: ${roomData[data['user1']]['score']}`
     document.querySelector(`#${data['user2']}`).innerHTML = `${data['user2']}: ${roomData[data['user2']]['score']}`
+    document.querySelector(`#${data['user1']}-modal`).innerHTML = `${data['user1']}: ${roomData[data['user1']]['score']}`
+    document.querySelector(`#${data['user2']}-modal`).innerHTML = `${data['user2']}: ${roomData[data['user2']]['score']}`
     score.innerHTML = `${roomData[username]['score']}`
     console.log(checkScores(roomData, username))
   }
@@ -174,11 +185,14 @@ function roundTimer (targetTime, currentRound, targetTimes) {
 }
 
 function switchPhase (timer, currentRound, targetTimes) {
+  let scoresModal = document.querySelector('#scores-after-round')
   if (timer === startTimer) {
     currentRound++
+    scoresModal.style.display = 'block'
     let index = (currentRound - 1) * 2
     startTimer(targetTimes[index], currentRound, targetTimes)
   } else {
+    scoresModal.style.display = 'none'
     let index = ((currentRound - 1) * 2) + 1
     roundTimer(targetTimes[index], currentRound, targetTimes)
   }
@@ -198,7 +212,7 @@ function checkGuess (guess, guessedWords, roomData, username) {
 function endRound (roomData, username) {
   if (checkScores(roomData, username)) {
     // If you made it to the next round:
-    console.log(`Round over.  Standings: ${roomData}`)
+
   } else {
     // If your score didn't qualify you for the next round:
     endGame(roomData, username)
