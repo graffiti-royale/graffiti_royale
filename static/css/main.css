@@ -995,6 +995,10 @@ input:focus {
     font-style:italic;
 }
 
+#round-trigger {
+    display: none;
+}
+
 .timer {
     font-size:30px;
     position: absolute;
