@@ -9,7 +9,11 @@ from django.db import close_old_connections
 import random, time
 import datetime
 
+<<<<<<< HEAD
 ROOM_CAP = 1
+=======
+ROOM_CAP = 5
+>>>>>>> master
 
 # Chooses a random word from our Words.csv file
 def get_random_word():

@@ -33,18 +33,13 @@ if (onPlayPage) {
     const username = window.location.href.split('/')[5]
     const rawRoomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
     const roomData = JSON.parse(rawRoomData)
+    const rounds = document.querySelector('#room-data').dataset.rounds
     const rawStartTime = document.querySelector('#room-data').dataset.starttime
     const startTime = parseInt(rawStartTime, 10)
-    const roundOneEnd = startTime + ((1000 * 120) + 10000)
-    const roundOneStart = startTime + 10000
-    const rounds = document.querySelector('#room-data').dataset.rounds
     const targetTimes = []
     for (let i = 1; i <= rounds; i++) {
-      if (i % 2) {
-        targetTimes.push(startTime + (10000 * i))
-      } else {
-        targetTimes.push(startTime + (((1000 * 120) + 10000)) * i)
-      }
+      targetTimes.push(startTime + (10000 * i))
+      targetTimes.push(startTime + (((1000 * 120) + 10000)) * i)
     }
     let score = document.querySelector('.score')
 
@@ -52,8 +47,7 @@ if (onPlayPage) {
 
     htmlSetup(roomData, score, username)
     connectScoreSocket(roomData, score, username)
-    roundTimer(roundOneEnd)
-    startTimer(roundOneStart)
+    startTimer(targetTimes[0], roundTimer, targetTimes[1])
     drawingScript2()
     console.log(rounds)
   })
