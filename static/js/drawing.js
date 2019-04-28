@@ -278,10 +278,14 @@ function drawingScript2 () {
       }
     }
   }
-
+  let round = '1'
   var start = null
   function step (timestamp) {
     redraw()
+    if (!(round === document.querySelector('#round-trigger').innerHTML)) {
+      console.log('round changed')
+      round = document.querySelector('#round-trigger').innerHTML
+    }
     window.requestAnimationFrame(step)
   }
   window.requestAnimationFrame(step)

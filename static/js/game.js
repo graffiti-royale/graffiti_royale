@@ -161,6 +161,7 @@ function roundTimer (targetTime, currentRound, targetTimes) {
       timerDiv.style.display = 'none'
       timerDiv.innerHTML = ''
       switchPhase(startTimer, currentRound, targetTimes)
+      document.querySelector('#round-trigger').innerHTML++
       clearInterval(x)
     }
 
