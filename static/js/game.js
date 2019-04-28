@@ -24,6 +24,30 @@ if (onPlayPage) {
   })
 }
 
+function checkScores (roomData, username) {
+  let names = []
+  let index
+  for (let user of Object.keys(roomData)) {
+    names.push([user, roomData[user]['score']])
+  }
+  let orderedNames = names.sort(function (a, b) {
+    return b[1] - a[1]
+  })
+  for (let i = 0; i < orderedNames.length; i++) {
+    if (orderedNames[i][0] === username) {
+      index = i
+      console.log('username', username)
+      console.log('name at index', orderedNames[i])
+      console.log('index', index)
+    }
+  }
+  console.log('ordered users', orderedNames)
+  if (index >= Math.floor(orderedNames.length / 2)) {
+    return false
+  }
+  return true
+}
+
 function startTimer (startTime) {
   let startCountDown = document.querySelector('#start-count-down')
   let countDownHolder = document.querySelector('#count-down-holder')
@@ -104,7 +128,7 @@ function connectScoreSocket (roomData, score, username) {
     document.querySelector(`#${data['user1']}`).innerHTML = `${data['user1']}: ${roomData[data['user1']]['score']}`
     document.querySelector(`#${data['user2']}`).innerHTML = `${data['user2']}: ${roomData[data['user2']]['score']}`
     score.innerHTML = `${roomData[username]['score']}`
-    console.log(score.innerHTML)
+    console.log(checkScores(roomData, username))
   }
 }
 
