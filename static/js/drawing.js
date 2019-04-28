@@ -146,7 +146,7 @@ function drawingScript2 () {
   // big, ugly, smelly fingers.
   drawMap.addEventListener('touchstart', function (event) {
     paint = true
-    userPaths[username]['paths'].push([[
+    roomData[username]['paths'].push([[
       Math.floor(event.touches[0].pageX) + xOffset,
       Math.floor(event.touches[0].pageY) + yOffset
     ]])
@@ -186,7 +186,7 @@ function drawingScript2 () {
       event.preventDefault()
       event.stopImmediatePropagation()
 
-      userPaths[username]['paths'][userPaths[username]['paths'].length - 1].push([
+      roomData[username]['paths'][roomData[username]['paths'].length - 1].push([
         Math.floor(event.touches[0].pageX) + xOffset,
         Math.floor(event.touches[0].pageY) + yOffset
       ])
@@ -283,7 +283,16 @@ function drawingScript2 () {
   function step (timestamp) {
     redraw()
     if (!(round === document.querySelector('#round-trigger').innerHTML)) {
-      console.log('round changed')
+      for (let user of Object.keys(roomData)) {
+        roomData[user]['paths'] = []
+      }
+      drawMap.style.zIndex = 1
+      miniMap.style.zIndex = 4
+      zoomCenter = false
+      zoomedOut = true
+      paint = false
+      bricks.style.transform = 'scale(1, 1)'
+      drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
       round = document.querySelector('#round-trigger').innerHTML
     }
     window.requestAnimationFrame(step)
