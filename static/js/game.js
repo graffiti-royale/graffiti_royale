@@ -37,6 +37,7 @@ if (onPlayPage) {
     const startTime = parseInt(rawStartTime, 10)
     const roundOneEnd = startTime + ((1000 * 120) + 10000)
     const roundOneStart = startTime + 10000
+    const rounds = document.querySelector('#room-data').dataset.rounds
     let score = document.querySelector('.score')
 
     console.log(roomData)
@@ -46,6 +47,7 @@ if (onPlayPage) {
     roundTimer(roundOneEnd)
     startTimer(roundOneStart)
     drawingScript2()
+    console.log(rounds)
   })
 }
 
