@@ -195,4 +195,22 @@ function checkGuess (guess, guessedWords, roomData, username) {
   return false
 }
 
+function endRound (roomData, username) {
+  if (checkScores(roomData, username)) {
+    // If you made it to the next round:
+    console.log(`Round over.  Standings: ${roomData}`)
+  } else {
+    // If your score didn't qualify you for the next round:
+    endGame(roomData, username)
+  }
+}
+
+function endGame (roomData, username) {
+  console.log(`Game Over.  Standings: ${roomData}.`)
+  // Go to homepage after 10 seconds:
+  setTimeout(function () {
+    window.location.href = `https://${window.location.host}`
+  }, 10000)
+}
+
 module.exports = {}
