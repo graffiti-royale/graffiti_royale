@@ -63,7 +63,7 @@ function htmlSetup (roomData, score, username) {
   score.style.color = roomData[username]['color']
 
   for (let user of Object.keys(roomData)) {
-    // Create divs for score popup
+    // Create divs for scores tab
     let userDiv = document.createElement('div')
     userDiv.style.color = roomData[user]['color']
     userDiv.id = user
