@@ -154,3 +154,24 @@ if (onPlayPage) {
 module.exports = {
   startTimer: startTimer
 }
+
+function setRoundTimer (targetTime) {
+  let x = setInterval(function () {
+    // Get todays date and time
+    let now = new Date().getTime()
+
+    // Find the distance between now and the count down date
+    let distance = (targetTime - now)
+
+    // Time calculations for days, hours, minutes and seconds
+    let minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60)))
+    let seconds = Math.floor(((distance % (1000 * 60)) / 1000))
+
+    // Display the result in the element with id="demo"
+    if (seconds > 9) {
+      timer.innerHTML = minutes + ':' + seconds
+    } else {
+      timer.innerHTML = minutes + ':0' + seconds
+    }
+  }, 1000)
+}
