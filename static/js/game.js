@@ -4,7 +4,7 @@ function checkScores (roomData, username) {
   let names = []
   let index
   for (let user of Object.keys(roomData)) {
-    names.push([user, roomData[user]['score']])
+    names.push([user, roomData[user]['score'], roomData[user]['color']])
   }
   let orderedNames = names.sort(function (a, b) {
     return b[1] - a[1]
@@ -19,9 +19,9 @@ function checkScores (roomData, username) {
   }
   console.log('ordered users', orderedNames)
   if (index >= Math.floor(orderedNames.length / 2)) {
-    return false
+    return (false, orderedNames)
   }
-  return true
+  return (true, orderedNames)
 }
 
 // Timer
@@ -76,6 +76,21 @@ function htmlSetup (roomData, score, username) {
     userModalDiv.id = `${user}-modal`
     userModalDiv.innerHTML = `${user}: 0`
     scoresModal.appendChild(userModalDiv)
+  }
+
+  function recreateScoreModal (orderedNames) {
+    const scoresModal = document.querySelector('#player-scores')
+    scoresModal.innerHTML = ''
+    for (let user of orderedNames) {
+      let username = user[0]
+      let score = user[1]
+      let color = user[2]
+      let userModalDiv = document.createElement('div')
+      userModalDiv.style.color = color
+      userModalDiv.id = `${username}-modal`
+      userModalDiv.innerHTML = `${username}: ${score}`
+      scoresModal.appendChild(userModalDiv)
+    }
   }
 
   popup.addEventListener('click', function (e) {
