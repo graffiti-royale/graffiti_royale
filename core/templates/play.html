@@ -23,11 +23,13 @@
     </div>
        
     <div class="play-header">
+            <div id="timer" class="timer"></div>
+
             <p class="random-word">WORD: {{ random_word }}</p>    
             <div id="playerspopup"><p><i class="fas fa-caret-down"></i>&nbsp<i class="fas fa-users"></i></p></div>
             <div>
                 <span class="random-word">WORD: {{ random_word }}</span>
-                <span class="score">0 </span>
+                
             </div>    
             <div id="playerlist"></div>
     </div>
@@ -39,8 +41,8 @@
    
     <div class="play-footer">
        
-        <div id="timer"></div>
         <input type="text" id="wordGuessed">
+        <span class="score">0 </span>
         <input type="submit" class="submitguess-button" value="GUESS">
      
     </div>
