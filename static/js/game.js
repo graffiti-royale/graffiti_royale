@@ -4,7 +4,7 @@ const onPlayPage = document.querySelector('#playPage')
 
 if (onPlayPage) {
   const rounds = document.querySelector('#room-data').dataset.rounds
-  const zoomFactor = (rounds * 2) + 2
+  const zoomFactor = (rounds * 2) + 3
   const rawStartTime = document.querySelector('#room-data').dataset.starttime
   const startTime = parseInt(rawStartTime, 10)
   const rawRoomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
