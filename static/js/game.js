@@ -4,6 +4,7 @@ const onPlayPage = document.querySelector('#playPage')
 
 if (onPlayPage) {
   const rounds = document.querySelector('#room-data').dataset.rounds
+  const zoomFactor = (rounds * 2) + 2
   const rawStartTime = document.querySelector('#room-data').dataset.starttime
   const startTime = parseInt(rawStartTime, 10)
   const rawRoomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
@@ -22,7 +23,7 @@ if (onPlayPage) {
   htmlSetup(roomData, score, username)
   connectScoreSocket(roomData, score, username)
   switchPhase(startTimer, currentRound, targetTimes)
-  drawingScript2()
+  drawingScript2(zoomFactor)
   console.log(rounds)
 
   function checkScores (roomData, username) {
