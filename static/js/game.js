@@ -102,7 +102,7 @@ if (onPlayPage) {
 
     // Time calculations for days, hours, minutes and seconds
     let minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60))) - 58
-    let seconds = Math.floor(((distance % (1000 * 60)) / 1000))
+    let seconds = Math.floor(((distance % (1000 * 60)) / 1000)) - 60
 
     // Display the result in the element with id="demo"
     if (seconds > 9) {

@@ -20,6 +20,25 @@ function drawingScript2 () {
   let xOffset = 0
   let yOffset = 0
 
+  // This contains all of the content for the modal that appears at the end of a round.
+
+  let endModal = document.querySelector('.modal')
+  let closeButton = document.querySelector('.close')[0]
+
+  // Closes the modal when the close button is clicked
+  closeButton.onclick = function () {
+    endModal.style.display = 'none'
+  }
+
+  // Closes the modal when anywhere outside of the modal is clicked
+  window.onclick = function (event) {
+    if (event.target == endModal) {
+      endModal.style.display = 'none'
+    }
+  }
+
+  // End of modal content
+
   /* Setting up visuals */
   const bricks = document.querySelector('#bricks')
 
