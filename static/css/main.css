@@ -967,15 +967,6 @@ input:focus {
     color:black;
 } */
 
-/* Modal Content */
-.endModalContent {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    overflow: auto;
-  }
 .current-players {
     font-family: 'Londrina Solid', cursive;
     text-shadow: -.5px 0 white, 0 .5px white, .5px 0 white, 0 -.5px white;
