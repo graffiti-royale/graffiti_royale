@@ -9,7 +9,7 @@ from django.db import close_old_connections
 import random, time
 import datetime
 
-ROOM_CAP = 2
+ROOM_CAP = 30
 
 # Chooses a random word from our Words.csv file
 def get_random_word():
@@ -17,8 +17,18 @@ def get_random_word():
         lines = [line.strip() for line in word_list]
     return random.choice(lines).lower()
 
-
-# Create your views here.
+def get_number_of_rounds(initial_player_count):
+    if initial_player_count <= 5:
+        return 1
+    if initial_player_count <= 10:
+        return 2
+    if initial_player_count <= 20:
+        return 3
+    if initial_player_count <= 40:
+        return 4
+    if initial_player_count <= 80:
+        return 5
+    return 6
 
 def homepage(request):
     return render(request, 'homepage.html', context={})
@@ -30,7 +40,7 @@ def waiting_room(request, roompk, username):
     username = username
     close_old_connections()
     room = Room.objects.get(pk=roompk)
-    word = get_random_word()
+    words_string = "/".join([get_random_word() for i in range(6)])
     colors_list = ['#FF6633', '#FFB399', '#FF33FF', '#00B3E6', '#3366E6',
     '#999966', '#99FF99', '#B34D4D', '#80B300', '#809900',
     '#E6B3B3', '#6680B3', '#66991A', '#FF99E6', '#FF1A66',
@@ -43,10 +53,11 @@ def waiting_room(request, roompk, username):
     color = random.choice(colors_list)
 
     if room.JSON:
-        room.JSON += f', "{username}": '+'{"word": '+f'"{word}", "color": "{color}", "paths": [], "score": 0'+"}"
+        room.JSON += f', "{username}": '+'{"words": '+f'"{words_string}", "color": "{color}", "paths": [], "score": 0'+"}"
     else:
-        room.JSON = f'"{username}": '+'{"word": '+f'"{word}", "color": "{color}", "paths": [], "score": 0'+"}"
+        room.JSON = f'"{username}": '+'{"words": '+f'"{words_string}", "color": "{color}", "paths": [], "score": 0'+"}"
     room.users += 1
+    room.rounds=get_number_of_rounds(room.users)
     if room.users > ROOM_CAP-1:
         room.full=True
     room.save()
@@ -59,7 +70,8 @@ def waiting_room(request, roompk, username):
         "roompk": roompk,
         "JSON": room.JSON,
         "time": timer,
-        "username": username
+        "username": username,
+        "ROOM_CAP": ROOM_CAP
     })
 
 def play(request, roompk, username):
@@ -71,7 +83,12 @@ def play(request, roompk, username):
         room.gameStart = datetime.datetime.utcnow()
         room.save()
     start = int(time.mktime(room.gameStart.timetuple())) * 1000
-    return render(request, 'play.html', context = {"room_data":room_data, "roompk":roompk, "start": start})
+    return render(request, 'play.html', context = {
+        "room_data": room_data,
+        "roompk": roompk,
+        "start": start,
+        "rounds": room.rounds
+    })
     
 def make_guest(request):
     return render(request, 'make_guest.html', context={})

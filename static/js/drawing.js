@@ -1,4 +1,4 @@
-function drawingScript2 () {
+function drawingScript2 (zoomFactor) {
   let roomData = document.querySelector('#room-data').dataset.roomData
   console.log(roomData)
   roomData = JSON.parse(roomData)
@@ -14,7 +14,7 @@ function drawingScript2 () {
 
   let paint
   let zoomedOut = true
-  const ZOOMFACTOR = 8
+  let ZOOMFACTOR = zoomFactor
   miniMapCxt.scale(1 / ZOOMFACTOR, 1 / ZOOMFACTOR)
   let zoomCenter = []
   let xOffset = 0
@@ -165,7 +165,7 @@ function drawingScript2 () {
   // big, ugly, smelly fingers.
   drawMap.addEventListener('touchstart', function (event) {
     paint = true
-    userPaths[username]['paths'].push([[
+    roomData[username]['paths'].push([[
       Math.floor(event.touches[0].pageX) + xOffset,
       Math.floor(event.touches[0].pageY) + yOffset
     ]])
@@ -205,7 +205,7 @@ function drawingScript2 () {
       event.preventDefault()
       event.stopImmediatePropagation()
 
-      userPaths[username]['paths'][userPaths[username]['paths'].length - 1].push([
+      roomData[username]['paths'][roomData[username]['paths'].length - 1].push([
         Math.floor(event.touches[0].pageX) + xOffset,
         Math.floor(event.touches[0].pageY) + yOffset
       ])
@@ -245,7 +245,7 @@ function drawingScript2 () {
       for (let path of paths) {
         miniMapCxt.beginPath()
         miniMapCxt.moveTo(path[0][0], path[0][1])
-        for (i = 1; i < path.length; i++) {
+        for (let i = 1; i < path.length; i++) {
           miniMapCxt.moveTo(path[i][0], path[i][1])
           miniMapCxt.lineTo(path[i - 1][0], path[i - 1][1])
         }
@@ -272,7 +272,7 @@ function drawingScript2 () {
         let paths = user['paths']
         drawMapCxt.strokeStyle = color
         drawMapCxt.shadowColor = color
-        drawMapCxt.shadowBlur = 4
+        drawMapCxt.shadowBlur = 15
         drawMapCxt.lineCap = 'round'
         drawMapCxt.lineWidth = 12
 
@@ -282,7 +282,7 @@ function drawingScript2 () {
             (path[0][0] - xOffset),
             (path[0][1] - yOffset)
           )
-          for (i = 1; i < path.length; i++) {
+          for (let i = 1; i < path.length; i++) {
             drawMapCxt.moveTo(
               (path[i][0] - xOffset),
               (path[i][1] - yOffset)
@@ -297,21 +297,29 @@ function drawingScript2 () {
       }
     }
   }
-
+  let round = '1'
   var start = null
   function step (timestamp) {
     redraw()
+    if (!(round === document.querySelector('#round-trigger').innerHTML)) {
+      for (let user of Object.keys(roomData)) {
+        roomData[user]['paths'] = []
+      }
+      drawMap.style.zIndex = 1
+      miniMap.style.zIndex = 4
+      zoomCenter = false
+      zoomedOut = true
+      paint = false
+      bricks.style.transform = 'scale(1, 1)'
+      drawMapCxt.clearRect(0, 0, drawMap.width, drawMap.height)
+      round = document.querySelector('#round-trigger').innerHTML
+      let oldFactor = ZOOMFACTOR
+      ZOOMFACTOR -= 2
+      miniMapCxt.scale(oldFactor / ZOOMFACTOR, oldFactor / ZOOMFACTOR)
+    }
     window.requestAnimationFrame(step)
   }
   window.requestAnimationFrame(step)
-}
-
-let onPlayPage = document.querySelector('#playPage')
-
-if (onPlayPage) {
-  document.addEventListener('DOMContentLoaded', function () {
-    drawingScript2()
-  })
 }
 
 module.exports = { drawingScript2: drawingScript2 }

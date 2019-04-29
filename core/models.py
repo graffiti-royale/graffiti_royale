@@ -6,8 +6,9 @@ import datetime
 
 class Room(models.Model):
     users = models.IntegerField(default=0)
+    rounds = models.IntegerField(default=1)
     name = models.CharField(max_length=50, default='Room')
     full = models.BooleanField(default=False)
-    JSON = models.TextField(max_length=1000, default='')
+    JSON = models.TextField(default='')
     createdAt = models.DateTimeField(auto_now_add=True)
     gameStart = models.DateTimeField(null=True)

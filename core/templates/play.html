@@ -18,13 +18,20 @@
     
 
 <body class="playfield crosshair fieldlogo" id="playPage">
+    <div id="count-down-holder">
+        <div id="start-count-down"></div>
+    </div>
        
     <div class="play-header">
+            <div id="timer" class="timer"></div>
+
+            <p class="random-word">WORD: {{ random_word }}</p>    
+            <div id="playerspopup"><p><i class="fas fa-caret-down"></i>&nbsp<i class="fas fa-users"></i></p></div>
+            <div id="round-trigger">1</div>
             <div>
                 <span class="random-word">WORD: {{ random_word }}</span>
-                <span class="score">0 </span>
+                
             </div>    
-            <div id="playerspopup"><p><i class="fas fa-caret-down"></i>&nbsp<i class="fas fa-users"></i></p></div>
             <div id="playerlist"></div>
     </div>
   
@@ -32,6 +39,13 @@
     <div class="image" id="background"></div>
     <div class="image" id="bricks"></div>
     <canvas id="miniMap"></canvas>
+
+    <div id="scores-after-round" class="score-modal">
+        <div class="modal-content">
+            <center><h4 id="headerTitle" class="welcome"> Standings:</h4></center><br>
+            <div id="player-scores"></div>
+        </div>
+    </div>
    
     <div class="modal">
 
@@ -45,12 +59,17 @@
 
     <div class="play-footer">
        
-        <div id="timer"></div>
         <input type="text" id="wordGuessed">
+        <span class="score">0 </span>
         <input type="submit" class="submitguess-button" value="GUESS">
      
     </div>
-    <div id="room-data" data-room-data="{{ room_data }}" data-roompk="{{ roompk }}" data-starttime="{{ start }}"></div>
+    <div id="room-data"
+        data-room-data="{{ room_data }}"
+        data-roompk="{{ roompk }}"
+        data-starttime="{{ start }}"
+        data-rounds="{{ rounds }}">
+    </div>
     {% load static %}
     <script src="{% static 'build/bundle.js' %}"></script>
 
