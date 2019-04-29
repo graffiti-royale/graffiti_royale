@@ -24,7 +24,7 @@ if (onPlayPage) {
   htmlSetup(roomData, score, username)
   connectScoreSocket(roomData, score, username)
   switchPhase(startTimer, targetTimes)
-  drawingScript2()
+  drawingScript2(zoomFactor)
   console.log(rounds)
 
   function checkScores (roomData, username) {
@@ -186,7 +186,6 @@ if (onPlayPage) {
         timerDiv.style.display = 'none'
         timerDiv.innerHTML = ''
         switchPhase(startTimer, targetTimes)
-        document.querySelector('#round-trigger').innerHTML++
         clearInterval(x)
       }
 
@@ -205,6 +204,7 @@ if (onPlayPage) {
 
     if (timer === startTimer) {
       currentRound++
+      document.querySelector('#round-trigger').innerHTML++
       let passRoundArray = checkScores(roomData, username)
       let passRound = passRoundArray[0]
       let orderedNames = passRoundArray[1]
