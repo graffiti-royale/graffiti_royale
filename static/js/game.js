@@ -124,7 +124,7 @@ if (onPlayPage) {
     scoreSocket.onmessage = function (event) {
       let data = JSON.parse(event.data)
       roomData[data['user1']]['score'] += Math.ceil(Math.pow(pointMultiplier, currentRound - 1))
-      roomData[data['user2']]['score'] += Math.ceil(Math.pow(pointMultiplier, currentRound - 1))
+      roomData[data['user2']]['score'] += Math.ceil(Math.pow(pointMultiplier, currentRound - 1 ))
       document.querySelector(`#${data['user1']}`).innerHTML = `${data['user1']}: ${roomData[data['user1']]['score']}`
       document.querySelector(`#${data['user2']}`).innerHTML = `${data['user2']}: ${roomData[data['user2']]['score']}`
       document.querySelector(`#${data['user1']}-modal`).innerHTML = `${data['user1']}: ${roomData[data['user1']]['score']}`
