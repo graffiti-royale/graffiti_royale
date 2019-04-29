@@ -4,6 +4,7 @@ const onPlayPage = document.querySelector('#playPage')
 
 if (onPlayPage) {
   const rounds = document.querySelector('#room-data').dataset.rounds
+  const zoomFactor = (rounds * 2) + 2
   const rawStartTime = document.querySelector('#room-data').dataset.starttime
   const startTime = parseInt(rawStartTime, 10)
   const rawRoomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
@@ -124,7 +125,7 @@ if (onPlayPage) {
     scoreSocket.onmessage = function (event) {
       let data = JSON.parse(event.data)
       roomData[data['user1']]['score'] += Math.ceil(Math.pow(pointMultiplier, currentRound - 1))
-      roomData[data['user2']]['score'] += Math.ceil(Math.pow(pointMultiplier, currentRound - 1 ))
+      roomData[data['user2']]['score'] += Math.ceil(Math.pow(pointMultiplier, currentRound - 1))
       document.querySelector(`#${data['user1']}`).innerHTML = `${data['user1']}: ${roomData[data['user1']]['score']}`
       document.querySelector(`#${data['user2']}`).innerHTML = `${data['user2']}: ${roomData[data['user2']]['score']}`
       document.querySelector(`#${data['user1']}-modal`).innerHTML = `${data['user1']}: ${roomData[data['user1']]['score']}`
