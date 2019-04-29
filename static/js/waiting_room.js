@@ -73,7 +73,7 @@ function waitingRoomJS () {
 
   let roomTime = document.querySelector('.user_data').dataset.remainingTime
 
-  let remainingTime = parseInt(roomTime, 10) + (1000 * 120)
+  let remainingTime = parseInt(roomTime, 10)
   console.log(remainingTime)
 
   // Update the count down every 1 second

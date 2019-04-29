@@ -5,16 +5,18 @@ const onPlayPage = document.querySelector('#playPage')
 if (onPlayPage) {
   const rounds = document.querySelector('#room-data').dataset.rounds
   const zoomFactor = (rounds * 2) + 3
-  const rawStartTime = document.querySelector('#room-data').dataset.starttime
-  const startTime = parseInt(rawStartTime, 10)
+  const remainingTime = document.querySelector('#room-data').dataset.remainingTime
+  const timeTillStart = parseInt(remainingTime, 10)
   const rawRoomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
   const roomData = JSON.parse(rawRoomData)
   const username = window.location.href.split('/')[5]
-  const targetTimes = []
+  const phaseLengths = []
+  phaseLengths.push(timeTillStart)
+  phaseLengths.push(1000 * 120)
   const pointMultiplier = 1.66
-  for (let i = 0; i < rounds; i++) {
-    targetTimes.push(startTime + (((1000 * 120) + 10000) * i) + 10000)
-    targetTimes.push(startTime + (((1000 * 120) + 10000) * i) + ((1000 * 120) + 10000))
+  for (let i = 1; i < rounds; i++) {
+    phaseLengths.push(10000)
+    phaseLengths.push(1000 * 120)
   }
   let score = document.querySelector('.score')
   let currentRound = 0
@@ -23,7 +25,7 @@ if (onPlayPage) {
 
   htmlSetup(roomData, score, username)
   connectScoreSocket(roomData, score, username)
-  switchPhase(startTimer, targetTimes)
+  switchPhase(startTimer, phaseLengths)
   drawingScript2(zoomFactor)
   console.log(rounds)
 
@@ -135,57 +137,47 @@ if (onPlayPage) {
     }
   }
 
-  function startTimer (targetTime, currentRound, targetTimes) {
+  function startTimer (length, currentRound, phaseLengths) {
     let startCountDown = document.querySelector('#start-count-down')
     let countDownHolder = document.querySelector('#count-down-holder')
     startCountDown.style.display = 'block'
     countDownHolder.style.display = 'block'
     // startCountDown.style.height = window.innerHeight
     let x = setInterval(function () {
-    // Get todays date and time
-      let now = Date.now()
-
-      // Find the distance between now and the count down date
-      let distance = (targetTime - now)
-
       // Time calculations for days, hours, minutes and seconds
-      let seconds = Math.floor(((distance % (1000 * 60)) / 1000))
-      console.log(seconds)
+      let seconds = Math.floor(((length % (1000 * 60)) / 1000))
+
+      length -= 1000
 
       // Display the result in the element with id="demo"
-      startCountDown.innerHTML = seconds
-      if (startCountDown.innerHTML === '0') {
+      if (seconds === 0) {
         startCountDown.innerHTML = 'DRAW!'
-      } else if (startCountDown.innerHTML === '59') {
+      } else if (seconds === -1) {
         startCountDown.style.display = 'none'
         startCountDown.innerHTML = ''
         countDownHolder.style.display = 'none'
-        switchPhase(roundTimer, targetTimes)
+        switchPhase(roundTimer, phaseLengths)
         clearInterval(x)
-      }
+      } else { startCountDown.innerHTML = seconds }
     }, 1000)
   }
 
-  function roundTimer (targetTime, currentRound, targetTimes) {
+  function roundTimer (length, currentRound, phaseLengths) {
     const timerDiv = document.querySelector('#timer')
+    timerDiv.innerHTML = ''
     timerDiv.style.display = 'block'
 
     // Update the count down every 1 second
     let x = setInterval(function () {
-    // Get todays date and time
-      let now = Date.now()
-
-      // Find the distance between now and the count down date
-      let distance = (targetTime - now)
-
       // Time calculations for days, hours, minutes and seconds
-      let minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60)))
-      let seconds = Math.floor(((distance % (1000 * 60)) / 1000))
+      let minutes = Math.floor(((length % (1000 * 60 * 60)) / (1000 * 60)))
+      let seconds = Math.floor(((length % (1000 * 60)) / 1000))
 
-      if (minutes === 59) {
+      length -= 1000
+
+      if (minutes === -1) {
         timerDiv.style.display = 'none'
-        timerDiv.innerHTML = ''
-        switchPhase(startTimer, targetTimes)
+        switchPhase(startTimer, phaseLengths)
         clearInterval(x)
       }
 
@@ -198,7 +190,7 @@ if (onPlayPage) {
     }, 1000)
   }
 
-  function switchPhase (timer, targetTimes) {
+  function switchPhase (timer, phaseLengths) {
     const scoresModal = document.querySelector('#scores-after-round')
     const rounds = document.querySelector('#room-data').dataset.rounds
 
@@ -214,7 +206,7 @@ if (onPlayPage) {
         endGame()
       } else {
         let index = (currentRound - 1) * 2
-        startTimer(targetTimes[index], currentRound, targetTimes)
+        startTimer(phaseLengths[index], currentRound, phaseLengths)
       }
     } else {
       let wordsArray = roomData[username]['words'].split('/')
@@ -223,7 +215,7 @@ if (onPlayPage) {
       document.querySelector('.random-word').innerHTML = `WORD: ${currentWord.toUpperCase()}`
       scoresModal.style.display = 'none'
       let index = ((currentRound - 1) * 2) + 1
-      roundTimer(targetTimes[index], currentRound, targetTimes)
+      roundTimer(phaseLengths[index], currentRound, phaseLengths)
     }
   }
 
