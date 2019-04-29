@@ -1,4 +1,4 @@
-function drawingScript2 () {
+function drawingScript2 (zoomFactor) {
   let roomData = document.querySelector('#room-data').dataset.roomData
   console.log(roomData)
   roomData = JSON.parse(roomData)
@@ -14,7 +14,7 @@ function drawingScript2 () {
 
   let paint
   let zoomedOut = true
-  let ZOOMFACTOR = 14
+  let ZOOMFACTOR = zoomFactor
   miniMapCxt.scale(1 / ZOOMFACTOR, 1 / ZOOMFACTOR)
   let zoomCenter = []
   let xOffset = 0

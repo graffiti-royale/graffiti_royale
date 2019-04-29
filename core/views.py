@@ -21,7 +21,7 @@ def get_number_of_rounds(initial_player_count):
     if initial_player_count <= 5:
         return 1
     if initial_player_count <= 10:
-        return 6
+        return 2
     if initial_player_count <= 20:
         return 3
     if initial_player_count <= 40:
