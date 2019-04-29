@@ -9,7 +9,7 @@ from django.db import close_old_connections
 import random, time
 import datetime
 
-ROOM_CAP = 30
+ROOM_CAP = 2
 
 # Chooses a random word from our Words.csv file
 def get_random_word():
@@ -63,13 +63,15 @@ def waiting_room(request, roompk, username):
     room.save()
     full = room.full
     timer = int(time.mktime(room.createdAt.timetuple())) * 1000
+    timer += (1000 * 120)
+    remaining_time = timer - int(time.mktime(datetime.datetime.utcnow().timetuple()))
     close_old_connections()
 
     return render(request, 'waiting_room.html', context = {
         "full": full,
         "roompk": roompk,
         "JSON": room.JSON,
-        "time": timer,
+        "remaining_time": remaining_time,
         "username": username,
         "ROOM_CAP": ROOM_CAP
     })

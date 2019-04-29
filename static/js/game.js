@@ -143,7 +143,7 @@ if (onPlayPage) {
     // startCountDown.style.height = window.innerHeight
     let x = setInterval(function () {
     // Get todays date and time
-      let now = new Date().getTime()
+      let now = Date.now()
 
       // Find the distance between now and the count down date
       let distance = (targetTime - now)
@@ -173,7 +173,7 @@ if (onPlayPage) {
     // Update the count down every 1 second
     let x = setInterval(function () {
     // Get todays date and time
-      let now = new Date().getTime()
+      let now = Date.now()
 
       // Find the distance between now and the count down date
       let distance = (targetTime - now)
