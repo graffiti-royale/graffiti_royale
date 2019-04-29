@@ -756,6 +756,7 @@ input:focus {
     position: absolute;
     border: 3px solid black;
     top: 3.5rem;
+    /* bottom: 6.5rem; */
     left: 0;
     right: 0;
     margin: auto;
