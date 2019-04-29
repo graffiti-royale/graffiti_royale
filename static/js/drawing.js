@@ -253,7 +253,7 @@ function drawingScript2 (zoomFactor) {
         let paths = user['paths']
         drawMapCxt.strokeStyle = color
         drawMapCxt.shadowColor = color
-        drawMapCxt.shadowBlur = 4
+        drawMapCxt.shadowBlur = 15
         drawMapCxt.lineCap = 'round'
         drawMapCxt.lineWidth = 12
 
