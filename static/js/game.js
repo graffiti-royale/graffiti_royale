@@ -4,13 +4,14 @@ const onPlayPage = document.querySelector('#playPage')
 
 if (onPlayPage) {
   const rounds = document.querySelector('#room-data').dataset.rounds
-  const zoomFactor = (rounds * 2) + 2
+  const zoomFactor = (rounds * 2) + 3
   const rawStartTime = document.querySelector('#room-data').dataset.starttime
   const startTime = parseInt(rawStartTime, 10)
   const rawRoomData = document.querySelector('#room-data').dataset.roomData.replace(/\\/g, '')
   const roomData = JSON.parse(rawRoomData)
   const username = window.location.href.split('/')[5]
   const targetTimes = []
+  const pointMultiplier = 1.66
   for (let i = 0; i < rounds; i++) {
     targetTimes.push(startTime + (((1000 * 120) + 10000) * i) + 10000)
     targetTimes.push(startTime + (((1000 * 120) + 10000) * i) + ((1000 * 120) + 10000))
@@ -22,7 +23,7 @@ if (onPlayPage) {
 
   htmlSetup(roomData, score, username)
   connectScoreSocket(roomData, score, username)
-  switchPhase(startTimer, currentRound, targetTimes)
+  switchPhase(startTimer, targetTimes)
   drawingScript2(zoomFactor)
   console.log(rounds)
 
@@ -54,8 +55,10 @@ if (onPlayPage) {
     const playerList = document.querySelector('#playerlist')
     const popup = document.querySelector('#playerspopup')
     const scoresModal = document.querySelector('#player-scores')
+    let wordsArray = roomData[username]['words'].split('/')
+    let currentWord = wordsArray[currentRound]
 
-    document.querySelector('.random-word').innerHTML = `WORD: ${roomData[username]['word'].toUpperCase()}`
+    document.querySelector('.random-word').innerHTML = `WORD: ${currentWord.toUpperCase()}`
     score.style.color = roomData[username]['color']
 
     for (let user of Object.keys(roomData)) {
@@ -121,8 +124,8 @@ if (onPlayPage) {
 
     scoreSocket.onmessage = function (event) {
       let data = JSON.parse(event.data)
-      roomData[data['user1']]['score'] += 1
-      roomData[data['user2']]['score'] += 1
+      roomData[data['user1']]['score'] += Math.ceil(Math.pow(pointMultiplier, currentRound - 1))
+      roomData[data['user2']]['score'] += Math.ceil(Math.pow(pointMultiplier, currentRound - 1))
       document.querySelector(`#${data['user1']}`).innerHTML = `${data['user1']}: ${roomData[data['user1']]['score']}`
       document.querySelector(`#${data['user2']}`).innerHTML = `${data['user2']}: ${roomData[data['user2']]['score']}`
       document.querySelector(`#${data['user1']}-modal`).innerHTML = `${data['user1']}: ${roomData[data['user1']]['score']}`
@@ -157,7 +160,7 @@ if (onPlayPage) {
         startCountDown.style.display = 'none'
         startCountDown.innerHTML = ''
         countDownHolder.style.display = 'none'
-        switchPhase(roundTimer, currentRound, targetTimes)
+        switchPhase(roundTimer, targetTimes)
         clearInterval(x)
       }
     }, 1000)
@@ -182,8 +185,7 @@ if (onPlayPage) {
       if (minutes === 59) {
         timerDiv.style.display = 'none'
         timerDiv.innerHTML = ''
-        switchPhase(startTimer, currentRound, targetTimes)
-        document.querySelector('#round-trigger').innerHTML++
+        switchPhase(startTimer, targetTimes)
         clearInterval(x)
       }
 
@@ -196,13 +198,13 @@ if (onPlayPage) {
     }, 1000)
   }
 
-  function switchPhase (timer, currentRound, targetTimes) {
+  function switchPhase (timer, targetTimes) {
     const scoresModal = document.querySelector('#scores-after-round')
     const rounds = document.querySelector('#room-data').dataset.rounds
 
     if (timer === startTimer) {
       currentRound++
-      console.log(roomData)
+      document.querySelector('#round-trigger').innerHTML++
       let passRoundArray = checkScores(roomData, username)
       let passRound = passRoundArray[0]
       let orderedNames = passRoundArray[1]
@@ -215,6 +217,10 @@ if (onPlayPage) {
         startTimer(targetTimes[index], currentRound, targetTimes)
       }
     } else {
+      let wordsArray = roomData[username]['words'].split('/')
+      let currentWord = wordsArray[currentRound - 1]
+
+      document.querySelector('.random-word').innerHTML = `WORD: ${currentWord.toUpperCase()}`
       scoresModal.style.display = 'none'
       let index = ((currentRound - 1) * 2) + 1
       roundTimer(targetTimes[index], currentRound, targetTimes)
@@ -224,7 +230,9 @@ if (onPlayPage) {
   function checkGuess (guess, guessedWords, roomData, username) {
     if (!guessedWords.includes(guess)) {
       for (let user of Object.keys(roomData)) {
-        if (guess === roomData[user]['word'] && username !== user) {
+        let wordsArray = roomData[user]['words'].split('/')
+        let currentWord = wordsArray[currentRound - 1]
+        if (guess === currentWord && username !== user) {
           return [username, user]
         }
       }

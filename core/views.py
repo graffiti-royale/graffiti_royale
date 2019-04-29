@@ -9,7 +9,7 @@ from django.db import close_old_connections
 import random, time
 import datetime
 
-ROOM_CAP = 6
+ROOM_CAP = 2
 
 # Chooses a random word from our Words.csv file
 def get_random_word():
@@ -40,7 +40,7 @@ def waiting_room(request, roompk, username):
     username = username
     close_old_connections()
     room = Room.objects.get(pk=roompk)
-    word = get_random_word()
+    words_string = "/".join([get_random_word() for i in range(6)])
     colors_list = ['#FF6633', '#FFB399', '#FF33FF', '#00B3E6', '#3366E6',
     '#999966', '#99FF99', '#B34D4D', '#80B300', '#809900',
     '#E6B3B3', '#6680B3', '#66991A', '#FF99E6', '#FF1A66',
@@ -53,16 +53,14 @@ def waiting_room(request, roompk, username):
     color = random.choice(colors_list)
 
     if room.JSON:
-        room.JSON += f', "{username}": '+'{"word": '+f'"{word}", "color": "{color}", "paths": [], "score": 0'+"}"
+        room.JSON += f', "{username}": '+'{"words": '+f'"{words_string}", "color": "{color}", "paths": [], "score": 0'+"}"
     else:
-        room.JSON = f'"{username}": '+'{"word": '+f'"{word}", "color": "{color}", "paths": [], "score": 0'+"}"
+        room.JSON = f'"{username}": '+'{"words": '+f'"{words_string}", "color": "{color}", "paths": [], "score": 0'+"}"
     room.users += 1
     room.rounds=get_number_of_rounds(room.users)
     if room.users > ROOM_CAP-1:
         room.full=True
-    print(room.JSON)
     room.save()
-    print(room.JSON)
     full = room.full
     timer = int(time.mktime(room.createdAt.timetuple())) * 1000
     close_old_connections()
