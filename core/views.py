@@ -81,7 +81,7 @@ def play(request, roompk, username):
     room.full = True
     if room.gameStart is None:
         room.gameStart = datetime.datetime.utcnow()
-        room.save()
+    room.save()
     start = int(time.mktime(room.gameStart.timetuple())) * 1000
     return render(request, 'play.html', context = {
         "room_data": room_data,
