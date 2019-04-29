@@ -9,8 +9,14 @@ function drawingScript2 (zoomFactor) {
   const username = window.location.href.split('/')[5]
   drawMap.width = window.innerWidth
   drawMap.height = window.innerHeight
-  miniMap.width = 600
-  miniMap.height = 600
+  miniMap.width = Math.min(window.innerHeight - (160), window.innerWidth)
+  miniMap.height = Math.min(window.innerHeight - (160), window.innerWidth)
+  const bricks = document.querySelector('#bricks')
+  document.addEventListener('DOMContentLoaded', function () {
+    bricks.style.width = `${miniMap.width}px`
+    bricks.style.height = `${miniMap.height}px`
+    console.log(bricks.style)
+  })
 
   let paint
   let zoomedOut = true
@@ -21,7 +27,6 @@ function drawingScript2 (zoomFactor) {
   let yOffset = 0
 
   /* Setting up visuals */
-  const bricks = document.querySelector('#bricks')
 
   // Determines which point the minimap is currently on when using a mouse.
   miniMap.addEventListener('mousemove', function (event) {
@@ -129,7 +134,7 @@ function drawingScript2 (zoomFactor) {
   drawMap.addEventListener('mousedown', function (event) {
     paint = true
     roomData[username]['paths'].push([[
-      event.pageX + xOffset,
+      (event.pageX + xOffset) / miniMap.width,
       event.pageY + yOffset
     ]])
     drawSocket.send(JSON.stringify({
