@@ -1,5 +1,6 @@
-const { drawingScript2 } = require('./drawing')
+document.addEventListener('DOMContentLoaded', function () {
 
+const { drawingScript2 } = require('./drawing')
 const onPlayPage = document.querySelector('#playPage')
 
 if (onPlayPage) {
@@ -110,34 +111,68 @@ if (onPlayPage) {
 
     let guessedWords = []
 
-    guessInputField.addEventListener('keyup', function (event) {
-      if (event.key === 'Enter') {
-        let word = guessInputField.value.toLowerCase()
-        let result = checkGuess(word, guessedWords, roomData, username)
-        console.log(result)
-        if (result) {
-          guessInputField.style.border = '.2rem solid lightgreen'
-          guessedWords.push(word)
-          scoreSocket.send(JSON.stringify({
-            'user1': result[0],
-            'user2': result[1]
-          }))
-        } else { guessInputField.style.border = '.2rem solid red' }
-      }
-    })
+    guessInputField.focus()
 
+    // When the submit button is pressed, checks what is in the field.
     document.querySelector('.submitguess-button').addEventListener('click', function () {
       let word = guessInputField.value.toLowerCase()
       let result = checkGuess(word, guessedWords, roomData, username)
       console.log(result)
       if (result) {
         guessInputField.style.border = '.2rem solid lightgreen'
+        guessInputField.focus()
         guessedWords.push(word)
         scoreSocket.send(JSON.stringify({
           'user1': result[0],
           'user2': result[1]
         }))
-      } else { guessInputField.style.border = '.2rem solid red' }
+        guessInputField.value=''
+        setTimeout(function(){ 
+        guessInputField.style.border = '.2rem solid black'
+        guessInputField.style.backgroundColor = ""
+        ; }, 500)
+      } else { 
+        guessInputField.style.border = '.2rem solid red' 
+        guessInputField.focus()
+        guessInputField.value=''
+        setTimeout(function(){ 
+        guessInputField.style.border = '.2rem solid black'
+        guessInputField.style.backgroundColor = ""
+        ; }, 500)
+      }
+    })
+
+    // When enter is pressed, checks what is in the field.
+    guessInputField.addEventListener('keydown', function(event){
+      if(event.key === "Enter"){
+      let word = guessInputField.value.toLowerCase()
+      let result = checkGuess(word, guessedWords, roomData, username)
+      console.log(result)
+      if (result) {
+        guessInputField.style.border = '.2rem solid lightgreen'
+        guessInputField.style.backgroundColor = "#C8FED5"
+        guessInputField.focus()
+        guessedWords.push(word)
+        scoreSocket.send(JSON.stringify({
+          'user1': result[0],
+          'user2': result[1]
+        }))
+        guessInputField.value=''
+        setTimeout(function(){ 
+        guessInputField.style.border = '.2rem solid black'
+        guessInputField.style.backgroundColor = ""
+        ; }, 200)
+      } else { 
+        guessInputField.style.border = '.2rem solid red' 
+        guessInputField.style.backgroundColor = "#FEC8C8"
+        guessInputField.focus()
+        guessInputField.value=''
+        setTimeout(function(){ 
+        guessInputField.style.border = '.2rem solid black'
+        guessInputField.style.backgroundColor = ""
+        ; }, 200)
+      }
+      }
     })
 
     scoreSocket.onmessage = function (event) {
@@ -258,3 +293,5 @@ if (onPlayPage) {
 }
 
 module.exports = {}
+
+})
