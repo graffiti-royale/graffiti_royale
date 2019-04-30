@@ -7,9 +7,9 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.db import close_old_connections
 import random, time
-import datetime
+from datetime import datetime, timezone
 
-ROOM_CAP = 2
+ROOM_CAP = 30
 
 # Chooses a random word from our Words.csv file
 def get_random_word():
@@ -62,14 +62,17 @@ def waiting_room(request, roompk, username):
         room.full=True
     room.save()
     full = room.full
-    timer = int(time.mktime(room.createdAt.timetuple())) * 1000
+    target_time = (int(time.mktime(room.createdAt.timetuple())) * 1000) + (1000 * 120)
+    current_time = datetime.now(timezone.utc)
+    current_time = int(time.mktime(current_time.timetuple())) * 1000
+    remaining_time = target_time - current_time
     close_old_connections()
 
     return render(request, 'waiting_room.html', context = {
         "full": full,
         "roompk": roompk,
         "JSON": room.JSON,
-        "time": timer,
+        "remaining_time": remaining_time,
         "username": username,
         "ROOM_CAP": ROOM_CAP
     })
@@ -80,13 +83,16 @@ def play(request, roompk, username):
     room_data = "{"+room.JSON+"}"
     room.full = True
     if room.gameStart is None:
-        room.gameStart = datetime.datetime.utcnow()
-        room.save()
-    start = int(time.mktime(room.gameStart.timetuple())) * 1000
+        room.gameStart = datetime.now(timezone.utc)
+    room.save()
+    target_time = (int(time.mktime(room.gameStart.timetuple())) * 1000) + 10000
+    current_time = datetime.now(timezone.utc)
+    current_time = int(time.mktime(current_time.timetuple())) * 1000
+    remaining_time = target_time - current_time
     return render(request, 'play.html', context = {
         "room_data": room_data,
         "roompk": roompk,
-        "start": start,
+        "remaining_time": remaining_time,
         "rounds": room.rounds
     })
     
