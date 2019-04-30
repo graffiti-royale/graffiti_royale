@@ -2,12 +2,20 @@ function guestLoginJavaScript () {
   /* globals fetch */
   const Cookies = require('cookies-js')
   let input = document.querySelector('#guest-name')
-
+  let letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'
   input.focus()
-  input.addEventListener("keyup", function(event) {
-    if (event.key === "Enter") {
+  input.addEventListener('keyup', function (event) {
+    if (event.key === 'Enter') {
       let name = input.value
-      if (name.length > 15) {
+      let check = true
+      for (let letter of name) {
+        if (!letters.includes(letter)) {
+          check = false
+        }
+      }
+      if (!check) {
+        document.querySelector('h2').innerText = 'No special characters or spaces'
+      } else if (name.length > 15) {
         document.querySelector('h2').innerText = 'Character limit is 15'
       } else {
         fetch('/checkguestname/', {
@@ -31,7 +39,15 @@ function guestLoginJavaScript () {
 
   document.querySelector('button').addEventListener('click', function () {
     let name = input.value
-    if (name.length > 15) {
+    let check = true
+    for (let letter of name) {
+      if (!letters.includes(letter)) {
+        check = false
+      }
+    }
+    if (!check) {
+      document.querySelector('h2').innerText = 'No special characters or spaces'
+    } else if (name.length > 15) {
       document.querySelector('h2').innerText = 'Character limit is 15'
     } else {
       fetch('/checkguestname/', {
