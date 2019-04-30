@@ -9,14 +9,14 @@ function hintsJavaScript () {
 
   function setInnerHTML () {
     headerTitle.innerHTML = 'HiNTS'
-    firstP.innerHTML = `Draw the word displayed at the top left<br>
-                        Doubletap to zoom in/out<br>
-                        You must be zoomed in to draw<br>
-                        +1 point for guessing a drawing correctly<br>
-                        +1 point if your drawing is guessed<br>`
-    secondP.innerHTML = `Draw or guess at any time<br>
-                        View scoreboard by tapping&nbsp<i class='fas fa-caret-down scoreboard-icon' />&nbsp<i class='fas fa-users scoreboard-icon' /><br>
-                        Highest score after time is up, wins`
+    firstP.innerHTML = `<li>Draw the word displayed at the top left<br>
+    <li>Double-click to zoom in/out<br>
+    <li>You must be zoomed in to draw<br>
+    <li>+1 point for guessing a drawing correctly<br>
+    <li>+1 point if your drawing is guessed
+    <li>Draw or guess at any time<br>
+    <li>View scoreboard by clicking<div id="playerspopuptutorial"><p><i class="fas fa-caret-down"></i>&nbsp<i class="fas fa-users"></i></p></div><br>
+    <li>Highest score after time is up, wins`
   }
 
   hintsButton.onclick = function () {

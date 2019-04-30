@@ -24,7 +24,7 @@ body {
     background-color: white;
     font-style: italic;
     /* border-bottom: .2rem solid black; */
-    border-bottom: 7px solid transparent;
+    border-bottom: 12px solid transparent;
     border-image: linear-gradient(to right, rgb(0, 123, 255) 0%, #18fbff 20%, #ff4797 40%, rgb(255, 0, 17) 60%, rgb(255, 247, 0) 80%, #85ff1b 100%);
     border-image-slice: 1;
     /* border-radius:0px 0px 30px 30px; */
@@ -305,14 +305,14 @@ body {
     text-shadow: -1.5px 0 black, 0 1.5px black, 1.5px 0 black, 0 -1.5px black;
     font-family: 'Londrina Solid', cursive;
     border-radius: 100px;
-    height:120px;
+    height:125px;
     font-size: 3.9rem;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 1rem;
     box-shadow: -2px 3px 3px 1px rgb(159, 159, 159);
-    margin: 110px 30px 45px 30px;
+    margin: 100px 30px 50px 30px;
     min-width:300px;
     max-width:550px;
 }
@@ -371,7 +371,7 @@ body {
     text-shadow: -1.5px 0 black, 0 1.5px black, 1.5px 0 black, 0 -1.5px black;
     font-family: 'Londrina Solid', cursive;
     border-radius: 100px;
-    height:120px;
+    height:125px;
     font-size: 3.9rem;
     display: flex;
     justify-content: center;
@@ -877,6 +877,10 @@ input:focus {
     font-size: 45px;
 }
 
+#hints-button {
+    cursor:pointer;
+}
+
 .matchtimer {
     font-family: 'Londrina Solid', cursive;
     font-size: 50px;
@@ -932,6 +936,7 @@ input:focus {
 }
 
 .waiting-room-banner {
+    height:13rem;
     display: flex;
     justify-content: space-between;
     /* justify-content: center; */
@@ -942,7 +947,7 @@ input:focus {
     background-color: white;
     font-style: italic;
     /* border-bottom: .2rem solid black; */
-    border-bottom: 7px solid transparent;
+    border-bottom: 12px solid transparent;
     border-image: linear-gradient(to right, rgb(0, 123, 255) 0%, #18fbff 20%, #ff4797 40%, rgb(255, 0, 17) 60%, rgb(255, 247, 0) 80%, #85ff1b 100%);
     border-image-slice: 1;
     /* border-radius:0px 0px 30px 30px; */
