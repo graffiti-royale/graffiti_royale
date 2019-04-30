@@ -760,8 +760,6 @@ input:focus {
     left: 0;
     right: 0;
     margin: auto;
-    width: 605px;
-    height: 605px;
     background: linear-gradient(
         rgba(255, 255, 255, 0.900), 
         rgba(255, 255, 255, 0.900)),
