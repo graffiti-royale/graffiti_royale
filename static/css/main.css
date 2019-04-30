@@ -994,8 +994,10 @@ input:focus {
 } */
 
 .count-down {
-    width: 215px;
-    margin: auto;
+    margin: 0px 0px 0px 0px;
+    min-width:300px;
+    max-width:700px;
+    font-size:50px;
 }
 
 span {
@@ -1007,6 +1009,9 @@ span {
     text-shadow: -.75px 0 black, 0 .75px black, .75px 0 black, 0 -.75px black;
     color: black;
     font-style:italic;
+    margin: 0px 0px 0px 0px;
+    min-width:300px;
+    max-width:700px;
 }
 
 #round-trigger {
