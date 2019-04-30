@@ -49,7 +49,7 @@ def waiting_room(request, roompk, username):
     '#4DB3FF', '#1AB399', '#E666B3', '#33991A', '#CC9999',
     '#00E680', '#4D8066', '#809980', '#1AFF33', '#FF3380',
     '#66E64D', '#4D80CC', '#9900B3', '#E64D66', '#4DB380',
-    '#FF4D4D', '#99E6E6', '#6666FF']
+    '#FF4D4D', '#99E6E6', '#6666FF', 'rgb(0, 123, 255)', '#33B2FF', '#ff4797', 'rgb(255, 0, 17)', '#85ff1b', '#F96900', '#FF00A2', '#7C0DDE', '#FF3333', '#0020B0', '#36A42F', '#FF4D00', '#F0A700', '#FF1300', '#FF0049', '#FF7400', '#B8BD00', '#00BDAC', '#0087FF', '#FFA200']
     color = random.choice(colors_list)
 
     if room.JSON:

@@ -8,7 +8,7 @@ function hintsJavaScript () {
   let secondP = document.querySelector('#secondP')
 
   function setInnerHTML () {
-    headerTitle.innerHTML = 'HiNTS'
+    headerTitle.innerHTML = 'NiFTY HiNTS'
     firstP.innerHTML = `<li>Draw the word displayed at the top left<br>
     <li>Double-click to zoom in/out<br>
     <li>You must be zoomed in to draw<br>
