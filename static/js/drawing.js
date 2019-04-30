@@ -12,11 +12,9 @@ function drawingScript2 (zoomFactor) {
   miniMap.width = Math.min(window.innerHeight - (160), window.innerWidth)
   miniMap.height = Math.min(window.innerHeight - (160), window.innerWidth)
   const bricks = document.querySelector('#bricks')
-  document.addEventListener('DOMContentLoaded', function () {
-    bricks.style.width = `${miniMap.width}px`
-    bricks.style.height = `${miniMap.height}px`
-    console.log(bricks.style)
-  })
+  bricks.style.width = `${miniMap.width}px`
+  bricks.style.height = `${miniMap.height}px`
+  console.log(bricks.style)
 
   let paint
   let zoomedOut = true
