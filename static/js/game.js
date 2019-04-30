@@ -155,9 +155,9 @@ if (onPlayPage) {
 
   function startTimer (length, currentRound, phaseLengths) {
     let startCountDown = document.querySelector('#start-count-down')
-    let countDownHolder = document.querySelector('#count-down-holder')
+    let countDownText = document.querySelector('#count-down-text')
     startCountDown.style.display = 'inline-block'
-    countDownHolder.style.display = 'block'
+    countDownText.style.display = 'inline-block'
     // startCountDown.style.height = window.innerHeight
     let x = setInterval(function () {
       // Time calculations for days, hours, minutes and seconds
@@ -167,11 +167,12 @@ if (onPlayPage) {
 
       // Display the result in the element with id="demo"
       if (seconds === 0) {
+        countDownText.innerHTML = ''
         startCountDown.innerHTML = 'DRAW!'
       } else if (seconds === -1) {
         startCountDown.style.display = 'none'
         startCountDown.innerHTML = ''
-        countDownHolder.style.display = 'none'
+        countDownText.style.display = 'none'
         switchPhase(roundTimer, phaseLengths)
         clearInterval(x)
       } else { startCountDown.innerHTML = seconds }
