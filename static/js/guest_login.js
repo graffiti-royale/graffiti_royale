@@ -3,8 +3,9 @@ function guestLoginJavaScript () {
   const Cookies = require('cookies-js')
   let input = document.querySelector('#guest-name')
 
-  input.addEventListener('keyup', function (event) {
-    if (event.key === 'Enter') {
+  input.focus()
+  input.addEventListener("keyup", function(event) {
+    if (event.key === "Enter") {
       let name = input.value
       if (name.length > 15) {
         document.querySelector('h2').innerText = 'Character limit is 15'
