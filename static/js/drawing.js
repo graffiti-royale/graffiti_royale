@@ -9,8 +9,14 @@ function drawingScript2 (zoomFactor) {
   const username = window.location.href.split('/')[5]
   drawMap.width = window.innerWidth
   drawMap.height = window.innerHeight
-  miniMap.width = 600
-  miniMap.height = 600
+  miniMap.width = Math.min(window.innerHeight - (160), window.innerWidth)
+  miniMap.height = Math.min(window.innerHeight - (160), window.innerWidth)
+  const bricks = document.querySelector('#bricks')
+  document.addEventListener('DOMContentLoaded', function () {
+    bricks.style.width = `${miniMap.width}px`
+    bricks.style.height = `${miniMap.height}px`
+    console.log(bricks.style)
+  })
 
   let paint
   let zoomedOut = true
@@ -21,13 +27,13 @@ function drawingScript2 (zoomFactor) {
   let yOffset = 0
 
   /* Setting up visuals */
-  const bricks = document.querySelector('#bricks')
 
   // Determines which point the minimap is currently on when using a mouse.
   miniMap.addEventListener('mousemove', function (event) {
     if (zoomedOut) {
       let X = Math.min(
-        Math.max(event.pageX - this.offsetLeft, drawMap.width / ZOOMFACTOR / 2), miniMap.width - drawMap.width / ZOOMFACTOR / 2
+        Math.max(event.pageX - this.offsetLeft, drawMap.width / ZOOMFACTOR / 2),
+        miniMap.width - drawMap.width / ZOOMFACTOR / 2
       ) * ZOOMFACTOR
       let Y = Math.min(
         Math.max(event.pageY - this.offsetTop, drawMap.height / ZOOMFACTOR / 2),
@@ -96,8 +102,8 @@ function drawingScript2 (zoomFactor) {
       miniMap.style.zIndex = 1
       let moveX = -1 * (((zoomCenter[0] / ZOOMFACTOR) - (window.innerWidth / 2)) + miniMap.offsetLeft)
       let moveY = -1 * (((zoomCenter[1] / ZOOMFACTOR) - (window.innerHeight / 2)) + miniMap.offsetTop)
-      X = zoomCenter[0] * 100 / miniMap.width / ZOOMFACTOR
-      Y = zoomCenter[1] * 100 / miniMap.height / ZOOMFACTOR
+      let X = zoomCenter[0] * 100 / miniMap.width / ZOOMFACTOR
+      let Y = zoomCenter[1] * 100 / miniMap.height / ZOOMFACTOR
       let coord = `${X}% ${Y}%`
       console.log(coord)
       bricks.style.transform = `translate(${moveX}px, ${moveY}px) scale(${ZOOMFACTOR}, ${ZOOMFACTOR})`
@@ -128,15 +134,15 @@ function drawingScript2 (zoomFactor) {
   // When the user clicks with a mouse, this begins tracking the movement of the mouse.
   drawMap.addEventListener('mousedown', function (event) {
     paint = true
-    roomData[username]['paths'].push([[
-      event.pageX + xOffset,
-      event.pageY + yOffset
-    ]])
+    roomData[username]['paths'].push([
+      (event.pageX + xOffset) / miniMap.width,
+      (event.pageY + yOffset) / miniMap.height
+    ])
     drawSocket.send(JSON.stringify({
       'username': username,
       'point': [
-        event.pageX + xOffset,
-        event.pageY + yOffset
+        (event.pageX + xOffset) / miniMap.width,
+        (event.pageY + yOffset) / miniMap.height
       ],
       'new_path': true
     }))
@@ -147,14 +153,14 @@ function drawingScript2 (zoomFactor) {
   drawMap.addEventListener('touchstart', function (event) {
     paint = true
     roomData[username]['paths'].push([[
-      Math.floor(event.touches[0].pageX) + xOffset,
-      Math.floor(event.touches[0].pageY) + yOffset
+      (event.touches[0].pageX + xOffset) / miniMap.width,
+      (event.touches[0].pageY + yOffset) / miniMap.height
     ]])
     drawSocket.send(JSON.stringify({
       'username': username,
       'point': [
-        Math.floor(event.touches[0].pageX) + xOffset,
-        Math.floor(event.touches[0].pageY) + yOffset
+        (event.touches[0].pageX + xOffset) / miniMap.width,
+        (event.touches[0].pageY + yOffset) / miniMap.height
       ],
       'new_path': true
     }))
@@ -164,14 +170,18 @@ function drawingScript2 (zoomFactor) {
   drawMap.addEventListener('mousemove', function (event) {
     if (paint) {
       roomData[username]['paths'][roomData[username]['paths'].length - 1].push([
-        event.pageX + xOffset,
-        event.pageY + yOffset
+        (event.pageX + xOffset) / miniMap.width,
+        (event.pageY + yOffset) / miniMap.height
+      ])
+      console.log([
+        (event.pageX + xOffset) / miniMap.width,
+        (event.pageY + yOffset) / miniMap.height
       ])
       drawSocket.send(JSON.stringify({
         'username': username,
         'point': [
-          event.pageX + xOffset,
-          event.pageY + yOffset
+          (event.pageX + xOffset) / miniMap.width,
+          (event.pageY + yOffset) / miniMap.height
         ],
         'new_path': false
       }))
@@ -187,14 +197,14 @@ function drawingScript2 (zoomFactor) {
       event.stopImmediatePropagation()
 
       roomData[username]['paths'][roomData[username]['paths'].length - 1].push([
-        Math.floor(event.touches[0].pageX) + xOffset,
-        Math.floor(event.touches[0].pageY) + yOffset
+        (event.touches[0].pageX + xOffset) / miniMap.width,
+        (event.touches[0].pageY + yOffset) / miniMap.height
       ])
       drawSocket.send(JSON.stringify({
         'username': username,
         'point': [
-          Math.floor(event.touches[0].pageX) + xOffset,
-          Math.floor(event.touches[0].pageY) + yOffset
+          (event.touches[0].pageX + xOffset) / miniMap.width,
+          (event.touches[0].pageY + yOffset) / miniMap.height
         ],
         'new_path': false
       }))
@@ -211,6 +221,10 @@ function drawingScript2 (zoomFactor) {
     paint = false
   })
 
+  function convert (percent) {
+    return [Math.floor(percent * miniMap.width)]
+  }
+
   /* Redraw function */
   function redraw () {
     miniMapCxt.clearRect(0, 0, miniMap.width * ZOOMFACTOR, miniMap.height * ZOOMFACTOR)
@@ -225,10 +239,10 @@ function drawingScript2 (zoomFactor) {
 
       for (let path of paths) {
         miniMapCxt.beginPath()
-        miniMapCxt.moveTo(path[0][0], path[0][1])
+        miniMapCxt.moveTo(convert(path[0][0]), convert(path[0][1]))
         for (let i = 1; i < path.length; i++) {
-          miniMapCxt.moveTo(path[i][0], path[i][1])
-          miniMapCxt.lineTo(path[i - 1][0], path[i - 1][1])
+          miniMapCxt.moveTo(convert(path[i][0]), convert(path[i][1]))
+          miniMapCxt.lineTo(convert(path[i - 1][0]), convert(path[i - 1][1]))
         }
         miniMapCxt.stroke()
       }
@@ -260,17 +274,17 @@ function drawingScript2 (zoomFactor) {
         for (let path of paths) {
           drawMapCxt.beginPath()
           drawMapCxt.moveTo(
-            (path[0][0] - xOffset),
-            (path[0][1] - yOffset)
+            (convert(path[0][0]) - xOffset),
+            (convert(path[0][1]) - yOffset)
           )
           for (let i = 1; i < path.length; i++) {
             drawMapCxt.moveTo(
-              (path[i][0] - xOffset),
-              (path[i][1] - yOffset)
+              (convert(path[i][0]) - xOffset),
+              (convert(path[i][1]) - yOffset)
             )
             drawMapCxt.lineTo(
-              (path[i - 1][0] - xOffset),
-              (path[i - 1][1] - yOffset)
+              (convert(path[i - 1][0]) - xOffset),
+              (convert(path[i - 1][1]) - yOffset)
             )
           }
           drawMapCxt.stroke()
