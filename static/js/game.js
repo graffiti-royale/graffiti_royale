@@ -110,6 +110,22 @@ if (onPlayPage) {
 
     let guessedWords = []
 
+    guessInputField.addEventListener("keyup", function(event) {
+      if (event.key === "Enter") {
+        let word = guessInputField.value.toLowerCase()
+        let result = checkGuess(word, guessedWords, roomData, username)
+        console.log(result)
+        if (result) {
+          guessInputField.style.border = '.2rem solid lightgreen'
+          guessedWords.push(word)
+          scoreSocket.send(JSON.stringify({
+            'user1': result[0],
+            'user2': result[1]
+          }))
+        } else { guessInputField.style.border = '.2rem solid red' }
+      }
+  })
+
     document.querySelector('.submitguess-button').addEventListener('click', function () {
       let word = guessInputField.value.toLowerCase()
       let result = checkGuess(word, guessedWords, roomData, username)
