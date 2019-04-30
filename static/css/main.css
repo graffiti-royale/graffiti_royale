@@ -993,12 +993,16 @@ input:focus {
     cursor:default;
 } */
 
+.count-down {
+    width: 215px;
+    margin: auto;
+}
+
+span {
+    display: inline-block;
+}
+
 #start-count-down {
-    position: fixed;
-    /* top: 46%; */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     font-family: 'Londrina Sketch', cursive;
     text-shadow: -.75px 0 black, 0 .75px black, .75px 0 black, 0 -.75px black;
     color: black;

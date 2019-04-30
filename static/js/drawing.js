@@ -221,6 +221,10 @@ function drawingScript2 (zoomFactor) {
     paint = false
   })
 
+  drawMap.addEventListener('wheel', function () {
+    window.scrollTo(0, 0)
+  })
+
   function convert (percent) {
     return [Math.floor(percent * miniMap.width)]
   }
