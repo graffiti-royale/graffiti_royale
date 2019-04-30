@@ -110,8 +110,8 @@ if (onPlayPage) {
 
     let guessedWords = []
 
-    guessInputField.addEventListener("keyup", function(event) {
-      if (event.key === "Enter") {
+    guessInputField.addEventListener('keyup', function (event) {
+      if (event.key === 'Enter') {
         let word = guessInputField.value.toLowerCase()
         let result = checkGuess(word, guessedWords, roomData, username)
         console.log(result)
@@ -124,7 +124,7 @@ if (onPlayPage) {
           }))
         } else { guessInputField.style.border = '.2rem solid red' }
       }
-  })
+    })
 
     document.querySelector('.submitguess-button').addEventListener('click', function () {
       let word = guessInputField.value.toLowerCase()
@@ -156,7 +156,7 @@ if (onPlayPage) {
   function startTimer (length, currentRound, phaseLengths) {
     let startCountDown = document.querySelector('#start-count-down')
     let countDownHolder = document.querySelector('#count-down-holder')
-    startCountDown.style.display = 'block'
+    startCountDown.style.display = 'inline-block'
     countDownHolder.style.display = 'block'
     // startCountDown.style.height = window.innerHeight
     let x = setInterval(function () {
