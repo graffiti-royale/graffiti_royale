@@ -71,20 +71,18 @@ function waitingRoomJS () {
     }
   }
 
-  let roomTime = document.querySelector('.user_data').dataset.starttime
-  let countDownDate = new Date(parseInt(roomTime, 10))
+  let roomTime = document.querySelector('.user_data').dataset.remainingTime
+
+  let remainingTime = parseInt(roomTime, 10)
+  console.log(remainingTime)
 
   // Update the count down every 1 second
   let x = setInterval(function () {
-    // Get todays date and time
-    let now = new Date().getTime()
-
-    // Find the distance between now and the count down date
-    let distance = countDownDate - now
-
     // Time calculations for days, hours, minutes and seconds
-    let minutes = Math.floor(((distance % (1000 * 60 * 60)) / (1000 * 60)) - 58)
-    let seconds = Math.floor(((distance % (1000 * 60)) / 1000))
+    let minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60))
+    let seconds = Math.floor(((remainingTime % (1000 * 60)) / 1000))
+
+    remainingTime -= 1000
 
     // Display the result in the element with id="demo"
     if (seconds > 9) {
