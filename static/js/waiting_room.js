@@ -9,15 +9,11 @@ function waitingRoomJS () {
   roomData = JSON.parse(roomData)
   let currentPlayers = document.querySelector('#current_players')
   let numberOfPlayers = document.querySelector('#number-of-players')
-  console.log(username)
-  console.log(full)
   let usersAtPing = {}
 
   let startSocket = new WebSocket(`wss://${window.location.host}/ws/${room}/start/`)
 
   startSocket.onopen = function (event) {
-    console.log('connected')
-    console.log('open', roomData)
     let messageType
     if (full === 'True') {
       messageType = 'startgame'
@@ -33,15 +29,12 @@ function waitingRoomJS () {
 
   startSocket.onmessage = function (event) {
     let data = JSON.parse(event.data)
-    console.log('message', roomData)
 
     if (data['type'] === 'start') {
       // start the match!!!!
       window.location.href = `https://${window.location.host}/play/${room}/${username}/`
     } else if (data['type'] === 'ping') {
-      console.log('ping')
       roomData = data['roomData']
-      console.log(roomData)
       // respond to a ping by updating the users in the room directly (using the html room_data)
       currentPlayers.innerHTML = ''
       let numPlayers = 0
@@ -74,7 +67,6 @@ function waitingRoomJS () {
   let roomTime = document.querySelector('.user_data').dataset.remainingTime
 
   let remainingTime = parseInt(roomTime, 10)
-  console.log(remainingTime)
 
   // Update the count down every 1 second
   let x = setInterval(function () {

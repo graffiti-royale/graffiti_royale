@@ -22,13 +22,10 @@ if (onPlayPage) {
   let score = document.querySelector('.score')
   let currentRound = 0
 
-  console.log(roomData)
-
   htmlSetup(roomData, score, username)
   connectScoreSocket(roomData, score, username)
   switchPhase(startTimer, phaseLengths)
   drawingScript2(zoomFactor)
-  console.log(rounds)
 
   function checkScores (roomData, username) {
     let names = []
@@ -42,12 +39,8 @@ if (onPlayPage) {
     for (let i = 0; i < orderedNames.length; i++) {
       if (orderedNames[i][0] === username) {
         index = i
-        console.log('username', username)
-        console.log('name at index', orderedNames[i])
-        console.log('index', index)
       }
     }
-    console.log('ordered users', orderedNames)
     if (index >= Math.floor(orderedNames.length / 2)) {
       return [false, orderedNames]
     }
@@ -117,7 +110,6 @@ if (onPlayPage) {
     document.querySelector('.submitguess-button').addEventListener('click', function () {
       let word = guessInputField.value.toLowerCase()
       let result = checkGuess(word, guessedWords, roomData, username)
-      console.log(result)
       if (result) {
         guessInputField.style.border = '.2rem solid lightgreen'
         guessInputField.focus()
@@ -147,7 +139,6 @@ if (onPlayPage) {
       if(event.key === "Enter"){
       let word = guessInputField.value.toLowerCase()
       let result = checkGuess(word, guessedWords, roomData, username)
-      console.log(result)
       if (result) {
         guessInputField.style.border = '.2rem solid lightgreen'
         guessInputField.style.backgroundColor = "#C8FED5"
@@ -184,7 +175,6 @@ if (onPlayPage) {
       document.querySelector(`#${data['user1']}-modal`).innerHTML = `${data['user1']}: ${roomData[data['user1']]['score']}`
       document.querySelector(`#${data['user2']}-modal`).innerHTML = `${data['user2']}: ${roomData[data['user2']]['score']}`
       score.innerHTML = `${roomData[username]['score']}`
-      console.log(checkScores(roomData, username))
     }
   }
 

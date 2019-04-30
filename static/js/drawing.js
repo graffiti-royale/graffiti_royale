@@ -1,6 +1,5 @@
 function drawingScript2 (zoomFactor) {
   let roomData = document.querySelector('#room-data').dataset.roomData
-  console.log(roomData)
   roomData = JSON.parse(roomData)
   const drawMap = document.querySelector('#drawMap')
   const miniMap = document.querySelector('#miniMap')
@@ -14,7 +13,6 @@ function drawingScript2 (zoomFactor) {
   const bricks = document.querySelector('#bricks')
   bricks.style.width = `${miniMap.width}px`
   bricks.style.height = `${miniMap.height}px`
-  console.log(bricks.style)
 
   let paint
   let zoomedOut = true
@@ -103,10 +101,8 @@ function drawingScript2 (zoomFactor) {
       let X = zoomCenter[0] * 100 / miniMap.width / ZOOMFACTOR
       let Y = zoomCenter[1] * 100 / miniMap.height / ZOOMFACTOR
       let coord = `${X}% ${Y}%`
-      console.log(coord)
       bricks.style.transform = `translate(${moveX}px, ${moveY}px) scale(${ZOOMFACTOR}, ${ZOOMFACTOR})`
       bricks.style.transformOrigin = coord
-      console.log(bricks.style)
       event.preventDefault()
     } else {
       // This will trigger if it is a single tap.
@@ -171,10 +167,6 @@ function drawingScript2 (zoomFactor) {
         (event.pageX + xOffset) / miniMap.width,
         (event.pageY + yOffset) / miniMap.height
       ])
-      console.log([
-        (event.pageX + xOffset) / miniMap.width,
-        (event.pageY + yOffset) / miniMap.height
-      ])
       drawSocket.send(JSON.stringify({
         'username': username,
         'point': [
@@ -185,8 +177,6 @@ function drawingScript2 (zoomFactor) {
       }))
     }
   })
-
-  // UNFINISHED
 
   // This will control the drawing when the user moves their smelly fingers.
   drawMap.addEventListener('touchmove', function (event) {
