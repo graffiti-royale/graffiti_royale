@@ -1,6 +1,5 @@
 function hintsJavaScript () {
   let hintsButton = document.querySelector('#hints-button')
-  console.log(hintsButton)
   let modal = document.getElementById('myModal')
   let close = document.getElementsByClassName('close')[0]
   let headerTitle = document.querySelector('#headerTitle')
@@ -21,7 +20,6 @@ function hintsJavaScript () {
 
   hintsButton.onclick = function () {
     setInnerHTML()
-    console.log('ModalDisplay', hintsButton)
     modal.style.display = 'block'
   }
 
