@@ -12,10 +12,9 @@ function drawingScript2 (zoomFactor) {
   miniMap.width = Math.min(window.innerHeight - (160), window.innerWidth)
   miniMap.height = Math.min(window.innerHeight - (160), window.innerWidth)
   const bricks = document.querySelector('#bricks')
-  
-    bricks.style.width = `${miniMap.width}px`
-    bricks.style.height = `${miniMap.height}px`
-    console.log(bricks.style)
+  bricks.style.width = `${miniMap.width}px`
+  bricks.style.height = `${miniMap.height}px`
+  console.log(bricks.style)
 
   let paint
   let zoomedOut = true
@@ -218,6 +217,10 @@ function drawingScript2 (zoomFactor) {
   // Stops drawing when a user mouses off of the canvas.
   drawMap.addEventListener('mouseleave', function () {
     paint = false
+  })
+
+  drawMap.addEventListener('wheel', function () {
+    window.scrollTo(0, 0)
   })
 
   function convert (percent) {

@@ -19,7 +19,6 @@
 
 <body class="playfield crosshair fieldlogo" id="playPage">
     <div id="count-down-holder">
-        <div id="start-count-down"></div>
     </div>
        
     <div class="play-header">
@@ -42,7 +41,11 @@
 
     <div id="scores-after-round" class="score-modal">
         <div class="modal-content">
-            <center><h4 id="headerTitle" class="welcome"> Standings:</h4></center><br>
+                <div class="count-down"> 
+                    <span id="count-down-text">NEXT ROUND iN </span>
+                    <span id="start-count-down"></span>
+                </div>
+            <h4 id="headerTitle" class="welcome"> STANDiNGS:</h4><br>
             <div id="player-scores"></div>
         </div>
     </div>

@@ -25,7 +25,7 @@
             <a class="waiting-room-logo" style="font-size:9vw"><div><p>WAiTiNG ROOM</p></div></a>
                  <div>
                     <span>
-                    <div id="hints-button" class="login head-link dim f2 lh-copy" style="font-size:3vw"><i class="fas fa-scroll fa-1x"></i>&nbspHiNTS&nbsp&nbsp&nbsp</div>
+                    <a id="hints-button" class="login head-link dim f2 lh-copy" style="font-size:3vw"><i class="fas fa-scroll fa-1x"></i>&nbspHiNTS&nbsp&nbsp&nbsp</a>
                     <a class="login head-link dim f2 lh-copy" style="font-size:3vw" href="{% url 'homepage'%}"><i class="fas fa-door-open fa-1x"></i>&nbspEXiT</a>
                     </span>
                 </div>   
@@ -55,11 +55,11 @@
         data-remaining-time="{{ remaining_time }}">
     </div>
 
-    <center><div class="matchtimer"><span id="number-of-players"></span>MATCH STARTS iN <span class="seconds" id="time"></span></div>
+    <center><div class="matchtimer">MATCH STARTS iN <span class="seconds" id="time"></span></div>
     <div class="player-queue">
     <div class="player-queue-title">
         CURRENT PLAYERS
-        <div id="current_players" class="current-players"></div>
+        <span id="number-of-players"></span><div id="current_players" class="current-players"></div>
     </div>
     </div></center>
 
