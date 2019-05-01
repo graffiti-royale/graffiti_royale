@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.db import close_old_connections
 import random, time
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 ROOM_CAP = 30
 
@@ -102,7 +102,8 @@ def make_guest(request):
 def check_guest_name(request):
     data = json.loads(request.body)
     username = data['username']
-    room, _ = Room.objects.get_or_create(full=False)
+    two_minute_old_rooms = Room.objects.filter(createdAt__gte=datetime.now(timezone.utc)-timedelta(minutes=2))
+    room, _ = two_minute_old_rooms.get_or_create(full=False)
     if username not in room.JSON:
         return JsonResponse({"url": f"waiting-room/{room.pk}/{data['username']}"})
     return JsonResponse({"message": 'Username already in use.'})
