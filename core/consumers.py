@@ -63,7 +63,6 @@ class StartConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data = json.loads(text_data)
         message_type = text_data['messageType']
-        print(message_type)
         # Send message of type 'start' to room group if the room is full
         if message_type == 'startgame':
             async_to_sync(self.channel_layer.group_send)(
@@ -74,7 +73,6 @@ class StartConsumer(WebsocketConsumer):
             )
         # Send message of type 'ping' to room group if the room still has space
         elif message_type == 'ping':
-            # print(text_data['roomData'])
             async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name,
                 {
