@@ -58,6 +58,7 @@ function drawingScript2 (zoomFactor) {
 
   // When the user double clicks with a mouse, zooms IN on the canvas.
   miniMap.addEventListener('dblclick', function (event) {
+    event.preventDefault()
     drawMap.style.zIndex = 4
     miniMap.style.zIndex = 1
     zoomedOut = false
